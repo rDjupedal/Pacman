@@ -46,7 +46,7 @@ class PacPanel extends JPanel {
         characterFactory cFactory = new characterFactory();
 
         pacman = cFactory.getCharacter("pacman", 100, 100);
-        monster = cFactory.getCharacter("monster", 50, 50);
+        monster = cFactory.getCharacter("monster", 300, 300);
         // todo: monster1 = cFactory.getCharacter("monster", 200, 200); etc.
 
         timer.start();
