@@ -1,8 +1,8 @@
 public class characterFactory {
 
 
-    protected AliveComponent getCharacter(String type, int startX, int startY) {
-        if (type == "pacman") return new Pac(startX, startY);
+    protected Character getCharacter(String type, int startX, int startY) {
+        if (type.equalsIgnoreCase("pacman")) return new Pacman(startX, startY);
         return null;
     }
 }
