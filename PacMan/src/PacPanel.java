@@ -37,6 +37,7 @@ class PacPanel extends JPanel {
         //add(gamelevel);
         //gamelevel.drawMap(); <--- Doesn't work as it needs a Graphics g passed as argument!
         gamelevel.repaint();
+        gamelevel.setVisible(true);
 
 
 
