@@ -17,42 +17,44 @@ class Pacman extends JComponent implements Character {
     public void keyPressed(KeyEvent e) {
         System.out.println("Key pressed: " + e.getKeyCode());
         switch (e.getKeyCode()) {
-            case 38:
-                lastKey = 'U'; // Up
-                break;
-            case 40:
-                lastKey = 'D'; // Down
-                break;
-            case 37:
-                lastKey = 'L'; // Left
-                break;
-            case 39:
-                lastKey = 'R'; // Right
-                break;
-            case 27:
-                lastKey = 'E'; // Escape (Stop playing)
-                break;
-            case 80: lastKey = 'P'; // P (Pause)
+        case 38:
+            lastKey = 'U'; // Up
+            break;
+        case 40:
+            lastKey = 'D'; // Down
+            break;
+        case 37:
+            lastKey = 'L'; // Left
+            break;
+        case 39:
+            lastKey = 'R'; // Right
+            break;
+        case 27:
+            lastKey = 'E'; // Escape (Stop playing)
+            break;
+        case 80:
+            lastKey = 'P'; // P (Pause)
         }
     }
 
     public void doMove() {
         System.out.println("last key: " + lastKey);
         switch (lastKey) {
-            case 'U':
-                y = y - moveDistance;
-                break;
-            case 'D':
-                y = y + moveDistance;
-                break;
-            case 'L':
-                x = x - moveDistance;
-                break;
-            case 'R':
-                x = x + moveDistance;
+        case 'U':
+            y = y - moveDistance;
+            break;
+        case 'D':
+            y = y + moveDistance;
+            break;
+        case 'L':
+            x = x - moveDistance;
+            break;
+        case 'R':
+            x = x + moveDistance;
 
-                System.out.println("pacman moved to " + x + ", " + y);
+            break;
         }
+        System.out.println("pacman moved to " + x + ", " + y);
     }
 
 

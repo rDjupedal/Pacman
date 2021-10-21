@@ -34,9 +34,8 @@ class PacPanel extends JPanel {
         });
 
         gamelevel = new GameLevel(this);
-        //add(gamelevel);
-        //gamelevel.drawMap();  <--- Doesn't work as it needs a Graphics g passed as argument!
-        gamelevel.repaint();
+        add(gamelevel);
+        //gamelevel.drawMap();
 
 
 
@@ -45,7 +44,6 @@ class PacPanel extends JPanel {
         characterFactory cFactory = new characterFactory();
 
         pacman = cFactory.getCharacter("pacman", 100, 100);
-
         // todo: monster1 = cFactory.getCharacter("monster", 200, 200); etc.
 
 
@@ -63,7 +61,6 @@ class PacPanel extends JPanel {
 
         // todo: redraw all Characters
         pacman.draw(g);
-
     }
 
 }
