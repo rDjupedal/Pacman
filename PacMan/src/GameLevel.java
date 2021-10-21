@@ -14,9 +14,9 @@ import java.util.stream.Stream;
 public class GameLevel extends JComponent {
     int level;
     PacPanel pacpanel;
-    //byte[] levelBytes;
-    //List<String> levelMap;
-    //List<Byte> levelBytes;
+    // byte[] levelBytes;
+    // List<String> levelMap;
+    // List<Byte> levelBytes;
     int gridWidth;
     int gridHeight;
     byte[] readLevel;
@@ -40,18 +40,17 @@ public class GameLevel extends JComponent {
         System.out.println("opening file " + path.toString() + "...");
 
         try {
-            //levelMap = Files.readAllLines(path);
+            // levelMap = Files.readAllLines(path);
             readLevel = Files.readAllBytes(path);
 
         } catch (IOException e) {
             System.out.println("error opening file ");
-            //e.printStackTrace();
+            // e.printStackTrace();
         }
 
         /*
-        System.out.println(readLevel.length);
-        List<?> test =
-                Stream.of(readLevel).collect(Collectors.toList());
+         * System.out.println(readLevel.length); List<?> test =
+         * Stream.of(readLevel).collect(Collectors.toList());
          */
 
     }
@@ -67,7 +66,6 @@ public class GameLevel extends JComponent {
         }
     }
 
-
     protected void paintComponent(Graphics g) {
 
         // Calculate grid size
@@ -76,8 +74,8 @@ public class GameLevel extends JComponent {
 
         // Iterate over map level array
         System.out.println("GameLevel::paintComponent called");
-        g.drawImage(wall,200,200,this);
-        g.fillRect(300,300,100,100);
+        g.drawImage(wall, 200, 200, this);
+        g.fillRect(300, 300, 100, 100);
     }
 
     protected void drawMap(Graphics g) {
@@ -88,20 +86,18 @@ public class GameLevel extends JComponent {
             int spriteY = (i / 30) * (int) gridHeight;
             System.out.print(readLevel[i] + " ");
 
+            // if (readLevel[i] == 87) g.drawImage(wall, spriteX, spriteY, this);
+            if (readLevel[i] == 87)
+                g.drawImage(wall.getScaledInstance(gridWidth, gridHeight, 2), spriteX, spriteY, this);
 
-            //if (readLevel[i] == 87) g.drawImage(wall, spriteX, spriteY, this);
-            if (readLevel[i] == 87) g.drawImage(wall.getScaledInstance(gridWidth, gridHeight, 2), spriteX, spriteY, this);
-
-            //if (readLevel[i] == 83) g.drawImage(space, spriteX, spriteY, this);
-            if (readLevel[i] == 83) g.drawImage(space.getScaledInstance(gridWidth, gridHeight, 2), spriteX, spriteY, this);
+            // if (readLevel[i] == 83) g.drawImage(space, spriteX, spriteY, this);
+            if (readLevel[i] == 83)
+                g.drawImage(space.getScaledInstance(gridWidth, gridHeight, 2), spriteX, spriteY, this);
         }
 
-
-
-        //System.out.println("GameLevel::paintComponent called");
-        //g.drawImage(wall,200,200,this);
-        //g.fillRect(300,300,100,100);
+        // System.out.println("GameLevel::paintComponent called");
+        // g.drawImage(wall,200,200,this);
+        // g.fillRect(300,300,100,100);
     }
-
 
 }

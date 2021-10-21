@@ -1,7 +1,6 @@
 
 import java.awt.event.KeyEvent;
 
-import javax.print.attribute.standard.ColorSupported;
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,7 +21,6 @@ public class Monster implements Character {
     }
 
     private String getDirection() {
-        System.out.println("GETTING DIRECTION!");
         if (x == 0 && y > 0) {
             direction = "up";
 
@@ -62,13 +60,20 @@ public class Monster implements Character {
             break;
         case "down":
             y = y + moveDistance;
-            // color = Color.GREEN;
         default:
             break;
         }
 
         String debug = String.format("monster is at %d, %d", x, y);
         System.out.println(debug);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     @Override
