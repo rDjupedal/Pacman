@@ -57,6 +57,7 @@ public class GameLevel extends JComponent {
         }
     }
 
+
     protected void paintComponent(Graphics g) {
 
         // Calculate grid size
@@ -65,8 +66,21 @@ public class GameLevel extends JComponent {
 
         // Iterate over map level array
         System.out.println("GameLevel::paintComponent called");
-
     }
+
+
+    /*
+    protected void drawMap(Graphics g) {
+
+        // Calculate grid size
+        double gridWidth = pacpanel.width / 30;
+        double gridHeight = pacpanel.height / 30;
+
+        // Iterate over map level array
+        System.out.println("GameLevel::paintComponent called");
+    }
+
+     */
 
 
 }

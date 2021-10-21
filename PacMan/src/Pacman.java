@@ -58,10 +58,21 @@ class Pacman extends JComponent implements Character {
         System.out.println("pacman moved to " + x + ", " + y);
     }
 
+
     public void draw(Graphics g) {
         System.out.println("drawing pacman from drawPacman..");
         g.setColor(Color.YELLOW);
         g.fillOval(x, y, pacSize, pacSize);
     }
+
+
+    /*
+    public void paintComponent(Graphics g) {
+        System.out.println("drawing pacman from its own paintComponent method..");
+        g.setColor(Color.YELLOW);
+        g.fillOval(x, y, pacSize, pacSize);
+    }
+
+     */
 
 }
