@@ -35,10 +35,12 @@ class PacPanel extends JPanel {
         });
 
         gamelevel = new GameLevel(this);
-        // add(gamelevel);
+        // the level is being constantly repainted... is this a probelm?
+        add(gamelevel);
         // gamelevel.drawMap(); <--- Doesn't work as it needs a Graphics g passed as
         // argument!
-        gamelevel.repaint();
+        //gamelevel.repaint();
+        //gamelevel.setVisible(true);
 
         // todo: Read map, get start coords for all objects and pass them for
         // construction
@@ -64,6 +66,7 @@ class PacPanel extends JPanel {
         // todo: redraw all Characters
         pacman.draw(g);
         monster.draw(g);
+
     }
 
 }

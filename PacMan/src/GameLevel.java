@@ -66,6 +66,8 @@ public class GameLevel extends JComponent {
 
         // Iterate over map level array
         System.out.println("GameLevel::paintComponent called");
+        g.drawImage(wall,200,200,this);
+        g.fillRect(300,300,100,100);
     }
 
 
