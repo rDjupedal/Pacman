@@ -50,13 +50,9 @@ public class GameLevel extends JComponent {
 
         /*
         System.out.println(readLevel.length);
-        List<> test =
+        List<?> test =
                 Stream.of(readLevel).collect(Collectors.toList());
-
          */
-
-        // todo: filter out all new lines
-
 
     }
 
@@ -64,16 +60,14 @@ public class GameLevel extends JComponent {
 
         // create walls & space
         try {
-
             wall = ImageIO.read(new File("PacMan/src/resources/wall.jpg"));
             space = ImageIO.read(new File("PacMan/src/resources/space.jpg"));
-
         } catch (IOException e) {
             System.out.println("error loading image");
         }
     }
 
-/*
+
     protected void paintComponent(Graphics g) {
 
         // Calculate grid size
@@ -85,7 +79,6 @@ public class GameLevel extends JComponent {
         g.drawImage(wall,200,200,this);
         g.fillRect(300,300,100,100);
     }
- */
 
     protected void drawMap(Graphics g) {
 
