@@ -29,7 +29,7 @@ class PacFrame extends JFrame  {
 }
 
 class PacPanel extends JPanel {
-    Pac pac;
+    AliveComponent pac;
     final int width;
     final int height;
 
@@ -44,7 +44,7 @@ class PacPanel extends JPanel {
         requestFocusInWindow();
 
         // Timer
-        Timer timer = new Timer(2000,( ae ->
+        Timer timer = new Timer(10,( ae ->
         {
             Toolkit.getDefaultToolkit().sync();
             repaint();
@@ -53,9 +53,12 @@ class PacPanel extends JPanel {
 
         timer.start();
 
-        // todo: Read map, get start coords for pac
-        pac = new Pac(100,100);
-        //pac.repaint();
+        // todo: Read map, get start coords for all objects and pass them for construction
+        //pac = new Pac(100,100);
+        characterFactory cFactory = new characterFactory();
+
+        pac = cFactory.getCharacter("pacman", 100, 100);
+
 
         addKeyListener(new KeyAdapter() {
             @Override
@@ -65,15 +68,17 @@ class PacPanel extends JPanel {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        pac.drawPacman(g);
+        pac.doMove();
+        pac.draw(g);
 
     }
 
 }
 
-class Pac extends JComponent {
+class Pac extends JComponent implements AliveComponent {
     int x, y;
     final int pacSize = 30;
+    final int moveDistance = 2;
     char lastKey;
 
     public Pac(int x, int y) {
@@ -82,29 +87,56 @@ class Pac extends JComponent {
         System.out.println("Creating a Pac at " + x + ", " + y);
     }
 
-    protected void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {
         System.out.println("Key pressed: " + e.getKeyCode());
         switch (e.getKeyCode()) {
-            case 38: lastKey = 'U'; // Up
-            case 40: lastKey = 'D'; // Down
-            case 37: lastKey = 'L'; // Left
-            case 39: lastKey = 'R'; // Right
-            case 27: lastKey = 'E'; // Escape (Stop playing)
+            case 38:
+                lastKey = 'U'; // Up
+                break;
+            case 40:
+                lastKey = 'D'; // Down
+                break;
+            case 37:
+                lastKey = 'L'; // Left
+                break;
+            case 39:
+                lastKey = 'R'; // Right
+                break;
+            case 27:
+                lastKey = 'E'; // Escape (Stop playing)
+                break;
             case 80: lastKey = 'P'; // P (Pause)
         }
     }
 
-    protected void drawPacman(Graphics g) {
+    public void doMove() {
+        System.out.println("last key: " + lastKey);
+        switch (lastKey) {
+            case 'U':
+                y = y - moveDistance;
+                break;
+            case 'D':
+                y = y + moveDistance;
+                break;
+            case 'L':
+                x = x - moveDistance;
+                break;
+            case 'R':
+                x = x + moveDistance;
+
+            System.out.println("pacman moved to " + x + ", " + y);
+        }
+    }
+
+
+    public void draw(Graphics g) {
         System.out.println("drawing pacman from drawPacman..");
-        g.setColor(Color.YELLOW);
+        //g.setColor(Color.YELLOW);
+        g.setColor(Color.RED);
         g.fillOval(x, y, pacSize, pacSize);
     }
 
-    protected void paintComponent(Graphics g) {
-        System.out.println("drawing pacman from painComponent..");
-        g.setColor(Color.YELLOW);
-        g.fillOval(x, y, pacSize, pacSize);
-    }
+
 
     protected void keyUp() {}
     protected void keyDown() {}
