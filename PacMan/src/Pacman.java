@@ -54,6 +54,7 @@ class Pacman extends JComponent implements Character {
 
             break;
         }
+        // DEBUG
         System.out.println("pacman moved to " + x + ", " + y);
     }
 
