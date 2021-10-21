@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 class PacPanel extends JPanel {
     Character pacman;
+    Character monster;
     GameLevel gamelevel;
     final int width;
     final int height;
@@ -21,33 +22,32 @@ class PacPanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
 
-        Timer timer = new Timer(10,( ae ->
-        {
+        Timer timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
             repaint();
-        }
-        ));
+        }));
 
         addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) { pacman.keyPressed(e); }
+            public void keyPressed(KeyEvent e) {
+                pacman.keyPressed(e);
+            }
         });
 
         gamelevel = new GameLevel(this);
-        //add(gamelevel);
-        //gamelevel.drawMap(); <--- Doesn't work as it needs a Graphics g passed as argument!
+        // add(gamelevel);
+        // gamelevel.drawMap(); <--- Doesn't work as it needs a Graphics g passed as
+        // argument!
         gamelevel.repaint();
 
-
-
-        // todo: Read map, get start coords for all objects and pass them for construction
-        //pac = new Pac(100,100);
+        // todo: Read map, get start coords for all objects and pass them for
+        // construction
+        // pac = new Pac(100,100);
         characterFactory cFactory = new characterFactory();
 
         pacman = cFactory.getCharacter("pacman", 100, 100);
+        monster = cFactory.getCharacter("monster", 50, 50);
         // todo: monster1 = cFactory.getCharacter("monster", 200, 200); etc.
-
-
 
         timer.start();
     }
@@ -59,10 +59,11 @@ class PacPanel extends JPanel {
 
         // todo: update moves for all Characters
         pacman.doMove();
+        monster.doMove();
 
         // todo: redraw all Characters
         pacman.draw(g);
+        monster.draw(g);
     }
 
 }
-
