@@ -35,16 +35,15 @@ class PacPanel extends JPanel {
         });
 
         gamelevel = new GameLevel(this);
-        // the level is being constantly repainted... is this a probelm?
-        add(gamelevel);
+        // the level is being constantly repainted... is this a problem?
         // gamelevel.drawMap(); <--- Doesn't work as it needs a Graphics g passed as
-        // argument!
-        //gamelevel.repaint();
-        //gamelevel.setVisible(true);
+        // argument, and thats only possible to do from withing painComponent()!?
+        // which makes it being called ALL the time.
+
 
         // todo: Read map, get start coords for all objects and pass them for
         // construction
-        // pac = new Pac(100,100);
+
         characterFactory cFactory = new characterFactory();
 
         pacman = cFactory.getCharacter("pacman", 100, 100);
@@ -67,6 +66,8 @@ class PacPanel extends JPanel {
         pacman.draw(g);
         monster.draw(g);
 
+        // todo: is there any way we can avoid calling the method at each tick?
+        gamelevel.drawMap(g);
     }
 
 }
