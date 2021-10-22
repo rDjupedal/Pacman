@@ -1,6 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+//Image imports
+import javax.imageio.*;
+import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 
 class Pacman extends JComponent implements Character {
     int x, y;
@@ -8,26 +15,56 @@ class Pacman extends JComponent implements Character {
     final int moveDistance = 2;
     char lastKey;
 
+    ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
+    BufferedImage currentImg;
+
     public Pacman(int x, int y) {
         this.x = x;
         this.y = y;
         System.out.println("Creating a Pac at " + x + ", " + y);
+
+        // Load images.
+        try {
+
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/pac/pacLeft.png")));
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/pac/pacRight.png")));
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/pac/pacUp.png")));
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/pac/pacDown.png")));
+
+            // Initial pic.
+            currentImg = pacImages.get(0);
+
+        } catch (IOException e) {
+            System.out.println("Pacman image not found!");
+        }
     }
 
+    public BufferedImage getImage() {
+        return currentImg;
+    }
+
+    /**
+     * När en knapp trycks så ändras även bilden så att pac åker åtå rätt håll.
+     */
     public void keyPressed(KeyEvent e) {
         System.out.println("Key pressed: " + e.getKeyCode());
         switch (e.getKeyCode()) {
         case 38:
             lastKey = 'U'; // Up
+            currentImg = pacImages.get(2);
+
             break;
         case 40:
             lastKey = 'D'; // Down
+            currentImg = pacImages.get(3);
             break;
         case 37:
             lastKey = 'L'; // Left
+            currentImg = pacImages.get(0);
             break;
         case 39:
             lastKey = 'R'; // Right
+            currentImg = pacImages.get(1);
             break;
         case 27:
             lastKey = 'E'; // Escape (Stop playing)
@@ -42,6 +79,7 @@ class Pacman extends JComponent implements Character {
         switch (lastKey) {
         case 'U':
             y = y - moveDistance;
+
             break;
         case 'D':
             y = y + moveDistance;
@@ -58,7 +96,7 @@ class Pacman extends JComponent implements Character {
         System.out.println("pacman moved to " + x + ", " + y);
     }
 
-    // Testing image.
+    // Getters för pacmans position.
     public int getX() {
         return x;
     }
@@ -67,6 +105,9 @@ class Pacman extends JComponent implements Character {
         return y;
     }
 
+    /**
+     * Används inte just nu.
+     */
     public void draw(Graphics g) {
         System.out.println("drawing pacman from drawPacman..");
         g.setColor(Color.YELLOW);
