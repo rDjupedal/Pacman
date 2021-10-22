@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+//Image imports
+import java.awt.image.*;
+
 public interface Character {
     void draw(Graphics g);
 
@@ -14,5 +17,7 @@ public interface Character {
     int getY();
 
     int getX();
+
+    BufferedImage getImage();
 
 }
