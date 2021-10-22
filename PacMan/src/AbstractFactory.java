@@ -1,6 +1,6 @@
 public abstract class AbstractFactory {
-    abstract Character getCharacter(String type, int x, int y);
+    abstract Pacman getCharacter(String type, int x, int y);
 
-    abstract Character getCharacter(String type, int x, int y, int number);
+    abstract Monster getCharacter(String type, int x, int y, int number);
 
 }
