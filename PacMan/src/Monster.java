@@ -1,8 +1,14 @@
 
 import java.awt.event.KeyEvent;
-
 import javax.swing.*;
 import java.awt.*;
+
+//Image imports
+import javax.imageio.*;
+import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 public class Monster implements Character {
 
@@ -14,12 +20,26 @@ public class Monster implements Character {
     String direction = "up";
     Color color = Color.RED;
 
+    BufferedImage monsterImg;
+
     public Monster(int x, int y, int number) {
         this.x = x;
         this.y = y;
         this.name = "Monster " + number;
         System.out.printf("Creating %s at %d, %d", name, x, y);
 
+        try {
+
+            String imgPath = String.format("resources/ghost/%d.png", number);
+            monsterImg = ImageIO.read(this.getClass().getResource(imgPath));
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public BufferedImage getImage() {
+        return monsterImg;
     }
 
     private String getDirection() {
