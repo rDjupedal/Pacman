@@ -1,0 +1,10 @@
+Tjabba! 
+
+Eftersom vi jobbar lite olika tider så täntke jag att jag skriver ltie saker som jag gjort idag. 
+
+
+* Skapat en Abstract Factory för skapandet av Pacman och monster.
+* Gjorde även två olika konstruktorer för factories så att vi kan skapa flera olika monster. 
+* Gjorde om själva ritandet av pacman och monster till drawImage, som sen hämtar en position istället. 
+
+* 

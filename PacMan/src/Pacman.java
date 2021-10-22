@@ -35,7 +35,7 @@ class Pacman extends JComponent implements Character {
             currentImg = pacImages.get(0);
 
         } catch (IOException e) {
-            System.out.println("Pacman image not found!");
+            System.out.println("Pacmans bild kunde inte hämtas: " + e.getMessage());
         }
     }
 

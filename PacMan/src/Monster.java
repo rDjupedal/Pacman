@@ -28,12 +28,14 @@ public class Monster implements Character {
         this.name = "Monster " + number;
         System.out.printf("Creating %s at %d, %d", name, x, y);
 
+        // Laddar deras bilder beroende på sekvens. (Ska man göra olika klasser för alla
+        // spöken istället? Färgkodat?)
         try {
 
             String imgPath = String.format("resources/ghost/%d.png", number);
             monsterImg = ImageIO.read(this.getClass().getResource(imgPath));
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println("Spökenas bild kunde inte hämtas: " + e.getMessage());
         }
 
     }
@@ -42,6 +44,12 @@ public class Monster implements Character {
         return monsterImg;
     }
 
+    /**
+     * Enkel liten loop som späkena gör. Vänden i olika hörn och snurrar ett helt
+     * varv.
+     * 
+     * @return
+     */
     private String getDirection() {
         if (x == 0 && y > 0) {
             direction = "up";
@@ -86,10 +94,14 @@ public class Monster implements Character {
             break;
         }
 
+        // DEbug test.
         String debug = String.format("%s is at %d, %d", name, x, y);
         System.out.println(debug);
     }
 
+    /**
+     * Getters för positionen.
+     */
     public int getX() {
         return x;
     }
@@ -98,6 +110,9 @@ public class Monster implements Character {
         return y;
     }
 
+    /**
+     * Används inte just nu.
+     */
     @Override
     public void draw(Graphics g) {
         System.out.printf("Drawing %s from Monsterclass %n", name);

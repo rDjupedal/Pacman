@@ -12,12 +12,13 @@ public interface Character {
 
     void keyPressed(KeyEvent e); // does nothing for monsters
 
-    // Testing getPosition
+    // Getters för position
 
     int getY();
 
     int getX();
 
+    // GEtter for img.
     BufferedImage getImage();
 
 }

@@ -11,16 +11,13 @@ import java.net.URL;
 import java.util.ArrayList;
 
 class PacPanel extends JPanel {
-    Character pacman;
-    Character monster;
+    Pacman pacman;
+    Monster monster;
     GameLevel gamelevel;
     final int width;
     final int height;
     int level = 1;
     ArrayList<Monster> monsters = new ArrayList<Monster>();
-
-    // IMAGE
-    BufferedImage blueGhostImg = null;
 
     public PacPanel(int width, int height) {
         this.width = width;
@@ -33,8 +30,6 @@ class PacPanel extends JPanel {
         setBackground(Color.BLACK);
         setFocusable(true);
         requestFocusInWindow();
-
-        // Laddar bild.
 
         Timer timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
@@ -63,12 +58,13 @@ class PacPanel extends JPanel {
 
         pacman = pacManFactory.getCharacter("pacman", 100, 100);
 
+        // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
+        // dom just nu följer samma rörelsemönster.
         for (int i = 0; i < 4; i++) {
+
             monsters.add(monsterFactory.getCharacter("monster", 300, 300 + i * 30, i));
 
         }
-
-        // todo: monster1 = cFactory.getCharacter("monster", 200, 200); etc.
 
         timer.start();
     }
