@@ -18,7 +18,8 @@ class PacPanel extends JPanel {
     int level = 1;
 
     // IMAGE
-    BufferedImage img = null;
+    BufferedImage blueGhostImg = null;
+    BufferedImage pacmanImg = null;
 
     public PacPanel(int width, int height) {
         this.width = width;
@@ -35,7 +36,8 @@ class PacPanel extends JPanel {
         // Laddar bild.
         try {
 
-            img = ImageIO.read(this.getClass().getResource("resources/1.png"));
+            blueGhostImg = ImageIO.read(this.getClass().getResource("resources/blueGhost.png"));
+            pacmanImg = ImageIO.read(this.getClass().getResource("resources/pac/pac2.png"));
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -82,8 +84,8 @@ class PacPanel extends JPanel {
         monster.doMove();
 
         // todo: redraw all Characters
-        pacman.draw(g);
-        monster.draw(g);
+        // pacman.draw(g);
+        // monster.draw(g);
 
         /**
          * Den här målar bara en bild på x,y,width,height. Om vi bara hittar ett sätt
@@ -91,7 +93,8 @@ class PacPanel extends JPanel {
          * själva klasserna, utan bara ta fram positionen där.
          * 
          */
-        g.drawImage(img, 50, 50, 50, 50, null);
+        g.drawImage(blueGhostImg, monster.getX(), monster.getY(), 40, 40, null);
+        g.drawImage(pacmanImg, pacman.getX(), pacman.getY(), 40, 40, null);
 
         // todo: is there any way we can avoid calling the method at each tick?
         // gamelevel.drawMap(g);
