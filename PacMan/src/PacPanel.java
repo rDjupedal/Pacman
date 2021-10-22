@@ -61,10 +61,12 @@ class PacPanel extends JPanel {
         // todo: Read map, get start coords for all objects and pass them for
         // construction
 
-        characterFactory cFactory = new characterFactory();
+        // Creation of characters
+        AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
+        AbstractFactory monsterFactory = FactoryProducer.getFactory(false);
 
-        pacman = cFactory.getCharacter("pacman", 100, 100);
-        monster = cFactory.getCharacter("monster", 300, 300);
+        pacman = pacManFactory.getCharacter("pacman", 100, 100);
+        monster = monsterFactory.getCharacter("monster", 300, 300, 1);
         // todo: monster1 = cFactory.getCharacter("monster", 200, 200); etc.
 
         timer.start();

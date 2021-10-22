@@ -1,5 +1,6 @@
 
 import java.awt.event.KeyEvent;
+import java.time.YearMonth;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,16 +8,18 @@ import java.awt.*;
 public class Monster implements Character {
 
     int x, y;
+    String name;
     final int monsterSize = 30;
     final int moveDistance = 1;
     char lastKey;
     String direction = "up";
     Color color = Color.RED;
 
-    public Monster(int x, int y) {
+    public Monster(int x, int y, int number) {
         this.x = x;
         this.y = y;
-        System.out.println("Creating Monster at" + x + ", " + y);
+        this.name = "Monster " + number;
+        System.out.printf("Creating %s at %d, %d", name, x, y);
 
     }
 
@@ -64,7 +67,7 @@ public class Monster implements Character {
             break;
         }
 
-        String debug = String.format("monster is at %d, %d", x, y);
+        String debug = String.format("%s is at %d, %d", name, x, y);
         System.out.println(debug);
     }
 
@@ -78,7 +81,7 @@ public class Monster implements Character {
 
     @Override
     public void draw(Graphics g) {
-        System.out.println("Drawing monster from drawMonster");
+        System.out.printf("Drawing %s from Monsterclass", name);
         g.setColor(color);
         g.fillOval(x, y, monsterSize, monsterSize);
 
