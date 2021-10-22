@@ -1,6 +1,5 @@
 
 import java.awt.event.KeyEvent;
-import java.time.YearMonth;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,7 +80,7 @@ public class Monster implements Character {
 
     @Override
     public void draw(Graphics g) {
-        System.out.printf("Drawing %s from Monsterclass", name);
+        System.out.printf("Drawing %s from Monsterclass %n", name);
         g.setColor(color);
         g.fillOval(x, y, monsterSize, monsterSize);
 
