@@ -8,6 +8,7 @@ import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 class PacPanel extends JPanel {
     Character pacman;
@@ -16,10 +17,10 @@ class PacPanel extends JPanel {
     final int width;
     final int height;
     int level = 1;
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
 
     // IMAGE
     BufferedImage blueGhostImg = null;
-    BufferedImage pacmanImg = null;
 
     public PacPanel(int width, int height) {
         this.width = width;
@@ -34,13 +35,6 @@ class PacPanel extends JPanel {
         requestFocusInWindow();
 
         // Laddar bild.
-        try {
-
-            blueGhostImg = ImageIO.read(this.getClass().getResource("resources/blueGhost.png"));
-            pacmanImg = ImageIO.read(this.getClass().getResource("resources/pac/pac2.png"));
-        } catch (IOException e) {
-            System.out.println(e);
-        }
 
         Timer timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
@@ -68,7 +62,12 @@ class PacPanel extends JPanel {
         AbstractFactory monsterFactory = FactoryProducer.getFactory(false);
 
         pacman = pacManFactory.getCharacter("pacman", 100, 100);
-        monster = monsterFactory.getCharacter("monster", 300, 300, 1);
+
+        for (int i = 0; i < 4; i++) {
+            monsters.add(monsterFactory.getCharacter("monster", 300, 300 + i * 30, i));
+
+        }
+
         // todo: monster1 = cFactory.getCharacter("monster", 200, 200); etc.
 
         timer.start();
@@ -81,20 +80,28 @@ class PacPanel extends JPanel {
 
         // todo: update moves for all Characters
         pacman.doMove();
-        monster.doMove();
+
+        /**
+         * Den här kör monsters::move och hämtar bilden för alla monster.
+         */
+        for (Monster monster : monsters) {
+            monster.doMove();
+            g.drawImage(monster.getImage(), monster.getX(), monster.getY(), 30, 30, null);
+
+        }
 
         // todo: redraw all Characters
         // pacman.draw(g);
         // monster.draw(g);
 
         /**
-         * Den här målar bara en bild på x,y,width,height. Om vi bara hittar ett sätt
-         * att ändra x,y på (getx and Y kanske?) så kanske vi inte behöver paint i
-         * själva klasserna, utan bara ta fram positionen där.
+         * Den här målar bara en bild på x,y,width,height. Har lagt in att hämta
+         * positionen från klasserna.
+         * 
          * 
          */
-        g.drawImage(blueGhostImg, monster.getX(), monster.getY(), 40, 40, null);
-        g.drawImage(pacmanImg, pacman.getX(), pacman.getY(), 40, 40, null);
+
+        g.drawImage(pacman.getImage(), pacman.getX(), pacman.getY(), 30, 30, null);
 
         // todo: is there any way we can avoid calling the method at each tick?
         // gamelevel.drawMap(g);
