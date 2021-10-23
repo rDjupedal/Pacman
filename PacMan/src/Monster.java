@@ -116,9 +116,9 @@ public class Monster extends JComponent implements Character {
     @Override
     public void draw(Graphics g) {
         System.out.printf("Drawing %s from Monsterclass %n", name);
-        g.setColor(color);
-        g.fillOval(x, y, monsterSize, monsterSize);
-
+        //g.setColor(color);
+        //g.fillOval(x, y, monsterSize, monsterSize);
+        g.drawImage(monsterImg, x, y, monsterSize, monsterSize, null);
     }
 
     public void paintComponent(Graphics g) {
@@ -126,6 +126,10 @@ public class Monster extends JComponent implements Character {
         System.out.printf("Drawing monster from monster::paintComponent");
         g.setColor(color);
         g.fillOval(x, y, monsterSize, monsterSize);
+    }
+
+    public Rectangle getRectangle() {
+        return new Rectangle(x-2, y-2, monsterSize+4, monsterSize+4);
     }
 
 }

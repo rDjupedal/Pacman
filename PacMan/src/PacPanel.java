@@ -74,7 +74,7 @@ class PacPanel extends JPanel {
 
         pacman = pacManFactory.getCharacter("pacman", 100, 100);
         //add(pacman, DRAG_LAYER);
-        add(pacman);
+        //add(pacman);
 
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
@@ -88,15 +88,18 @@ class PacPanel extends JPanel {
     }
 
     protected void gameUpdate() {
+
         pacman.doMove();
+        //Only redraws the area surrounding Pacman
+        repaint(pacman.getRectangle());
 
         for (Monster monster : monsters) {
             monster.doMove();
-            monster.repaint();
+            repaint(monster.getRectangle());
         }
 
-        //Only redraws the area surrounding Pacman
-        repaint(pacman.getRectangle());
+
+        //repaint();
 
     }
 
@@ -105,9 +108,14 @@ class PacPanel extends JPanel {
 
         // Important! The order is important! Draw the maze FIRST!
         maze.drawMap(g);
-        pacman.draw(g);
+
         // todo: update moves for all Characters
-        //pacman.doMove();
+        pacman.draw(g);
+        for (Monster monster : monsters) {
+            monster.draw(g);
+        }
+
+
 
         /**
          * Den här kör monsters::move och hämtar bilden för alla monster.
@@ -116,10 +124,10 @@ class PacPanel extends JPanel {
         for (Monster monster : monsters) {
             monster.doMove();
             g.drawImage(monster.getImage(), monster.getX(), monster.getY(), 30, 30, null);
-
         }
-
          */
+
+
 
         // todo: redraw all Characters
         // pacman.draw(g);
