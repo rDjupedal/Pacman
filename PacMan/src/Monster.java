@@ -10,13 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class Monster implements Character {
+public class Monster extends JComponent implements Character {
 
     int x, y;
     String name;
     final int monsterSize = 30;
     final int moveDistance = 1;
-    char lastKey;
+    //char lastKey;
     String direction = "up";
     Color color = Color.RED;
 
@@ -96,7 +96,7 @@ public class Monster implements Character {
 
         // DEbug test.
         String debug = String.format("%s is at %d, %d", name, x, y);
-        System.out.println(debug);
+        //System.out.println(debug);
     }
 
     /**
@@ -119,6 +119,13 @@ public class Monster implements Character {
         g.setColor(color);
         g.fillOval(x, y, monsterSize, monsterSize);
 
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        System.out.printf("Drawing monster from monster::paintComponent");
+        g.setColor(color);
+        g.fillOval(x, y, monsterSize, monsterSize);
     }
 
 }

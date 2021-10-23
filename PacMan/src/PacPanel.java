@@ -3,11 +3,9 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import javax.imageio.*;
-import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 class PacPanel extends JPanel {
@@ -18,6 +16,7 @@ class PacPanel extends JPanel {
     final int height;
     int level = 1;
     ArrayList<Monster> monsters = new ArrayList<Monster>();
+    JLabel debugLabel = new JLabel();
 
     public PacPanel(int width, int height) {
         this.width = width;
@@ -33,7 +32,9 @@ class PacPanel extends JPanel {
 
         Timer timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
-            repaint();
+            //repaint();
+            gameUpdate();
+
         }));
 
         addKeyListener(new KeyAdapter() {
@@ -43,11 +44,22 @@ class PacPanel extends JPanel {
             }
         });
 
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY());
+                debugLabel.setVisible(true);
+            }
+        });
+
+        add(debugLabel);
+
+
         gamelevel = new GameLevel(this);
-        // the level is being constantly repainted... is this a problem?
-        // gamelevel.drawMap(); <--- Doesn't work as it needs a Graphics g passed as
-        // argument, and thats only possible to do from withing painComponent()!?
-        // which makes it being called ALL the time.
+        add(gamelevel);
+        gamelevel.repaint();
+
 
         // todo: Read map, get start coords for all objects and pass them for
         // construction
@@ -57,6 +69,7 @@ class PacPanel extends JPanel {
         AbstractFactory monsterFactory = FactoryProducer.getFactory(false);
 
         pacman = pacManFactory.getCharacter("pacman", 100, 100);
+        add(pacman);
 
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
@@ -69,22 +82,36 @@ class PacPanel extends JPanel {
         timer.start();
     }
 
-    protected void paintComponent(Graphics g) {
-
-        // if removed, we don't have to redraw everything?
-        super.paintComponent(g);
-
-        // todo: update moves for all Characters
+    protected void gameUpdate() {
         pacman.doMove();
+        for (Monster monster : monsters) {
+            monster.doMove();
+            monster.repaint();
+        }
+
+        //Only redraws the area surrounding Pacman
+        repaint(pacman.getRectangle());
+
+    }
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        pacman.draw(g);
+        gamelevel.drawMap(g);
+        // todo: update moves for all Characters
+        //pacman.doMove();
 
         /**
          * Den här kör monsters::move och hämtar bilden för alla monster.
          */
+        /*
         for (Monster monster : monsters) {
             monster.doMove();
             g.drawImage(monster.getImage(), monster.getX(), monster.getY(), 30, 30, null);
 
         }
+
+         */
 
         // todo: redraw all Characters
         // pacman.draw(g);
@@ -97,10 +124,10 @@ class PacPanel extends JPanel {
          * 
          */
 
-        g.drawImage(pacman.getImage(), pacman.getX(), pacman.getY(), 30, 30, null);
+        //g.drawImage(pacman.getImage(), pacman.getX(), pacman.getY(), 30, 30, null);
 
         // todo: is there any way we can avoid calling the method at each tick?
-        // gamelevel.drawMap(g);
+        //gamelevel.drawMap(g);
     }
 
 }
