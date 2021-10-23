@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 class PacPanel extends JPanel {
+//class PacPanel extends JLayeredPane {
     Pacman pacman;
     Monster monster;
     Maze maze;
@@ -20,6 +21,7 @@ class PacPanel extends JPanel {
 
     public PacPanel(Dimension dimension) {
         setPreferredSize(dimension);
+        setOpaque(true);
         width = dimension.width;
         height = dimension.height;
         setupPanel();
@@ -48,15 +50,18 @@ class PacPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY());
+                System.out.println("Mouse coords: " + e.getX() + ", " + e.getY());
                 debugLabel.setVisible(true);
+                debugLabel.setOpaque(true);
             }
         });
 
         add(debugLabel);
-
+        //add(debugLabel, 100);
 
         maze = new Maze(this);
-        add(maze);
+        //add(maze);
+        //add(maze, 200);
         //maze.repaint();
 
 
@@ -68,6 +73,7 @@ class PacPanel extends JPanel {
         AbstractFactory monsterFactory = FactoryProducer.getFactory(false);
 
         pacman = pacManFactory.getCharacter("pacman", 100, 100);
+        //add(pacman, DRAG_LAYER);
         add(pacman);
 
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
@@ -96,8 +102,10 @@ class PacPanel extends JPanel {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        pacman.draw(g);
+
+        // Important! The order is important! Draw the maze FIRST!
         maze.drawMap(g);
+        pacman.draw(g);
         // todo: update moves for all Characters
         //pacman.doMove();
 
@@ -127,7 +135,7 @@ class PacPanel extends JPanel {
         //g.drawImage(pacman.getImage(), pacman.getX(), pacman.getY(), 30, 30, null);
 
         // todo: is there any way we can avoid calling the method at each tick?
-        //maze.drawMap(g);
+
     }
 
 }

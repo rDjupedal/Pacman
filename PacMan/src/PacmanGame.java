@@ -15,6 +15,9 @@ public class PacmanGame {
             pFrame.add(pacPanel);
             pFrame.pack();
 
+            // ?? ta bort
+            pFrame.setContentPane(pacPanel);
+
             pFrame.setVisible(true);
         });
     }
