@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PacmanGame {
-    final static int width = 600;
-    final static int height = 600;
+    final static int width = 840;
+    final static int height = 900;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() ->

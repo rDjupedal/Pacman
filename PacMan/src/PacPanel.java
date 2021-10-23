@@ -25,7 +25,7 @@ class PacPanel extends JPanel {
         height = dimension.height;
 
         // Calculate grid size
-        gridWidth = width / 30;
+        gridWidth = width / 28;
         gridHeight = height / 30;
 
         setupPanel();

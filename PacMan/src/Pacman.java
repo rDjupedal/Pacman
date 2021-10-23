@@ -48,7 +48,7 @@ class Pacman extends JComponent implements Character {
      * När en knapp trycks så ändras även bilden så att pac åker åtå rätt håll.
      */
     public void keyPressed(KeyEvent e) {
-        System.out.println("Key pressed: " + e.getKeyCode());
+
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 lastKey = 'U'; // Up
@@ -71,22 +71,21 @@ class Pacman extends JComponent implements Character {
     }
 
     public void doMove() {
-        //System.out.println("last key: " + lastKey);
 
-        // todo: dont hardcode gridsize! (30x30)
+        // todo: dont hardcode 2*gridsize! (60x60)
         if (lastKey != direction) {
             // Only change direction to up / down when we are horizontally in center of a grid
             if (lastKey == 'U' || lastKey == 'D') {
-                if ( x % 30 <= 1 ) {
+                if ( x % 60 <= 1 ) {
                     direction = lastKey;
-                    System.out.println("changeing direction to " + lastKey + " at pos " + x + ", " + y);
+                    System.out.println("changing direction to " + lastKey + " at pos " + x + ", " + y);
                 };
             }
             // Only change direction to left / right when we are vertically in center of a grid
             if (lastKey == 'L' || lastKey == 'R') {
-                if ( y % 30 <= 1 ) {
+                if ( y % 60 <= 1 ) {
                     direction = lastKey;
-                    System.out.println("changeing direction to " + lastKey + " at pos " + x + ", " + y);
+                    System.out.println("changing direction to " + lastKey + " at pos " + x + ", " + y);
                 };
             }
         }

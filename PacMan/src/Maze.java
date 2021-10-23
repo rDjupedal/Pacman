@@ -14,18 +14,15 @@ import java.util.stream.Stream;
 public class Maze extends JComponent {
     int level;
     PacPanel pacpanel;
-    // byte[] levelBytes;
-    // List<String> levelMap;
-    // List<Byte> levelBytes;
-    int gridWidth, gridHeight;
-    int width, height;
+    final int gridWidth, gridHeight;
+    final int width, height;
     byte[] readLevel;
     BufferedImage wall, space;
     ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
 
     public Maze(PacPanel pacpanel) {
         this.level = pacpanel.level;
-        this.pacpanel = pacpanel;
+        //this.pacpanel = pacpanel;
 
         width = pacpanel.width;
         height = pacpanel.height;
