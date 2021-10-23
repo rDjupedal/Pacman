@@ -29,11 +29,12 @@ public class GameLevel extends JComponent {
 
         width = pacpanel.width;
         height = pacpanel.height;
+        System.out.println(pacpanel.getWidth());
+        System.out.println("size: "+ getWidth() + ", " + getHeight());
 
         // Calculate grid size
         gridWidth = width / 30;
         gridHeight = height / 30;
-
 
         readFromFile();
         createGraphics();

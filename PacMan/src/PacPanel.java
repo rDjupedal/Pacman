@@ -18,11 +18,11 @@ class PacPanel extends JPanel {
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     JLabel debugLabel = new JLabel();
 
-    public PacPanel(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public PacPanel(Dimension dimension) {
+        setPreferredSize(dimension);
+        width = dimension.width;
+        height = dimension.height;
         setupPanel();
-
     }
 
     protected void setupPanel() {
@@ -79,11 +79,12 @@ class PacPanel extends JPanel {
 
         }
 
-        timer.start();
+        //timer.start();
     }
 
     protected void gameUpdate() {
         pacman.doMove();
+
         for (Monster monster : monsters) {
             monster.doMove();
             monster.repaint();

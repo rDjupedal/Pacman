@@ -10,11 +10,11 @@ public class PacmanGame {
         {
             JFrame pFrame = new JFrame();
             pFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            pFrame.setSize(width, height);
             pFrame.setTitle("Pacman 1.0");
-
-            PacPanel pacPanel = new PacPanel(width, height);
+            PacPanel pacPanel = new PacPanel(new Dimension(width, height));
             pFrame.add(pacPanel);
+            pFrame.pack();
+
             pFrame.setVisible(true);
         });
     }
