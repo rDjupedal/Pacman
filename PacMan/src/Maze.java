@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class GameLevel extends JComponent {
+public class Maze extends JComponent {
     int level;
     PacPanel pacpanel;
     // byte[] levelBytes;
@@ -23,7 +23,7 @@ public class GameLevel extends JComponent {
     BufferedImage wall, space;
     ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
 
-    public GameLevel(PacPanel pacpanel) {
+    public Maze(PacPanel pacpanel) {
         this.level = pacpanel.level;
         this.pacpanel = pacpanel;
 
@@ -47,9 +47,7 @@ public class GameLevel extends JComponent {
         System.out.println("opening file " + path.toString() + "...");
 
         try {
-            // levelMap = Files.readAllLines(path);
             readLevel = Files.readAllBytes(path);
-
         } catch (IOException e) {
             System.out.println("error opening file ");
             // e.printStackTrace();

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 class PacPanel extends JPanel {
     Pacman pacman;
     Monster monster;
-    GameLevel gamelevel;
+    Maze maze;
     final int width;
     final int height;
     int level = 1;
@@ -32,9 +32,7 @@ class PacPanel extends JPanel {
 
         Timer timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
-            //repaint();
             gameUpdate();
-
         }));
 
         addKeyListener(new KeyAdapter() {
@@ -44,6 +42,7 @@ class PacPanel extends JPanel {
             }
         });
 
+        // show current x,y at mousepointer
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -56,9 +55,9 @@ class PacPanel extends JPanel {
         add(debugLabel);
 
 
-        gamelevel = new GameLevel(this);
-        add(gamelevel);
-        gamelevel.repaint();
+        maze = new Maze(this);
+        add(maze);
+        //maze.repaint();
 
 
         // todo: Read map, get start coords for all objects and pass them for
@@ -79,7 +78,7 @@ class PacPanel extends JPanel {
 
         }
 
-        //timer.start();
+        timer.start();
     }
 
     protected void gameUpdate() {
@@ -98,7 +97,7 @@ class PacPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         pacman.draw(g);
-        gamelevel.drawMap(g);
+        maze.drawMap(g);
         // todo: update moves for all Characters
         //pacman.doMove();
 
@@ -128,7 +127,7 @@ class PacPanel extends JPanel {
         //g.drawImage(pacman.getImage(), pacman.getX(), pacman.getY(), 30, 30, null);
 
         // todo: is there any way we can avoid calling the method at each tick?
-        //gamelevel.drawMap(g);
+        //maze.drawMap(g);
     }
 
 }
