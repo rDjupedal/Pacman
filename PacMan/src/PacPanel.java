@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -16,6 +14,7 @@ class PacPanel extends JPanel {
     final int width;
     final int height;
     int level = 1;
+    boolean isRunning = false;
     ArrayList<Monster> monsters = new ArrayList<Monster>();
     JLabel debugLabel = new JLabel();
 
@@ -40,6 +39,10 @@ class PacPanel extends JPanel {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                if (!isRunning) {
+                    isRunning = true;
+                    timer.start();
+                }
                 pacman.keyPressed(e);
             }
         });
@@ -52,18 +55,13 @@ class PacPanel extends JPanel {
                 debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY());
                 System.out.println("Mouse coords: " + e.getX() + ", " + e.getY());
                 debugLabel.setVisible(true);
-                debugLabel.setOpaque(true);
+                //debugLabel.setOpaque(true);
             }
         });
 
         add(debugLabel);
-        //add(debugLabel, 100);
 
         maze = new Maze(this);
-        //add(maze);
-        //add(maze, 200);
-        //maze.repaint();
-
 
         // todo: Read map, get start coords for all objects and pass them for
         // construction
@@ -73,18 +71,14 @@ class PacPanel extends JPanel {
         AbstractFactory monsterFactory = FactoryProducer.getFactory(false);
 
         pacman = pacManFactory.getCharacter("pacman", 100, 100);
-        //add(pacman, DRAG_LAYER);
-        //add(pacman);
 
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
         for (int i = 0; i < 4; i++) {
-
             monsters.add(monsterFactory.getCharacter("monster", 300, 300 + i * 30, i));
-
         }
 
-        timer.start();
+        //timer.start();
     }
 
     protected void gameUpdate() {
@@ -97,9 +91,6 @@ class PacPanel extends JPanel {
             monster.doMove();
             repaint(monster.getRectangle());
         }
-
-
-        //repaint();
 
     }
 

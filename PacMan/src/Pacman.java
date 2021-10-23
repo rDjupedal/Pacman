@@ -13,7 +13,7 @@ class Pacman extends JComponent implements Character {
     int x, y;
     final int pacSize = 30;
     final int moveDistance = 2;
-    char lastKey;
+    char lastKey, direction;
 
     ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
@@ -49,37 +49,40 @@ class Pacman extends JComponent implements Character {
     public void keyPressed(KeyEvent e) {
         System.out.println("Key pressed: " + e.getKeyCode());
         switch (e.getKeyCode()) {
-        case 38:
-            lastKey = 'U'; // Up
-            currentImg = pacImages.get(2);
-
-            break;
-        case 40:
-            lastKey = 'D'; // Down
-            currentImg = pacImages.get(3);
-            break;
-        case 37:
-            lastKey = 'L'; // Left
-            currentImg = pacImages.get(0);
-            break;
-        case 39:
-            lastKey = 'R'; // Right
-            currentImg = pacImages.get(1);
-            break;
-        case 27:
-            lastKey = 'E'; // Escape (Stop playing)
-            break;
-        case 80:
-            lastKey = 'P'; // P (Pause)
+            case KeyEvent.VK_UP:
+                lastKey = 'U'; // Up
+                currentImg = pacImages.get(2);
+                break;
+            case KeyEvent.VK_DOWN:
+                lastKey = 'D'; // Down
+                currentImg = pacImages.get(3);
+                break;
+            case KeyEvent.VK_LEFT:
+                lastKey = 'L'; // Left
+                currentImg = pacImages.get(0);
+                break;
+            case KeyEvent.VK_RIGHT:
+                lastKey = 'R'; // Right
+                currentImg = pacImages.get(1);
+                break;
+            case 27:
+                lastKey = 'E'; // Escape (Stop playing)
+                break;
+            case 80:
+                lastKey = 'P'; // P (Pause)
         }
     }
 
     public void doMove() {
         System.out.println("last key: " + lastKey);
+
+        // Check
+
+
+
         switch (lastKey) {
         case 'U':
             y = y - moveDistance;
-
             break;
         case 'D':
             y = y + moveDistance;

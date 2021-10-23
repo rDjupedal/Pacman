@@ -110,24 +110,16 @@ public class Monster extends JComponent implements Character {
         return y;
     }
 
-    /**
-     * Används inte just nu.
-     */
     @Override
     public void draw(Graphics g) {
-        System.out.printf("Drawing %s from Monsterclass %n", name);
-        //g.setColor(color);
-        //g.fillOval(x, y, monsterSize, monsterSize);
+        //System.out.printf("Drawing %s from Monsterclass %n", name);
         g.drawImage(monsterImg, x, y, monsterSize, monsterSize, null);
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        System.out.printf("Drawing monster from monster::paintComponent");
-        g.setColor(color);
-        g.fillOval(x, y, monsterSize, monsterSize);
-    }
-
+    /**
+     * Returns a rectangle around pacman in order to only redraw this part
+     * @return rectangle surronding object
+     */
     public Rectangle getRectangle() {
         return new Rectangle(x-2, y-2, monsterSize+4, monsterSize+4);
     }
