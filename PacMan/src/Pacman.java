@@ -13,7 +13,8 @@ class Pacman extends JComponent implements Character {
     int x, y;
     final int pacSize = 30;
     final int moveDistance = 2;
-    char lastKey, direction;
+    char lastKey;
+    char direction = 'R';
 
     ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
@@ -51,19 +52,15 @@ class Pacman extends JComponent implements Character {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 lastKey = 'U'; // Up
-                currentImg = pacImages.get(2);
                 break;
             case KeyEvent.VK_DOWN:
                 lastKey = 'D'; // Down
-                currentImg = pacImages.get(3);
                 break;
             case KeyEvent.VK_LEFT:
                 lastKey = 'L'; // Left
-                currentImg = pacImages.get(0);
                 break;
             case KeyEvent.VK_RIGHT:
                 lastKey = 'R'; // Right
-                currentImg = pacImages.get(1);
                 break;
             case 27:
                 lastKey = 'E'; // Escape (Stop playing)
@@ -74,44 +71,50 @@ class Pacman extends JComponent implements Character {
     }
 
     public void doMove() {
-        System.out.println("last key: " + lastKey);
+        //System.out.println("last key: " + lastKey);
 
-        // Check
+        // todo: dont hardcode gridsize! (30x30)
+        if (lastKey != direction) {
+            // Only change direction to up / down when we are horizontally in center of a grid
+            if (lastKey == 'U' || lastKey == 'D') {
+                if ( x % 30 <= 1 ) {
+                    direction = lastKey;
+                    System.out.println("changeing direction to " + lastKey + " at pos " + x + ", " + y);
+                };
+            }
+            // Only change direction to left / right when we are vertically in center of a grid
+            if (lastKey == 'L' || lastKey == 'R') {
+                if ( y % 30 <= 1 ) {
+                    direction = lastKey;
+                    System.out.println("changeing direction to " + lastKey + " at pos " + x + ", " + y);
+                };
+            }
+        }
 
-
-
-        switch (lastKey) {
+        //switch (lastKey) {
+        switch (direction) {
         case 'U':
             y = y - moveDistance;
+            currentImg = pacImages.get(2);
             break;
         case 'D':
+            currentImg = pacImages.get(3);
             y = y + moveDistance;
             break;
         case 'L':
+            currentImg = pacImages.get(0);
             x = x - moveDistance;
             break;
         case 'R':
+            currentImg = pacImages.get(1);
             x = x + moveDistance;
-
             break;
         }
         // DEBUG
-        System.out.println("pacman moved to " + x + ", " + y);
-    }
-
-    // Getters för pacmans position.
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+        //System.out.println("pacman moved to " + x + ", " + y);
     }
 
     public void draw(Graphics g) {
-        System.out.println("drawing pacman from drawPacman..");
-        g.setColor(Color.YELLOW);
-        //g.fillOval(x, y, pacSize, pacSize);
         g.drawImage(currentImg, x, y, pacSize, pacSize, null);
     }
 

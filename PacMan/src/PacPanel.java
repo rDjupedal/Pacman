@@ -7,12 +7,11 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 class PacPanel extends JPanel {
-//class PacPanel extends JLayeredPane {
     Pacman pacman;
     Monster monster;
     Maze maze;
-    final int width;
-    final int height;
+    final int width, height;
+    final int gridWidth, gridHeight;
     int level = 1;
     boolean isRunning = false;
     ArrayList<Monster> monsters = new ArrayList<Monster>();
@@ -21,8 +20,14 @@ class PacPanel extends JPanel {
     public PacPanel(Dimension dimension) {
         setPreferredSize(dimension);
         setOpaque(true);
+
         width = dimension.width;
         height = dimension.height;
+
+        // Calculate grid size
+        gridWidth = width / 30;
+        gridHeight = height / 30;
+
         setupPanel();
     }
 
@@ -105,35 +110,6 @@ class PacPanel extends JPanel {
         for (Monster monster : monsters) {
             monster.draw(g);
         }
-
-
-
-        /**
-         * Den här kör monsters::move och hämtar bilden för alla monster.
-         */
-        /*
-        for (Monster monster : monsters) {
-            monster.doMove();
-            g.drawImage(monster.getImage(), monster.getX(), monster.getY(), 30, 30, null);
-        }
-         */
-
-
-
-        // todo: redraw all Characters
-        // pacman.draw(g);
-        // monster.draw(g);
-
-        /**
-         * Den här målar bara en bild på x,y,width,height. Har lagt in att hämta
-         * positionen från klasserna.
-         * 
-         * 
-         */
-
-        //g.drawImage(pacman.getImage(), pacman.getX(), pacman.getY(), 30, 30, null);
-
-        // todo: is there any way we can avoid calling the method at each tick?
 
     }
 
