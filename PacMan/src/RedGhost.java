@@ -14,11 +14,9 @@ public class RedGhost extends Ghost implements LivingCharacter {
 
     int x, y;
     String name;
-    final int monsterSize = 30;
-    final int moveDistance = 1;
-    // char lastKey;
+    final int ghostSize = 30;
+    final int moveDistance = 2;
     String direction = "up";
-    Color color = Color.RED;
 
     ArrayList<BufferedImage> monsterImg = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
@@ -27,6 +25,7 @@ public class RedGhost extends Ghost implements LivingCharacter {
         super();
         this.x = x;
         this.y = y;
+        IchaseBehaviour = new ChaseRandom();
 
         this.name = "Red ghost";
         System.out.println(name + "created at " + x + ", " + y);
@@ -84,7 +83,7 @@ public class RedGhost extends Ghost implements LivingCharacter {
     @Override
     public void doMove() {
 
-        switch (getDirection()) {
+        switch (IchaseBehaviour.chase()) {
         case "left":
             currentImg = monsterImg.get(3);
             x = x - moveDistance;
@@ -102,6 +101,46 @@ public class RedGhost extends Ghost implements LivingCharacter {
             y = y + moveDistance;
         default:
             break;
+        }
+
+        // Pacman Switch
+        switch (IchaseBehaviour.chase()) {
+
+        case "up":
+            if (!Maze2.INSTANCE.getBrick(x, y - moveDistance).isWall()) {
+                y -= moveDistance;
+                currentImg = monsterImg.get(0);
+            } else
+
+                break;
+
+        case "down":
+            if (!Maze2.INSTANCE.getBrick(x, y + ghostSize).isWall()) {
+                y += moveDistance;
+                currentImg = monsterImg.get(1);
+            } else
+
+                break;
+
+        case "left":
+            if (x - moveDistance < 0)
+                x = Maze2.INSTANCE.width - Maze2.INSTANCE.gridWidth;
+            if (!Maze2.INSTANCE.getBrick(x - moveDistance, y).isWall()) {
+                x -= moveDistance;
+                currentImg = monsterImg.get(3);
+            } else
+
+                break;
+
+        case "right":
+            if (x + ghostSize >= Maze2.INSTANCE.width + moveDistance)
+                x = 0;
+            if (!Maze2.INSTANCE.getBrick(x + ghostSize, y).isWall()) {
+                x += moveDistance;
+                currentImg = monsterImg.get(2);
+            } else
+
+                break;
         }
 
         // DEbug test.
@@ -123,7 +162,7 @@ public class RedGhost extends Ghost implements LivingCharacter {
     @Override
     public void draw(Graphics g) {
         // System.out.printf("Drawing %s from Monsterclass %n", name);
-        g.drawImage(currentImg, x, y, monsterSize, monsterSize, null);
+        g.drawImage(currentImg, x, y, ghostSize, ghostSize, null);
     }
 
     /**
@@ -132,7 +171,7 @@ public class RedGhost extends Ghost implements LivingCharacter {
      * @return rectangle surronding object
      */
     public Rectangle getRectangle() {
-        return new Rectangle(x - 2, y - 2, monsterSize + 4, monsterSize + 4);
+        return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
     }
 
 }
