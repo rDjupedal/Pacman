@@ -6,11 +6,9 @@ import java.awt.*;
 //Image imports
 import javax.imageio.*;
 import java.awt.image.*;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
-public class Monster extends JComponent implements Character {
+public class Monster extends JComponent implements LivingCharacter {
 
     int x, y;
     String name;

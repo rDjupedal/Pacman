@@ -44,11 +44,13 @@ class PacPanel extends JPanel {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (!isRunning) {
+                if (isRunning) {
+                    pacman.keyPressed(e);
+                } else {
                     isRunning = true;
+                    pacman.keyPressed(e);
                     timer.start();
                 }
-                pacman.keyPressed(e);
             }
         });
 

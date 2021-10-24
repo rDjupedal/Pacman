@@ -4,17 +4,19 @@ import java.awt.event.KeyEvent;
 //Image imports
 import javax.imageio.*;
 import java.awt.image.*;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 
-class Pacman extends JComponent implements Character {
+class Pacman extends JComponent implements LivingCharacter {
     int x, y;
     final int pacSize = 30;
     final int moveDistance = 2;
     char lastKey;
-    char direction = 'R';
+    char direction = ' ';
+    boolean isMoving = false;
+    Deque<Character> keyBuffer = new LinkedList<>();
 
     ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
@@ -44,53 +46,75 @@ class Pacman extends JComponent implements Character {
         return currentImg;
     }
 
-    /**
-     * När en knapp trycks så ändras även bilden så att pac åker åtå rätt håll.
-     */
     public void keyPressed(KeyEvent e) {
-
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                lastKey = 'U'; // Up
+                keyBuffer.addLast('U');
                 break;
             case KeyEvent.VK_DOWN:
-                lastKey = 'D'; // Down
+                keyBuffer.addLast('D');
                 break;
             case KeyEvent.VK_LEFT:
-                lastKey = 'L'; // Left
+                keyBuffer.addLast('L');
                 break;
             case KeyEvent.VK_RIGHT:
-                lastKey = 'R'; // Right
+                keyBuffer.addLast('R');
                 break;
             case 27:
-                lastKey = 'E'; // Escape (Stop playing)
+                //key = 'E'; // todo Escape (Stop playing)
                 break;
             case 80:
-                lastKey = 'P'; // P (Pause)
+                //key = 'P'; // todo P (Pause)
         }
+
+        if (!isMoving) {
+            isMoving = true;
+            direction = keyBuffer.pollFirst();
+        }
+
+        System.out.println("size of keyBuffer: " + keyBuffer.size());
+        for (char key : keyBuffer) {
+            System.out.print(key + ", ");
+        }
+
     }
 
     public void doMove() {
 
-        // todo: dont hardcode 2*gridsize! (60x60)
-        if (lastKey != direction) {
-            // Only change direction to up / down when we are horizontally in center of a grid
-            if (lastKey == 'U' || lastKey == 'D') {
-                if ( x % 60 <= 1 ) {
-                    direction = lastKey;
-                    System.out.println("changing direction to " + lastKey + " at pos " + x + ", " + y);
-                };
-            }
-            // Only change direction to left / right when we are vertically in center of a grid
-            if (lastKey == 'L' || lastKey == 'R') {
-                if ( y % 60 <= 1 ) {
-                    direction = lastKey;
-                    System.out.println("changing direction to " + lastKey + " at pos " + x + ", " + y);
-                };
+        // todo: dont hardcode gridsize! (30x30)
+
+        for (int i = 0; i < keyBuffer.size(); i++) {
+            if (keyBuffer.peekFirst() == direction) {
+                keyBuffer.removeFirst();
             }
         }
 
-        //switch (lastKey) {
+        if (!keyBuffer.isEmpty()) {
+            if (keyBuffer.peekFirst() != direction) {
+
+                // Only change direction to up / down when we are horizontally in center of a grid
+                if (keyBuffer.peekFirst() == 'U' || keyBuffer.peekFirst() == 'D') {
+                    if (x % 30 <= 1) {
+                        direction = keyBuffer.pollFirst();
+                        System.out.println("changing direction to " + direction + " at pos " + x + ", " + y);
+                    }
+                }
+
+                // Only change direction to left / right when we are vertically in center of a grid
+                else if (keyBuffer.peekFirst() == 'L' || keyBuffer.peekFirst() == 'R') {
+                    if (y % 30 <= 1) {
+                        direction = keyBuffer.pollFirst();
+                        System.out.println("changing direction to " + direction + " at pos " + x + ", " + y);
+                    }
+                }
+            }
+        }
+
+
+        /**
+         * Rita pacman med munnen åt rätt håll samt förflytta honom
+         */
+
         switch (direction) {
         case 'U':
             y = y - moveDistance;

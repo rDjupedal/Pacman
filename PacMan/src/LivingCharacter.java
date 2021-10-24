@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 //Image imports
 import java.awt.image.*;
 
-public interface Character {
+public interface LivingCharacter {
     void draw(Graphics g);
 
     // void paintComponent(Graphics g);
