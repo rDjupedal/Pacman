@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 class PacPanel extends JPanel {
     Pacman pacman;
-    Monster monster;
+    RedGhost monster;
     Maze maze;
     final int width, height;
     final int gridWidth, gridHeight;
     int level = 1;
     boolean isRunning = false;
-    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     JLabel debugLabel = new JLabel();
 
     public PacPanel(Dimension dimension) {
@@ -59,18 +59,18 @@ class PacPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY() +
-                        "   Pacmans position: " + pacman.x + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
-                System.out.println("Mouse coords: " + e.getX() + ", " + e.getY() +
-                        "   Pacmans position: " + pacman.x + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+                debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
+                        + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+                System.out.println("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
+                        + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
                 debugLabel.setVisible(true);
-                //debugLabel.setOpaque(true);
+                // debugLabel.setOpaque(true);
             }
         });
 
         add(debugLabel);
 
-        //maze = new Maze(this);
+        // maze = new Maze(this);
         Maze2.INSTANCE.startMaze(level, new Dimension(width, height), new Dimension(gridWidth, gridHeight));
 
         // todo: Read map, get start coords for all objects and pass them for
@@ -78,25 +78,29 @@ class PacPanel extends JPanel {
 
         // Creation of characters
         AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
-        AbstractFactory monsterFactory = FactoryProducer.getFactory(false);
+        AbstractFactory ghostFactory = FactoryProducer.getFactory(false);
 
         pacman = pacManFactory.getCharacter("pacman", 30, 30);
 
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
-        for (int i = 0; i < 4; i++) {
-            monsters.add(monsterFactory.getCharacter("monster", 300, 300 + i * 30, i));
-        }
 
+        ghosts.add(ghostFactory.getCharacter("monster", 100, 300, "red"));
+        ghosts.add(ghostFactory.getCharacter("monster", 150, 300, "blue"));
+        ghosts.add(ghostFactory.getCharacter("monster", 200, 300, "yellow"));
+        ghosts.add(ghostFactory.getCharacter("monster", 250, 300, "pink"));
+
+        // timer.start();
     }
 
     protected void gameUpdate() {
-        debugLabel.setText("Pacmans position: " + pacman.x + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+        debugLabel.setText(
+                "Pacmans position: " + pacman.x + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
         pacman.doMove();
-        //Only redraws the area surrounding Pacman
+        // Only redraws the area surrounding Pacman
         repaint(pacman.getRectangle());
 
-        for (Monster monster : monsters) {
+        for (Ghost monster : ghosts) {
             monster.doMove();
             repaint(monster.getRectangle());
         }
@@ -107,12 +111,12 @@ class PacPanel extends JPanel {
         super.paintComponent(g);
 
         // Important! The order is important! Draw the maze FIRST!
-        //maze.drawMap(g);
+        // maze.drawMap(g);
         Maze2.INSTANCE.drawMap(g);
 
         // todo: update moves for all Characters
         pacman.draw(g);
-        for (Monster monster : monsters) {
+        for (Ghost monster : ghosts) {
             monster.draw(g);
         }
 

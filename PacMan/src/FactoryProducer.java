@@ -6,7 +6,7 @@ public class FactoryProducer {
             return new pacmanFactory();
 
         } else {
-            return new MonsterFactory();
+            return new GhostFactory();
         }
     }
 

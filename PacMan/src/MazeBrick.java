@@ -14,7 +14,8 @@ public class MazeBrick {
         this.y = y;
         this.width = width;
         this.height = height;
-        System.out.println("brick created at " + x + ", " + y );
+        // DEBUg
+        // System.out.println("brick created at " + x + ", " + y );
     }
 
     protected Rectangle getBrickRectangle() {
@@ -28,6 +29,5 @@ public class MazeBrick {
     protected void draw(Graphics g) {
         g.drawImage(image, x, y, width, height, null);
     }
-
 
 }

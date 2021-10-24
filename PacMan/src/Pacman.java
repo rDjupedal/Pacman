@@ -19,7 +19,9 @@ class Pacman extends JComponent implements LivingCharacter {
     Deque<Character> keyBuffer = new LinkedList<>();
 
     ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
-    BufferedImage currentImg;
+    BufferedImage currentImgBig;
+    BufferedImage currentImgSmall;
+    Boolean animation = true;
 
     public Pacman(int x, int y) {
         this.x = x;
@@ -29,13 +31,19 @@ class Pacman extends JComponent implements LivingCharacter {
         // Load images.
         try {
 
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/pac/pacLeft.png")));
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/pac/pacRight.png")));
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/pac/pacUp.png")));
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/pac/pacDown.png")));
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacLeftBig.png"))); // 0
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacRightBig.png"))); // 1
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacUpBig.png"))); // 2
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacDownBig.png"))); // 3
+
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacLeftSmall.png"))); // 4
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacRightSmall.png"))); // 5
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacUpSmall.png"))); // 6
+            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacDownSmall.png"))); // 7
 
             // Initial pic.
-            currentImg = pacImages.get(0);
+            currentImgBig = pacImages.get(0);
+            currentImgSmall = pacImages.get(4);
 
         } catch (IOException e) {
             System.out.println("Pacmans bild kunde inte hämtas: " + e.getMessage());
@@ -43,7 +51,7 @@ class Pacman extends JComponent implements LivingCharacter {
     }
 
     public BufferedImage getImage() {
-        return currentImg;
+        return currentImgBig;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -52,23 +60,23 @@ class Pacman extends JComponent implements LivingCharacter {
             keyBuffer.clear();
         }
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP:
-                keyBuffer.addLast('U');
-                break;
-            case KeyEvent.VK_DOWN:
-                keyBuffer.addLast('D');
-                break;
-            case KeyEvent.VK_LEFT:
-                keyBuffer.addLast('L');
-                break;
-            case KeyEvent.VK_RIGHT:
-                keyBuffer.addLast('R');
-                break;
-            case 27:
-                //key = 'E'; // todo Escape (Stop playing)
-                break;
-            case 80:
-                //key = 'P'; // todo P (Pause)
+        case KeyEvent.VK_UP:
+            keyBuffer.addLast('U');
+            break;
+        case KeyEvent.VK_DOWN:
+            keyBuffer.addLast('D');
+            break;
+        case KeyEvent.VK_LEFT:
+            keyBuffer.addLast('L');
+            break;
+        case KeyEvent.VK_RIGHT:
+            keyBuffer.addLast('R');
+            break;
+        case 27:
+            // key = 'E'; // todo Escape (Stop playing)
+            break;
+        case 80:
+            // key = 'P'; // todo P (Pause)
         }
 
         if (!isMoving) {
@@ -112,7 +120,6 @@ class Pacman extends JComponent implements LivingCharacter {
             }
         }
 
-
         /**
          * Rita pacman med munnen åt rätt håll samt förflytta honom
          */
@@ -120,46 +127,61 @@ class Pacman extends JComponent implements LivingCharacter {
         switch (direction) {
 
         case 'U':
-            if (!Maze2.INSTANCE.getBrick(x, y - moveDistance).isWall() ) {
+            if (!Maze2.INSTANCE.getBrick(x, y - moveDistance).isWall()) {
                 y -= moveDistance;
-            } else isMoving = false;
-            currentImg = pacImages.get(2);
+                currentImgBig = pacImages.get(2);
+                currentImgSmall = pacImages.get(6);
+            } else
+                isMoving = false;
+
             break;
 
         case 'D':
-            if (!Maze2.INSTANCE.getBrick(x, y + pacSize).isWall() ) {
+            if (!Maze2.INSTANCE.getBrick(x, y + pacSize).isWall()) {
                 y += moveDistance;
-            } else isMoving = false;
-            currentImg = pacImages.get(3);
+                currentImgBig = pacImages.get(3);
+                currentImgSmall = pacImages.get(7);
+            } else
+                isMoving = false;
+
             break;
 
         case 'L':
-            if (x - moveDistance < 0) x = Maze2.INSTANCE.width - Maze2.INSTANCE.gridWidth;
-            if (!Maze2.INSTANCE.getBrick(x - moveDistance,y).isWall() ) {
+            if (x - moveDistance < 0)
+                x = Maze2.INSTANCE.width - Maze2.INSTANCE.gridWidth;
+            if (!Maze2.INSTANCE.getBrick(x - moveDistance, y).isWall()) {
                 x -= moveDistance;
-            } else isMoving = false;
-            currentImg = pacImages.get(0);
+                currentImgBig = pacImages.get(0);
+                currentImgSmall = pacImages.get(4);
+            } else
+                isMoving = false;
+
             break;
 
         case 'R':
-            if (x + pacSize >= Maze2.INSTANCE.width + moveDistance) x = 0;
-            if (!Maze2.INSTANCE.getBrick(x + pacSize , y).isWall() ) {
+            if (x + pacSize >= Maze2.INSTANCE.width + moveDistance)
+                x = 0;
+            if (!Maze2.INSTANCE.getBrick(x + pacSize, y).isWall()) {
                 x += moveDistance;
-            } else isMoving = false;
-            currentImg = pacImages.get(1);
+                currentImgBig = pacImages.get(1);
+                currentImgSmall = pacImages.get(5);
+            } else
+                isMoving = false;
+
             break;
         }
 
         // DEBUG
-        //System.out.println("pacman moved to " + x + ", " + y);
+        // System.out.println("pacman moved to " + x + ", " + y);
     }
 
     public void draw(Graphics g) {
-        g.drawImage(currentImg, x, y, pacSize, pacSize, null);
+        animation = !animation;
+        g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, pacSize, pacSize, null);
     }
 
     public Rectangle getRectangle() {
-        return new Rectangle(x-2, y-2, pacSize+4, pacSize+4);
+        return new Rectangle(x - 2, y - 2, pacSize + 4, pacSize + 4);
     }
 
 }

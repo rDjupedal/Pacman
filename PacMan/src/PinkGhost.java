@@ -6,40 +6,48 @@ import java.awt.*;
 //Image imports
 import javax.imageio.*;
 import java.awt.image.*;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 
-public class Monster extends JComponent implements LivingCharacter {
+public class PinkGhost extends Ghost implements Character {
 
     int x, y;
     String name;
     final int monsterSize = 30;
     final int moveDistance = 1;
-    //char lastKey;
+    // char lastKey;
     String direction = "up";
     Color color = Color.RED;
 
-    BufferedImage monsterImg;
+    ArrayList<BufferedImage> monsterImg = new ArrayList<BufferedImage>();
+    BufferedImage currentImg;
 
-    public Monster(int x, int y, int number) {
+    public PinkGhost(int x, int y) {
+        super();
         this.x = x;
         this.y = y;
-        this.name = "Monster " + number;
-        System.out.printf("Creating %s at %d, %d", name, x, y);
+        this.name = "Pink Ghost";
+        System.out.println(name + "created at " + x + ", " + y);
 
         // Laddar deras bilder beroende på sekvens. (Ska man göra olika klasser för alla
         // spöken istället? Färgkodat?)
         try {
 
-            String imgPath = String.format("resources/ghost/%d.png", number);
-            monsterImg = ImageIO.read(this.getClass().getResource(imgPath));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkUp.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkDown.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkRight.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkLeft.png")));
         } catch (IOException e) {
             System.out.println("Spökenas bild kunde inte hämtas: " + e.getMessage());
         }
+        currentImg = monsterImg.get(0);
 
     }
 
     public BufferedImage getImage() {
-        return monsterImg;
+        return monsterImg.get(0);
     }
 
     /**
@@ -78,15 +86,19 @@ public class Monster extends JComponent implements LivingCharacter {
 
         switch (getDirection()) {
         case "left":
+            currentImg = monsterImg.get(3);
             x = x - moveDistance;
             break;
         case "right":
+            currentImg = monsterImg.get(2);
             x = x + moveDistance;
             break;
         case "up":
+            currentImg = monsterImg.get(0);
             y = y - moveDistance;
             break;
         case "down":
+            currentImg = monsterImg.get(1);
             y = y + moveDistance;
         default:
             break;
@@ -94,7 +106,7 @@ public class Monster extends JComponent implements LivingCharacter {
 
         // DEbug test.
         String debug = String.format("%s is at %d, %d", name, x, y);
-        //System.out.println(debug);
+        // System.out.println(debug);
     }
 
     /**
@@ -110,16 +122,17 @@ public class Monster extends JComponent implements LivingCharacter {
 
     @Override
     public void draw(Graphics g) {
-        //System.out.printf("Drawing %s from Monsterclass %n", name);
-        g.drawImage(monsterImg, x, y, monsterSize, monsterSize, null);
+        // System.out.printf("Drawing %s from Monsterclass %n", name);
+        g.drawImage(currentImg, x, y, monsterSize, monsterSize, null);
     }
 
     /**
      * Returns a rectangle around pacman in order to only redraw this part
+     * 
      * @return rectangle surronding object
      */
     public Rectangle getRectangle() {
-        return new Rectangle(x-2, y-2, monsterSize+4, monsterSize+4);
+        return new Rectangle(x - 2, y - 2, monsterSize + 4, monsterSize + 4);
     }
 
 }
