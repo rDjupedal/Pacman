@@ -8,23 +8,47 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class Maze extends JComponent {
+
+public final class Maze extends JComponent {
+    protected static final Maze INSTANCE = new Maze();
     int level;
-    final int gridWidth, gridHeight;
-    final int width, height;
+    int gridWidth, gridHeight;
+    int width, height;
     byte[] readLevel;
     BufferedImage wall, space;
     ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
 
-    public Maze(PacPanel pacpanel) {
-        level = pacpanel.level;
-        width = pacpanel.width;
-        height = pacpanel.height;
-        gridWidth = pacpanel.gridWidth;
-        gridHeight = pacpanel.gridHeight;
+    /**
+     * Empty private constructor, Singleton
+     */
+    private Maze() {}
+
+    protected ArrayList<MazeBrick> getNeighbourBricks(Dimension position) {
+        ArrayList<MazeBrick> neighbours = new ArrayList<MazeBrick>();
+        return neighbours;
+    }
+
+    protected MazeBrick getBrick(int x, int y) {
+        // Find which brick is at current position
+
+        for (MazeBrick brick : mazeBricks) {
+            if ( brick.getBrickRectangle().contains(x, y) ) {
+                //System.out.println("Found a brick a position " + brick.x + ", " + brick.y);
+                return brick;
+            }
+        }
+
+        System.out.println("Couldnt find a brick at position " + x + ", " + y);
+        return null;
+    }
+
+    protected void startMaze(int level, Dimension paneSize, Dimension gridSize) {
+        this.level = level;
+        this.width = paneSize.width;
+        this.height = paneSize.height;
+        this.gridWidth = gridSize.width;
+        this.gridHeight = gridSize.height;
 
         readFromFile();
         createGraphics();
@@ -76,11 +100,11 @@ public class Maze extends JComponent {
                 switch(readLevel[i]) {
                     //todo: use a factory instead and pass the byte as argument
                     case 87: //wall
-                        //tempMazeBrick = new MazeBrick(wall, curX, curY, gridWidth, gridHeight);
-                         break;
+                        tempMazeBrick = new MazeBrick("wall", wall, curX, curY, gridWidth, gridHeight);
+                        break;
 
                     case 83: // space
-                        //tempMazeBrick = new MazeBrick(space, curX, curY, gridWidth, gridHeight);
+                        tempMazeBrick = new MazeBrick("space", space, curX, curY, gridWidth, gridHeight);
                         break;
 
                     default:
@@ -104,24 +128,18 @@ public class Maze extends JComponent {
 
     protected void drawMap(Graphics g) {
         for (MazeBrick brick : mazeBricks) { brick.draw(g); }
+        drawDebugGrid(g);
 
-/*        // Iterate over map level array
-        for (int i = 0; i < readLevel.length; i++) {
-            int spriteX = (i % 30) * (int) gridWidth;
-            int spriteY = (i / 30) * (int) gridHeight;
-            System.out.print(readLevel[i] + " ");
+    }
 
-            // if (readLevel[i] == 87) g.drawImage(wall, spriteX, spriteY, this);
-            if (readLevel[i] == 87)
-                g.drawImage(wall.getScaledInstance(gridWidth, gridHeight, 2), spriteX, spriteY, this);
-
-            // if (readLevel[i] == 83) g.drawImage(space, spriteX, spriteY, this);
-            if (readLevel[i] == 83)
-                g.drawImage(space.getScaledInstance(gridWidth, gridHeight, 2), spriteX, spriteY, this);
+    private void drawDebugGrid(Graphics g) {
+        //debug grid
+        for (int x = 0; x <= width; x += gridWidth) {
+            g.drawLine(x,0,x, height);
         }
-
- */
-
+        for (int y = 0; y <= height; y += gridHeight) {
+            g.drawLine(0,y, width, y);
+        }
     }
 
 }

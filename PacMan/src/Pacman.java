@@ -96,7 +96,7 @@ class Pacman extends JComponent implements LivingCharacter {
 
                 // Only change direction to up / down when pacman is inside a vertical grid
                 if (keyBuffer.peekFirst() == 'U' || keyBuffer.peekFirst() == 'D') {
-                    if (x % Maze2.INSTANCE.gridWidth <= 1) {
+                    if (x % Maze.INSTANCE.gridWidth <= 1) {
                         direction = keyBuffer.pollFirst();
                         System.out.println("changing direction to " + direction + " at pos " + x + ", " + y);
                     }
@@ -104,7 +104,7 @@ class Pacman extends JComponent implements LivingCharacter {
 
                 // Only change direction to left / right when pacman is inside a horizontal grid
                 else if (keyBuffer.peekFirst() == 'L' || keyBuffer.peekFirst() == 'R') {
-                    if (y % Maze2.INSTANCE.gridHeight <= 1) {
+                    if (y % Maze.INSTANCE.gridHeight <= 1) {
                         direction = keyBuffer.pollFirst();
                         System.out.println("changing direction to " + direction + " at pos " + x + ", " + y);
                     }
@@ -120,30 +120,30 @@ class Pacman extends JComponent implements LivingCharacter {
         switch (direction) {
 
         case 'U':
-            if (!Maze2.INSTANCE.getBrick(x, y - moveDistance).isWall() ) {
+            if (!Maze.INSTANCE.getBrick(x, y - moveDistance).isWall() ) {
                 y -= moveDistance;
             } else isMoving = false;
             currentImg = pacImages.get(2);
             break;
 
         case 'D':
-            if (!Maze2.INSTANCE.getBrick(x, y + pacSize).isWall() ) {
+            if (!Maze.INSTANCE.getBrick(x, y + pacSize).isWall() ) {
                 y += moveDistance;
             } else isMoving = false;
             currentImg = pacImages.get(3);
             break;
 
         case 'L':
-            if (x - moveDistance < 0) x = Maze2.INSTANCE.width - Maze2.INSTANCE.gridWidth;
-            if (!Maze2.INSTANCE.getBrick(x - moveDistance,y).isWall() ) {
+            if (x - moveDistance < 0) x = Maze.INSTANCE.width - Maze.INSTANCE.gridWidth;
+            if (!Maze.INSTANCE.getBrick(x - moveDistance,y).isWall() ) {
                 x -= moveDistance;
             } else isMoving = false;
             currentImg = pacImages.get(0);
             break;
 
         case 'R':
-            if (x + pacSize >= Maze2.INSTANCE.width + moveDistance) x = 0;
-            if (!Maze2.INSTANCE.getBrick(x + pacSize , y).isWall() ) {
+            if (x + pacSize >= Maze.INSTANCE.width + moveDistance) x = 0;
+            if (!Maze.INSTANCE.getBrick(x + pacSize , y).isWall() ) {
                 x += moveDistance;
             } else isMoving = false;
             currentImg = pacImages.get(1);
