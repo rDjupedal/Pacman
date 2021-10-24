@@ -85,10 +85,10 @@ class PacPanel extends JPanel {
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
 
-        ghosts.add(ghostFactory.getCharacter("monster", 340, 400, "red"));
-        ghosts.add(ghostFactory.getCharacter("monster", 340, 465, "blue"));
-        ghosts.add(ghostFactory.getCharacter("monster", 490, 405, "yellow"));
-        ghosts.add(ghostFactory.getCharacter("monster", 490, 470, "pink"));
+        ghosts.add(ghostFactory.getCharacter("monster", 330, 390, "red"));
+        // ghosts.add(ghostFactory.getCharacter("monster", 340, 465, "blue"));
+        // ghosts.add(ghostFactory.getCharacter("monster", 490, 405, "yellow"));
+        // ghosts.add(ghostFactory.getCharacter("monster", 490, 470, "pink"));
 
         // timer.start();
     }
@@ -102,6 +102,7 @@ class PacPanel extends JPanel {
 
         for (Ghost monster : ghosts) {
             monster.doMove();
+            monster.IchaseBehaviour.chase();
             repaint(monster.getRectangle());
         }
 
