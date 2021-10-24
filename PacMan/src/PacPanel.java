@@ -68,7 +68,8 @@ class PacPanel extends JPanel {
 
         add(debugLabel);
 
-        maze = new Maze(this);
+        //maze = new Maze(this);
+        Maze2.INSTANCE.startMaze(level, new Dimension(width, height), new Dimension(gridWidth, gridHeight));
 
         // todo: Read map, get start coords for all objects and pass them for
         // construction
@@ -85,7 +86,6 @@ class PacPanel extends JPanel {
             monsters.add(monsterFactory.getCharacter("monster", 300, 300 + i * 30, i));
         }
 
-        //timer.start();
     }
 
     protected void gameUpdate() {
@@ -105,7 +105,8 @@ class PacPanel extends JPanel {
         super.paintComponent(g);
 
         // Important! The order is important! Draw the maze FIRST!
-        maze.drawMap(g);
+        //maze.drawMap(g);
+        Maze2.INSTANCE.drawMap(g);
 
         // todo: update moves for all Characters
         pacman.draw(g);
