@@ -47,6 +47,10 @@ class Pacman extends JComponent implements LivingCharacter {
     }
 
     public void keyPressed(KeyEvent e) {
+
+        if (!isMoving) {
+            keyBuffer.clear();
+        }
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 keyBuffer.addLast('U');
@@ -114,31 +118,34 @@ class Pacman extends JComponent implements LivingCharacter {
          */
 
         switch (direction) {
-        case 'U':
 
+        case 'U':
             if (!Maze2.INSTANCE.getBrick(x, y - moveDistance).isWall() ) {
                 y -= moveDistance;
-            }
+            } else isMoving = false;
             currentImg = pacImages.get(2);
             break;
+
         case 'D':
-            if (!Maze2.INSTANCE.getBrick(x, y + Maze2.INSTANCE.gridHeight + moveDistance).isWall() ) {
+            if (!Maze2.INSTANCE.getBrick(x, y + pacSize).isWall() ) {
                 y += moveDistance;
-            }
+            } else isMoving = false;
             currentImg = pacImages.get(3);
             break;
+
         case 'L':
             if (x - moveDistance < 0) x = Maze2.INSTANCE.width - Maze2.INSTANCE.gridWidth;
             if (!Maze2.INSTANCE.getBrick(x - moveDistance,y).isWall() ) {
                 x -= moveDistance;
-            }
+            } else isMoving = false;
             currentImg = pacImages.get(0);
             break;
+
         case 'R':
             if (x > Maze2.INSTANCE.width + moveDistance) x = 0;
-            if (!Maze2.INSTANCE.getBrick(x + Maze2.INSTANCE.gridWidth + moveDistance,y).isWall() ) {
+            if (!Maze2.INSTANCE.getBrick(x + pacSize , y).isWall() ) {
                 x += moveDistance;
-            }
+            } else isMoving = false;
             currentImg = pacImages.get(1);
             break;
         }
