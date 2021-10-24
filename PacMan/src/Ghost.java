@@ -7,9 +7,7 @@ public abstract class Ghost extends JComponent {
     int x, y;
     int number;
 
-    public Ghost(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Ghost() {
 
     }
 

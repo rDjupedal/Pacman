@@ -25,7 +25,10 @@ public class BlueGhost extends Ghost implements Character {
     BufferedImage currentImg;
 
     public BlueGhost(int x, int y) {
-        super(x, y);
+        super();
+        this.x = x;
+        this.y = y;
+
         this.name = "Blue Ghost";
         System.out.println(name + "created at " + x + ", " + y);
 

@@ -25,7 +25,10 @@ public class RedGhost extends Ghost implements Character {
     BufferedImage currentImg;
 
     public RedGhost(int x, int y) {
-        super(x, y);
+        super();
+        this.x = x;
+        this.y = y;
+
         this.name = "Red ghost";
         System.out.println(name + "created at " + x + ", " + y);
 
