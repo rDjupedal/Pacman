@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class PinkGhost extends Ghost implements Character {
+public class PinkGhost extends Ghost implements LivingCharacter {
 
     int x, y;
     String name;
