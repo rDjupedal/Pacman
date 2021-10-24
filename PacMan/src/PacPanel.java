@@ -59,8 +59,10 @@ class PacPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY());
-                System.out.println("Mouse coords: " + e.getX() + ", " + e.getY());
+                debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY() +
+                        "   Pacmans position: " + pacman.x + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+                System.out.println("Mouse coords: " + e.getX() + ", " + e.getY() +
+                        "   Pacmans position: " + pacman.x + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
                 debugLabel.setVisible(true);
                 //debugLabel.setOpaque(true);
             }
@@ -78,7 +80,7 @@ class PacPanel extends JPanel {
         AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
         AbstractFactory monsterFactory = FactoryProducer.getFactory(false);
 
-        pacman = pacManFactory.getCharacter("pacman", 100, 100);
+        pacman = pacManFactory.getCharacter("pacman", 30, 30);
 
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
@@ -89,7 +91,7 @@ class PacPanel extends JPanel {
     }
 
     protected void gameUpdate() {
-
+        debugLabel.setText("Pacmans position: " + pacman.x + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
         pacman.doMove();
         //Only redraws the area surrounding Pacman
         repaint(pacman.getRectangle());

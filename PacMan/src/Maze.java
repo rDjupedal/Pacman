@@ -76,11 +76,11 @@ public class Maze extends JComponent {
                 switch(readLevel[i]) {
                     //todo: use a factory instead and pass the byte as argument
                     case 87: //wall
-                        tempMazeBrick = new MazeBrick(wall, curX, curY, gridWidth, gridHeight);
+                        //tempMazeBrick = new MazeBrick(wall, curX, curY, gridWidth, gridHeight);
                          break;
 
                     case 83: // space
-                        tempMazeBrick = new MazeBrick(space, curX, curY, gridWidth, gridHeight);
+                        //tempMazeBrick = new MazeBrick(space, curX, curY, gridWidth, gridHeight);
                         break;
 
                     default:
