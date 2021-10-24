@@ -85,10 +85,10 @@ class PacPanel extends JPanel {
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
 
-        ghosts.add(ghostFactory.getCharacter("monster", 100, 300, "red"));
-        ghosts.add(ghostFactory.getCharacter("monster", 150, 300, "blue"));
-        ghosts.add(ghostFactory.getCharacter("monster", 200, 300, "yellow"));
-        ghosts.add(ghostFactory.getCharacter("monster", 250, 300, "pink"));
+        ghosts.add(ghostFactory.getCharacter("monster", 340, 400, "red"));
+        ghosts.add(ghostFactory.getCharacter("monster", 340, 465, "blue"));
+        ghosts.add(ghostFactory.getCharacter("monster", 490, 405, "yellow"));
+        ghosts.add(ghostFactory.getCharacter("monster", 490, 470, "pink"));
 
         // timer.start();
     }
