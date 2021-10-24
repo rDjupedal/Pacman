@@ -7,9 +7,9 @@ public class MonsterFactory extends AbstractFactory {
     }
 
     @Override
-    Monster getCharacter(String type, int x, int y, int number) {
+    RedGhost getCharacter(String type, int x, int y, int number) {
         if (type.equalsIgnoreCase("MONSTER")) {
-            return new Monster(x, y, number);
+            return new RedGhost(x, y, number);
 
         }
         return null;

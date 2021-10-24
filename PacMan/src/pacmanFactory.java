@@ -8,7 +8,7 @@ public class pacmanFactory extends AbstractFactory {
     }
 
     @Override
-    Monster getCharacter(String type, int x, int y, int number) {
+    RedGhost getCharacter(String type, int x, int y, int number) {
         // TODO Auto-generated method stub
         return null;
     }

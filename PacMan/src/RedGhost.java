@@ -9,20 +9,22 @@ import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class Monster extends JComponent implements Character {
+public class RedGhost extends JComponent implements Character {
 
     int x, y;
     String name;
     final int monsterSize = 30;
     final int moveDistance = 1;
-    //char lastKey;
+    // char lastKey;
     String direction = "up";
     Color color = Color.RED;
 
-    BufferedImage monsterImg;
+    ArrayList<BufferedImage> monsterImg = new ArrayList<BufferedImage>();
+    BufferedImage currentImg;
 
-    public Monster(int x, int y, int number) {
+    public RedGhost(int x, int y, int number) {
         this.x = x;
         this.y = y;
         this.name = "Monster " + number;
@@ -32,16 +34,19 @@ public class Monster extends JComponent implements Character {
         // spöken istället? Färgkodat?)
         try {
 
-            String imgPath = String.format("resources/ghost/%d.png", number);
-            monsterImg = ImageIO.read(this.getClass().getResource(imgPath));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/redGhost/redUp.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/redGhost/redDown.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/redGhost/redRight.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/redGhost/redLeft.png")));
         } catch (IOException e) {
             System.out.println("Spökenas bild kunde inte hämtas: " + e.getMessage());
         }
+        currentImg = monsterImg.get(0);
 
     }
 
     public BufferedImage getImage() {
-        return monsterImg;
+        return monsterImg.get(0);
     }
 
     /**
@@ -80,15 +85,19 @@ public class Monster extends JComponent implements Character {
 
         switch (getDirection()) {
         case "left":
+            currentImg = monsterImg.get(3);
             x = x - moveDistance;
             break;
         case "right":
+            currentImg = monsterImg.get(2);
             x = x + moveDistance;
             break;
         case "up":
+            currentImg = monsterImg.get(0);
             y = y - moveDistance;
             break;
         case "down":
+            currentImg = monsterImg.get(1);
             y = y + moveDistance;
         default:
             break;
@@ -96,7 +105,7 @@ public class Monster extends JComponent implements Character {
 
         // DEbug test.
         String debug = String.format("%s is at %d, %d", name, x, y);
-        //System.out.println(debug);
+        // System.out.println(debug);
     }
 
     /**
@@ -112,16 +121,17 @@ public class Monster extends JComponent implements Character {
 
     @Override
     public void draw(Graphics g) {
-        //System.out.printf("Drawing %s from Monsterclass %n", name);
-        g.drawImage(monsterImg, x, y, monsterSize, monsterSize, null);
+        // System.out.printf("Drawing %s from Monsterclass %n", name);
+        g.drawImage(currentImg, x, y, monsterSize, monsterSize, null);
     }
 
     /**
      * Returns a rectangle around pacman in order to only redraw this part
+     * 
      * @return rectangle surronding object
      */
     public Rectangle getRectangle() {
-        return new Rectangle(x-2, y-2, monsterSize+4, monsterSize+4);
+        return new Rectangle(x - 2, y - 2, monsterSize + 4, monsterSize + 4);
     }
 
 }

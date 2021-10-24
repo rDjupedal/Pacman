@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 class PacPanel extends JPanel {
     Pacman pacman;
-    Monster monster;
+    RedGhost monster;
     Maze maze;
     final int width, height;
     final int gridWidth, gridHeight;
     int level = 1;
     boolean isRunning = false;
-    ArrayList<Monster> monsters = new ArrayList<Monster>();
+    ArrayList<RedGhost> monsters = new ArrayList<RedGhost>();
     JLabel debugLabel = new JLabel();
 
     public PacPanel(Dimension dimension) {
@@ -60,7 +60,7 @@ class PacPanel extends JPanel {
                 debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY());
                 System.out.println("Mouse coords: " + e.getX() + ", " + e.getY());
                 debugLabel.setVisible(true);
-                //debugLabel.setOpaque(true);
+                // debugLabel.setOpaque(true);
             }
         });
 
@@ -83,16 +83,16 @@ class PacPanel extends JPanel {
             monsters.add(monsterFactory.getCharacter("monster", 300, 300 + i * 30, i));
         }
 
-        //timer.start();
+        // timer.start();
     }
 
     protected void gameUpdate() {
 
         pacman.doMove();
-        //Only redraws the area surrounding Pacman
+        // Only redraws the area surrounding Pacman
         repaint(pacman.getRectangle());
 
-        for (Monster monster : monsters) {
+        for (RedGhost monster : monsters) {
             monster.doMove();
             repaint(monster.getRectangle());
         }
@@ -107,7 +107,7 @@ class PacPanel extends JPanel {
 
         // todo: update moves for all Characters
         pacman.draw(g);
-        for (Monster monster : monsters) {
+        for (RedGhost monster : monsters) {
             monster.draw(g);
         }
 
