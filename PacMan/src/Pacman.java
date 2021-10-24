@@ -176,7 +176,9 @@ class Pacman extends JComponent implements LivingCharacter {
     }
 
     public void draw(Graphics g) {
-        animation = !animation;
+        if (isMoving) {
+            animation = !animation;
+        }
         g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, pacSize, pacSize, null);
     }
 
