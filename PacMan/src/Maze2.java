@@ -24,7 +24,8 @@ public final class Maze2 extends JComponent {
     /**
      * Empty private constructor, Singleton
      */
-    private Maze2() {}
+    private Maze2() {
+    }
 
     protected ArrayList<MazeBrick> getNeighbourBricks(Dimension position) {
         ArrayList<MazeBrick> neighbours = new ArrayList<MazeBrick>();
@@ -35,8 +36,8 @@ public final class Maze2 extends JComponent {
         // Find which brick is at current position
 
         for (MazeBrick brick : mazeBricks) {
-            if ( brick.getBrickRectangle().contains(x, y) ) {
-                //System.out.println("Found a brick a position " + brick.x + ", " + brick.y);
+            if (brick.getBrickRectangle().contains(x, y)) {
+                // System.out.println("Found a brick a position " + brick.x + ", " + brick.y);
                 return brick;
             }
         }
@@ -95,28 +96,28 @@ public final class Maze2 extends JComponent {
         int curY = 0;
 
         for (int i = 0; i < readLevel.length; i++) {
-            System.out.println(i);
+            // System.out.println(i);
             MazeBrick tempMazeBrick = null;
 
-            if (readLevel[i] != 10) {   //ignore new line characters
-                switch(readLevel[i]) {
-                    //todo: use a factory instead and pass the byte as argument
-                    case 87: //wall
-                        tempMazeBrick = new MazeBrick("wall", wall, curX, curY, gridWidth, gridHeight);
-                        break;
+            if (readLevel[i] != 10) { // ignore new line characters
+                switch (readLevel[i]) {
+                // todo: use a factory instead and pass the byte as argument
+                case 87: // wall
+                    tempMazeBrick = new MazeBrick("wall", wall, curX, curY, gridWidth, gridHeight);
+                    break;
 
-                    case 83: // space
-                        tempMazeBrick = new MazeBrick("space", space, curX, curY, gridWidth, gridHeight);
-                        break;
+                case 83: // space
+                    tempMazeBrick = new MazeBrick("space", space, curX, curY, gridWidth, gridHeight);
+                    break;
 
-                    default:
-                        System.out.println(readLevel[i]);
-                        break;
+                default:
+                    System.out.println(readLevel[i]);
+                    break;
                 }
 
                 mazeBricks.add(tempMazeBrick);
 
-                if ( curX + gridWidth >= width ) {
+                if (curX + gridWidth >= width) {
                     curY += gridHeight;
                     curX = 0;
                 } else {
@@ -127,20 +128,21 @@ public final class Maze2 extends JComponent {
         }
     }
 
-
     protected void drawMap(Graphics g) {
-        for (MazeBrick brick : mazeBricks) { brick.draw(g); }
+        for (MazeBrick brick : mazeBricks) {
+            brick.draw(g);
+        }
         drawDebugGrid(g);
 
     }
 
     private void drawDebugGrid(Graphics g) {
-        //debug grid
+        // debug grid
         for (int x = 0; x <= width; x += gridWidth) {
-            g.drawLine(x,0,x, height);
+            g.drawLine(x, 0, x, height);
         }
         for (int y = 0; y <= height; y += gridHeight) {
-            g.drawLine(0,y, width, y);
+            g.drawLine(0, y, width, y);
         }
     }
 
