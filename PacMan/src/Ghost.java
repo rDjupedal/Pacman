@@ -6,13 +6,14 @@ import javax.swing.JComponent;
 public abstract class Ghost extends JComponent {
     int x, y;
     int number;
+    IChaseBehaviour IchaseBehaviour;
 
     public Ghost() {
 
     }
 
     public void doMove() {
-        System.out.println("Does a move from Ghost class");
+        IchaseBehaviour.chase();
     }
 
     public abstract Rectangle getRectangle();
