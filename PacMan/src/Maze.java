@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 public class Maze extends JComponent {
     int level;
-    PacPanel pacpanel;
     final int gridWidth, gridHeight;
     final int width, height;
     byte[] readLevel;
@@ -21,13 +20,11 @@ public class Maze extends JComponent {
     ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
 
     public Maze(PacPanel pacpanel) {
-        this.level = pacpanel.level;
-        //this.pacpanel = pacpanel;
-
+        level = pacpanel.level;
         width = pacpanel.width;
         height = pacpanel.height;
         gridWidth = pacpanel.gridWidth;
-        gridHeight = pacpanel.gridWidth;
+        gridHeight = pacpanel.gridHeight;
 
         readFromFile();
         createGraphics();
@@ -75,7 +72,7 @@ public class Maze extends JComponent {
             System.out.println(i);
             MazeBrick tempMazeBrick = null;
 
-            if (readLevel[i] != 10) {   //not new line
+            if (readLevel[i] != 10) {   //ignore new line characters
                 switch(readLevel[i]) {
                     //todo: use a factory instead and pass the byte as argument
                     case 87: //wall
