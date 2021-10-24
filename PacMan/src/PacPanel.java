@@ -14,7 +14,7 @@ class PacPanel extends JPanel {
     final int gridWidth, gridHeight;
     int level = 1;
     boolean isRunning = false;
-    ArrayList<RedGhost> monsters = new ArrayList<RedGhost>();
+    ArrayList<Ghost> monsters = new ArrayList<Ghost>();
     JLabel debugLabel = new JLabel();
 
     public PacPanel(Dimension dimension) {
@@ -92,7 +92,7 @@ class PacPanel extends JPanel {
         // Only redraws the area surrounding Pacman
         repaint(pacman.getRectangle());
 
-        for (RedGhost monster : monsters) {
+        for (Ghost monster : monsters) {
             monster.doMove();
             repaint(monster.getRectangle());
         }
@@ -107,7 +107,7 @@ class PacPanel extends JPanel {
 
         // todo: update moves for all Characters
         pacman.draw(g);
-        for (RedGhost monster : monsters) {
+        for (Ghost monster : monsters) {
             monster.draw(g);
         }
 

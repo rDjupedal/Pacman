@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class RedGhost extends Ghost implements Character {
+public class BlueGhost extends Ghost implements Character {
 
     int x, y;
     String name;
@@ -24,7 +24,7 @@ public class RedGhost extends Ghost implements Character {
     ArrayList<BufferedImage> monsterImg = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
 
-    public RedGhost(int x, int y, int number) {
+    public BlueGhost(int x, int y, int number) {
         super(x, y, number);
         System.out.printf("Creating %s at %d, %d", name, x, y);
 
@@ -32,10 +32,10 @@ public class RedGhost extends Ghost implements Character {
         // spöken istället? Färgkodat?)
         try {
 
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/redGhost/redUp.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/redGhost/redDown.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/redGhost/redRight.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/redGhost/redLeft.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/blueGhost/blueUp.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/blueGhost/blueDown.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/blueGhost/blueRight.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/blueGhost/blueLeft.png")));
         } catch (IOException e) {
             System.out.println("Spökenas bild kunde inte hämtas: " + e.getMessage());
         }
