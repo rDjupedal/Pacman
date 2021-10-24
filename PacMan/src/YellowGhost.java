@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class BlueGhost extends Ghost implements Character {
+public class YellowGhost extends Ghost implements Character {
 
     int x, y;
     String name;
@@ -24,19 +24,19 @@ public class BlueGhost extends Ghost implements Character {
     ArrayList<BufferedImage> monsterImg = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
 
-    public BlueGhost(int x, int y) {
+    public YellowGhost(int x, int y) {
         super(x, y);
-        this.name = "Blue Ghost";
+        this.name = "Yellow Ghost";
         System.out.println(name + "created at " + x + ", " + y);
 
         // Laddar deras bilder beroende på sekvens. (Ska man göra olika klasser för alla
         // spöken istället? Färgkodat?)
         try {
 
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/blueGhost/blueUp.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/blueGhost/blueDown.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/blueGhost/blueRight.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/blueGhost/blueLeft.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowUp.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowDown.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowRight.png")));
+            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowLeft.png")));
         } catch (IOException e) {
             System.out.println("Spökenas bild kunde inte hämtas: " + e.getMessage());
         }
@@ -129,7 +129,6 @@ public class BlueGhost extends Ghost implements Character {
      * 
      * @return rectangle surronding object
      */
-    @Override
     public Rectangle getRectangle() {
         return new Rectangle(x - 2, y - 2, monsterSize + 4, monsterSize + 4);
     }

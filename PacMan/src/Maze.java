@@ -72,7 +72,7 @@ public class Maze extends JComponent {
         int curY = 0;
 
         for (int i = 0; i < readLevel.length; i++) {
-            System.out.println(i);
+            // System.out.println(i);
             MazeBrick tempMazeBrick = null;
 
             if (readLevel[i] != 10) { // not new line

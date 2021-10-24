@@ -24,9 +24,10 @@ public class RedGhost extends Ghost implements Character {
     ArrayList<BufferedImage> monsterImg = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
 
-    public RedGhost(int x, int y, int number) {
-        super(x, y, number);
-        System.out.printf("Creating %s at %d, %d", name, x, y);
+    public RedGhost(int x, int y) {
+        super(x, y);
+        this.name = "Red ghost";
+        System.out.println(name + "created at " + x + ", " + y);
 
         // Laddar deras bilder beroende på sekvens. (Ska man göra olika klasser för alla
         // spöken istället? Färgkodat?)

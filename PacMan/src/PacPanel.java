@@ -14,7 +14,7 @@ class PacPanel extends JPanel {
     final int gridWidth, gridHeight;
     int level = 1;
     boolean isRunning = false;
-    ArrayList<Ghost> monsters = new ArrayList<Ghost>();
+    ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     JLabel debugLabel = new JLabel();
 
     public PacPanel(Dimension dimension) {
@@ -73,15 +73,17 @@ class PacPanel extends JPanel {
 
         // Creation of characters
         AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
-        AbstractFactory monsterFactory = FactoryProducer.getFactory(false);
+        AbstractFactory ghostFactory = FactoryProducer.getFactory(false);
 
         pacman = pacManFactory.getCharacter("pacman", 100, 100);
 
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
-        for (int i = 0; i < 4; i++) {
-            monsters.add(monsterFactory.getCharacter("monster", 300, 300 + i * 30, i));
-        }
+
+        ghosts.add(ghostFactory.getCharacter("monster", 100, 300, "red"));
+        ghosts.add(ghostFactory.getCharacter("monster", 150, 300, "blue"));
+        ghosts.add(ghostFactory.getCharacter("monster", 200, 300, "yellow"));
+        ghosts.add(ghostFactory.getCharacter("monster", 250, 300, "pink"));
 
         // timer.start();
     }
@@ -92,7 +94,7 @@ class PacPanel extends JPanel {
         // Only redraws the area surrounding Pacman
         repaint(pacman.getRectangle());
 
-        for (Ghost monster : monsters) {
+        for (Ghost monster : ghosts) {
             monster.doMove();
             repaint(monster.getRectangle());
         }
@@ -107,7 +109,7 @@ class PacPanel extends JPanel {
 
         // todo: update moves for all Characters
         pacman.draw(g);
-        for (Ghost monster : monsters) {
+        for (Ghost monster : ghosts) {
             monster.draw(g);
         }
 
