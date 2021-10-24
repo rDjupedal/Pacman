@@ -142,7 +142,7 @@ class Pacman extends JComponent implements LivingCharacter {
             break;
 
         case 'R':
-            if (x + pacSize >= Maze.INSTANCE.width + moveDistance) x = 0;
+            if (x + pacSize + moveDistance >= Maze.INSTANCE.width) x = 0;
             if (!Maze.INSTANCE.getBrick(x + pacSize , y).isWall() ) {
                 x += moveDistance;
             } else isMoving = false;

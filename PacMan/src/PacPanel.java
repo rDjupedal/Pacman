@@ -107,7 +107,6 @@ class PacPanel extends JPanel {
         super.paintComponent(g);
 
         // Important! The order is important! Draw the maze FIRST!
-        //maze.drawMap(g);
         Maze.INSTANCE.drawMap(g);
 
         // todo: update moves for all Characters
