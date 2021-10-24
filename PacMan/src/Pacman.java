@@ -104,7 +104,7 @@ class Pacman extends JComponent implements LivingCharacter {
 
                 // Only change direction to up / down when pacman is inside a vertical grid
                 if (keyBuffer.peekFirst() == 'U' || keyBuffer.peekFirst() == 'D') {
-                    if (x % Maze2.INSTANCE.gridWidth <= 1) {
+                    if (x % Maze.INSTANCE.gridWidth <= 1) {
                         direction = keyBuffer.pollFirst();
                         System.out.println("changing direction to " + direction + " at pos " + x + ", " + y);
                     }
@@ -112,7 +112,7 @@ class Pacman extends JComponent implements LivingCharacter {
 
                 // Only change direction to left / right when pacman is inside a horizontal grid
                 else if (keyBuffer.peekFirst() == 'L' || keyBuffer.peekFirst() == 'R') {
-                    if (y % Maze2.INSTANCE.gridHeight <= 1) {
+                    if (y % Maze.INSTANCE.gridHeight <= 1) {
                         direction = keyBuffer.pollFirst();
                         System.out.println("changing direction to " + direction + " at pos " + x + ", " + y);
                     }
@@ -127,7 +127,7 @@ class Pacman extends JComponent implements LivingCharacter {
         switch (direction) {
 
         case 'U':
-            if (!Maze2.INSTANCE.getBrick(x, y - moveDistance).isWall()) {
+            if (!Maze.INSTANCE.getBrick(x, y - moveDistance).isWall()) {
                 y -= moveDistance;
                 currentImgBig = pacImages.get(2);
                 currentImgSmall = pacImages.get(6);
@@ -137,7 +137,7 @@ class Pacman extends JComponent implements LivingCharacter {
             break;
 
         case 'D':
-            if (!Maze2.INSTANCE.getBrick(x, y + pacSize).isWall()) {
+            if (!Maze.INSTANCE.getBrick(x, y + pacSize).isWall()) {
                 y += moveDistance;
                 currentImgBig = pacImages.get(3);
                 currentImgSmall = pacImages.get(7);
@@ -148,8 +148,8 @@ class Pacman extends JComponent implements LivingCharacter {
 
         case 'L':
             if (x - moveDistance < 0)
-                x = Maze2.INSTANCE.width - Maze2.INSTANCE.gridWidth;
-            if (!Maze2.INSTANCE.getBrick(x - moveDistance, y).isWall()) {
+                x = Maze.INSTANCE.width - Maze.INSTANCE.gridWidth;
+            if (!Maze.INSTANCE.getBrick(x - moveDistance, y).isWall()) {
                 x -= moveDistance;
                 currentImgBig = pacImages.get(0);
                 currentImgSmall = pacImages.get(4);
@@ -159,9 +159,9 @@ class Pacman extends JComponent implements LivingCharacter {
             break;
 
         case 'R':
-            if (x + pacSize >= Maze2.INSTANCE.width + moveDistance)
+            if (x + pacSize + moveDistance >= Maze.INSTANCE.width)
                 x = 0;
-            if (!Maze2.INSTANCE.getBrick(x + pacSize, y).isWall()) {
+            if (!Maze.INSTANCE.getBrick(x + pacSize, y).isWall()) {
                 x += moveDistance;
                 currentImgBig = pacImages.get(1);
                 currentImgSmall = pacImages.get(5);
