@@ -15,7 +15,7 @@ public class RedGhost extends Ghost implements LivingCharacter {
     int x, y;
     String name;
     final int ghostSize = 30;
-    final int moveDistance = 2;
+    final int moveDistance = 1;
     String direction = "up";
 
     ArrayList<BufferedImage> monsterImg = new ArrayList<BufferedImage>();
@@ -83,64 +83,48 @@ public class RedGhost extends Ghost implements LivingCharacter {
     @Override
     public void doMove() {
 
-        switch (IchaseBehaviour.chase()) {
-        case "left":
-            currentImg = monsterImg.get(3);
-            x = x - moveDistance;
-            break;
-        case "right":
-            currentImg = monsterImg.get(2);
-            x = x + moveDistance;
-            break;
-        case "up":
-            currentImg = monsterImg.get(0);
-            y = y - moveDistance;
-            break;
-        case "down":
-            currentImg = monsterImg.get(1);
-            y = y + moveDistance;
-        default:
-            break;
-        }
+        // switch (IchaseBehaviour.chase()) {
+        // case "left":
+        // currentImg = monsterImg.get(3);
+        // x = x - moveDistance;
+        // break;
+        // case "right":
+        // currentImg = monsterImg.get(2);
+        // x = x + moveDistance;
+        // break;
+        // case "up":
+        // currentImg = monsterImg.get(0);
+        // y = y - moveDistance;
+        // break;
+        // case "down":
+        // currentImg = monsterImg.get(1);
+        // y = y + moveDistance;
+        // default:
+        // break;
+        // }
 
         // Pacman Switch
-        switch (IchaseBehaviour.chase()) {
+        switch (IchaseBehaviour.chase(x, y)) {
 
         case "up":
-            if (!Maze2.INSTANCE.getBrick(x, y - moveDistance).isWall()) {
-                y -= moveDistance;
-                currentImg = monsterImg.get(0);
-            } else
-
-                break;
+            y -= moveDistance;
+            currentImg = monsterImg.get(0);
+            break;
 
         case "down":
-            if (!Maze2.INSTANCE.getBrick(x, y + ghostSize).isWall()) {
-                y += moveDistance;
-                currentImg = monsterImg.get(1);
-            } else
-
-                break;
+            y += moveDistance;
+            currentImg = monsterImg.get(1);
+            break;
 
         case "left":
-            if (x - moveDistance < 0)
-                x = Maze2.INSTANCE.width - Maze2.INSTANCE.gridWidth;
-            if (!Maze2.INSTANCE.getBrick(x - moveDistance, y).isWall()) {
-                x -= moveDistance;
-                currentImg = monsterImg.get(3);
-            } else
-
-                break;
+            x -= moveDistance;
+            currentImg = monsterImg.get(3);
+            break;
 
         case "right":
-            if (x + ghostSize >= Maze2.INSTANCE.width + moveDistance)
-                x = 0;
-            if (!Maze2.INSTANCE.getBrick(x + ghostSize, y).isWall()) {
-                x += moveDistance;
-                currentImg = monsterImg.get(2);
-            } else
-
-                break;
+            x += moveDistance;
+            currentImg = monsterImg.get(2);
+            break;
         }
 
         // DEbug test.
@@ -151,12 +135,12 @@ public class RedGhost extends Ghost implements LivingCharacter {
     /**
      * Getters för positionen.
      */
-    public int getX() {
-        return x;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public int getY() {
-        return y;
+    public void setY(int y) {
+        this.y = y;
     }
 
     @Override

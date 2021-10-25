@@ -102,7 +102,7 @@ class PacPanel extends JPanel {
 
         for (Ghost monster : ghosts) {
             monster.doMove();
-            monster.IchaseBehaviour.chase();
+
             repaint(monster.getRectangle());
         }
 

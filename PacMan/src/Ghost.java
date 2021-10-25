@@ -13,7 +13,7 @@ public abstract class Ghost extends JComponent {
     }
 
     public void doMove() {
-        IchaseBehaviour.chase();
+
     }
 
     public abstract Rectangle getRectangle();

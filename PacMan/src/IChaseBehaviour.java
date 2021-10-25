@@ -1,3 +1,3 @@
 public interface IChaseBehaviour {
-    public String chase();
+    public String chase(int x, int y);
 }
