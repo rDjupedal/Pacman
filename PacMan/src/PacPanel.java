@@ -86,9 +86,9 @@ class PacPanel extends JPanel {
         // dom just nu följer samma rörelsemönster.
 
         ghosts.add(ghostFactory.getCharacter("monster", 330, 390, "red"));
-        // ghosts.add(ghostFactory.getCharacter("monster", 340, 465, "blue"));
-        // ghosts.add(ghostFactory.getCharacter("monster", 490, 405, "yellow"));
-        // ghosts.add(ghostFactory.getCharacter("monster", 490, 470, "pink"));
+        ghosts.add(ghostFactory.getCharacter("monster", 330, 450, "blue"));
+        ghosts.add(ghostFactory.getCharacter("monster", 480, 390, "yellow"));
+        ghosts.add(ghostFactory.getCharacter("monster", 480, 450, "pink"));
 
         // timer.start();
     }

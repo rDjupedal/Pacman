@@ -15,7 +15,7 @@ public class YellowGhost extends Ghost implements LivingCharacter {
 
     int x, y;
     String name;
-    final int monsterSize = 30;
+    final int ghostSize = 30;
     final int moveDistance = 1;
     // char lastKey;
     String direction = "up";
@@ -28,6 +28,7 @@ public class YellowGhost extends Ghost implements LivingCharacter {
         super();
         this.x = x;
         this.y = y;
+        IchaseBehaviour = new ChaseRandom();
 
         this.name = "Yellow Ghost";
         System.out.println(name + "created at " + x + ", " + y);
@@ -85,23 +86,26 @@ public class YellowGhost extends Ghost implements LivingCharacter {
     @Override
     public void doMove() {
 
-        switch (getDirection()) {
-        case "left":
-            currentImg = monsterImg.get(3);
-            x = x - moveDistance;
-            break;
-        case "right":
-            currentImg = monsterImg.get(2);
-            x = x + moveDistance;
-            break;
+        switch (IchaseBehaviour.chase(x, y)) {
+
         case "up":
+            y -= moveDistance;
             currentImg = monsterImg.get(0);
-            y = y - moveDistance;
             break;
+
         case "down":
+            y += moveDistance;
             currentImg = monsterImg.get(1);
-            y = y + moveDistance;
-        default:
+            break;
+
+        case "left":
+            x -= moveDistance;
+            currentImg = monsterImg.get(3);
+            break;
+
+        case "right":
+            x += moveDistance;
+            currentImg = monsterImg.get(2);
             break;
         }
 
@@ -124,7 +128,7 @@ public class YellowGhost extends Ghost implements LivingCharacter {
     @Override
     public void draw(Graphics g) {
         // System.out.printf("Drawing %s from Monsterclass %n", name);
-        g.drawImage(currentImg, x, y, monsterSize, monsterSize, null);
+        g.drawImage(currentImg, x, y, ghostSize, ghostSize, null);
     }
 
     /**
@@ -133,7 +137,7 @@ public class YellowGhost extends Ghost implements LivingCharacter {
      * @return rectangle surronding object
      */
     public Rectangle getRectangle() {
-        return new Rectangle(x - 2, y - 2, monsterSize + 4, monsterSize + 4);
+        return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
     }
 
 }

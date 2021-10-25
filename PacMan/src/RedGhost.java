@@ -114,13 +114,6 @@ public class RedGhost extends Ghost implements LivingCharacter {
     /**
      * Getters för positionen.
      */
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
 
     @Override
     public void draw(Graphics g) {
