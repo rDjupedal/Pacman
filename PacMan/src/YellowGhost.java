@@ -17,11 +17,8 @@ public class YellowGhost extends Ghost implements LivingCharacter {
     String name;
     final int ghostSize = 30;
     final int moveDistance = 1;
-    // char lastKey;
-    String direction = "up";
-    Color color = Color.RED;
-
-    ArrayList<BufferedImage> monsterImg = new ArrayList<BufferedImage>();
+    String direction;
+    ArrayList<BufferedImage> yellowGhostImgs = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
 
     public YellowGhost(int x, int y) {
@@ -31,56 +28,18 @@ public class YellowGhost extends Ghost implements LivingCharacter {
         IchaseBehaviour = new ChaseRandom();
 
         this.name = "Yellow Ghost";
-        System.out.println(name + "created at " + x + ", " + y);
 
-        // Laddar deras bilder beroende på sekvens. (Ska man göra olika klasser för alla
-        // spöken istället? Färgkodat?)
         try {
 
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowUp.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowDown.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowRight.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowLeft.png")));
+            yellowGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowUp.png")));
+            yellowGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowDown.png")));
+            yellowGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowRight.png")));
+            yellowGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/yellowGhost/yellowLeft.png")));
         } catch (IOException e) {
             System.out.println("Spökenas bild kunde inte hämtas: " + e.getMessage());
         }
-        currentImg = monsterImg.get(0);
+        currentImg = yellowGhostImgs.get(0);
 
-    }
-
-    public BufferedImage getImage() {
-        return monsterImg.get(0);
-    }
-
-    /**
-     * Enkel liten loop som späkena gör. Vänden i olika hörn och snurrar ett helt
-     * varv.
-     * 
-     * @return
-     */
-    private String getDirection() {
-        if (x == 0 && y > 0) {
-            direction = "up";
-
-        } else if (x == 800 && y == 0) {
-            direction = "down";
-
-        } else if (y == 0 && x > 0) {
-            direction = "right";
-
-        } else if (y == 600 && x == 800) {
-            direction = "left";
-        } else if (x == 0 && y == 0) {
-            direction = "right";
-        }
-
-        return direction;
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-        // Empty, as monsters do not listen to keys.
     }
 
     @Override
@@ -90,28 +49,25 @@ public class YellowGhost extends Ghost implements LivingCharacter {
 
         case "up":
             y -= moveDistance;
-            currentImg = monsterImg.get(0);
+            currentImg = yellowGhostImgs.get(0);
             break;
 
         case "down":
             y += moveDistance;
-            currentImg = monsterImg.get(1);
+            currentImg = yellowGhostImgs.get(1);
             break;
 
         case "left":
             x -= moveDistance;
-            currentImg = monsterImg.get(3);
+            currentImg = yellowGhostImgs.get(3);
             break;
 
         case "right":
             x += moveDistance;
-            currentImg = monsterImg.get(2);
+            currentImg = yellowGhostImgs.get(2);
             break;
         }
 
-        // DEbug test.
-        String debug = String.format("%s is at %d, %d", name, x, y);
-        // System.out.println(debug);
     }
 
     /**
@@ -138,6 +94,18 @@ public class YellowGhost extends Ghost implements LivingCharacter {
      */
     public Rectangle getRectangle() {
         return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
+    }
+
+    @Override
+    public BufferedImage getImage() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
+
     }
 
 }

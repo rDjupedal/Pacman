@@ -44,10 +44,6 @@ public class PinkGhost extends Ghost implements LivingCharacter {
 
     }
 
-    public BufferedImage getImage() {
-        return pinkGhostImgs.get(0);
-    }
-
     @Override
     public void doMove() {
 
@@ -105,6 +101,12 @@ public class PinkGhost extends Ghost implements LivingCharacter {
     @Override
     public void keyPressed(KeyEvent e) {
         // Empty because of LivingCharacter
+    }
+
+    @Override
+    public BufferedImage getImage() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
