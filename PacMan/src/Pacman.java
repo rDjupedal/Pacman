@@ -13,7 +13,6 @@ class Pacman extends JComponent implements LivingCharacter {
     int x, y;
     final int pacSize = 30;
     final int moveDistance = 2;
-    char lastKey;
     char direction = ' ';
     boolean isMoving = false;
     Deque<Character> keyBuffer = new LinkedList<>();
@@ -88,7 +87,6 @@ class Pacman extends JComponent implements LivingCharacter {
         for (char key : keyBuffer) {
             System.out.print(key + ", ");
         }
-
     }
 
     public void doMove() {
@@ -133,7 +131,6 @@ class Pacman extends JComponent implements LivingCharacter {
                 currentImgSmall = pacImages.get(6);
             } else
                 isMoving = false;
-
             break;
 
         case 'D':
@@ -143,7 +140,6 @@ class Pacman extends JComponent implements LivingCharacter {
                 currentImgSmall = pacImages.get(7);
             } else
                 isMoving = false;
-
             break;
 
         case 'L':
@@ -155,7 +151,6 @@ class Pacman extends JComponent implements LivingCharacter {
                 currentImgSmall = pacImages.get(4);
             } else
                 isMoving = false;
-
             break;
 
         case 'R':
@@ -167,12 +162,9 @@ class Pacman extends JComponent implements LivingCharacter {
                 currentImgSmall = pacImages.get(5);
             } else
                 isMoving = false;
-
             break;
         }
 
-        // DEBUG
-        // System.out.println("pacman moved to " + x + ", " + y);
     }
 
     public void draw(Graphics g) {
@@ -180,8 +172,20 @@ class Pacman extends JComponent implements LivingCharacter {
         g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, pacSize, pacSize, null);
     }
 
+    /**
+     * Returns a surround rectangle
+     * @return rectangle surrounding pacman
+     */
     public Rectangle getRectangle() {
-        return new Rectangle(x - 2, y - 2, pacSize + 4, pacSize + 4);
+        if (x < pacSize && direction == 'R') {
+            System.out.print(" clearing right");
+            return new Rectangle(Maze.INSTANCE.width-pacSize-2, y - 2, pacSize + 4, pacSize + 4);
+        } else if (x + pacSize + 50 + moveDistance > Maze.INSTANCE.width && direction == 'L') {
+            System.out.print(" clearing left");
+            return new Rectangle(0,y - 2, pacSize + 2, y + 2);
+        } else {
+            return new Rectangle(x - 2, y - 2, pacSize + 4, pacSize + 4);
+        }
     }
 
 }

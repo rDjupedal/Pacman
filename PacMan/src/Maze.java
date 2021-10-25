@@ -29,17 +29,21 @@ public final class Maze extends JComponent {
         return neighbours;
     }
 
+    /**
+     * Returns brick at point
+     * @param x x-coord for point
+     * @param y y-coord for point
+     * @return brick at position
+     */
     protected MazeBrick getBrick(int x, int y) {
-        // Find which brick is at current position
 
         for (MazeBrick brick : mazeBricks) {
             if ( brick.getBrickRectangle().contains(x, y) ) {
-                //System.out.println("Found a brick a position " + brick.x + ", " + brick.y);
                 return brick;
             }
         }
 
-        System.out.println("Couldnt find a brick at position " + x + ", " + y);
+        System.out.println("Could not find a brick at position " + x + ", " + y);
         return null;
     }
 
