@@ -9,7 +9,6 @@ import java.util.ArrayList;
 class PacPanel extends JPanel {
     Pacman pacman;
     RedGhost monster;
-    Maze maze;
     final int width, height;
     final int gridWidth, gridHeight;
     int level = 1;
@@ -64,6 +63,8 @@ class PacPanel extends JPanel {
                 System.out.println("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
                         + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
                 debugLabel.setVisible(true);
+                if (timer.getDelay() == 10) timer.setDelay(100);
+                else timer.setDelay(10);
                 // debugLabel.setOpaque(true);
             }
         });

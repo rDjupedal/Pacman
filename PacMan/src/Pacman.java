@@ -143,8 +143,10 @@ class Pacman extends JComponent implements LivingCharacter {
             break;
 
         case 'L':
+            // if pacman went thru tunnel
             if (x - moveDistance < 0)
-                x = Maze.INSTANCE.width - Maze.INSTANCE.gridWidth;
+                x = Maze.INSTANCE.width;
+
             if (!Maze.INSTANCE.getBrick(x - moveDistance, y).isWall()) {
                 x -= moveDistance;
                 currentImgBig = pacImages.get(0);
@@ -154,8 +156,10 @@ class Pacman extends JComponent implements LivingCharacter {
             break;
 
         case 'R':
-            if (x + pacSize + moveDistance >= Maze.INSTANCE.width)
-                x = 0;
+            // if pacman went thru tunnel
+            if (x + pacSize + moveDistance > Maze.INSTANCE.width)
+                x = -pacSize;
+
             if (!Maze.INSTANCE.getBrick(x + pacSize, y).isWall()) {
                 x += moveDistance;
                 currentImgBig = pacImages.get(1);
@@ -177,15 +181,14 @@ class Pacman extends JComponent implements LivingCharacter {
      * @return rectangle surrounding pacman
      */
     public Rectangle getRectangle() {
-        if (x < pacSize && direction == 'R') {
-            System.out.print(" clearing right");
-            return new Rectangle(Maze.INSTANCE.width-pacSize-2, y - 2, pacSize + 4, pacSize + 4);
-        } else if (x + pacSize + 50 + moveDistance > Maze.INSTANCE.width && direction == 'L') {
-            System.out.print(" clearing left");
-            return new Rectangle(0,y - 2, pacSize + 2, y + 2);
-        } else {
-            return new Rectangle(x - 2, y - 2, pacSize + 4, pacSize + 4);
-        }
+
+        // If pacman is just crossing through the shortcut return a wider rectangle covering both exists
+        if ((x < pacSize && direction == 'R') ||
+                x + pacSize > Maze.INSTANCE.width && direction == 'L' ) {
+            return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, pacSize + 4);
+        }   else {
+                return new Rectangle(x - 2, y - 2, pacSize + 4, pacSize + 4);
+            }
     }
 
 }
