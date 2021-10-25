@@ -83,27 +83,6 @@ public class RedGhost extends Ghost implements LivingCharacter {
     @Override
     public void doMove() {
 
-        // switch (IchaseBehaviour.chase()) {
-        // case "left":
-        // currentImg = monsterImg.get(3);
-        // x = x - moveDistance;
-        // break;
-        // case "right":
-        // currentImg = monsterImg.get(2);
-        // x = x + moveDistance;
-        // break;
-        // case "up":
-        // currentImg = monsterImg.get(0);
-        // y = y - moveDistance;
-        // break;
-        // case "down":
-        // currentImg = monsterImg.get(1);
-        // y = y + moveDistance;
-        // default:
-        // break;
-        // }
-
-        // Pacman Switch
         switch (IchaseBehaviour.chase(x, y)) {
 
         case "up":

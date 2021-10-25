@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class ChaseRandom implements IChaseBehaviour {
@@ -12,10 +14,12 @@ public class ChaseRandom implements IChaseBehaviour {
 
     @Override
     public String chase(int x, int y) {
-        int randomInt = new Random().nextInt(directions.length);
 
-        System.out.println("x: " + x + " TargetX:" + targetX);
-        System.out.println("y: " + y + " TargetY:" + targetY);
+        /**
+         * FÖr moves, Ett ghost kan egentligen bara röra sig åt 3 håll och egentligen
+         * bara åt två håll i och med maze.
+         */
+
         if (x == targetX | y == targetY) {
 
             targetX = -300;
@@ -27,8 +31,8 @@ public class ChaseRandom implements IChaseBehaviour {
         }
 
         if (pickDirection) {
-            direction = directions[randomInt];
 
+            direction = possibleMoves(x, y);
             System.out.println("Picked Direction " + direction);
             pickDirection = false;
 
@@ -39,6 +43,7 @@ public class ChaseRandom implements IChaseBehaviour {
 
             while (!onTheMove) {
                 targetX = x + Maze2.INSTANCE.getBrick(x, y).width;
+
                 onTheMove = true;
             }
 
@@ -97,6 +102,54 @@ public class ChaseRandom implements IChaseBehaviour {
         // GOing right
 
         return "";
+
+    }
+
+    private String possibleMoves(int x, int y) {
+
+        ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
+        if (Maze2.INSTANCE.getBrick(x + 30, y).isWall()) {
+            possibleMoves.remove("right");
+
+        }
+        if (Maze2.INSTANCE.getBrick(x - 30, y).isWall()) {
+            possibleMoves.remove("left");
+
+        }
+        if (Maze2.INSTANCE.getBrick(x, y + 30).isWall()) {
+            possibleMoves.remove("down");
+
+        }
+        if (Maze2.INSTANCE.getBrick(x, y - 30).isWall()) {
+            possibleMoves.remove("up");
+
+        }
+
+        if (previousMove != null) {
+            switch (previousMove) {
+            case "up":
+                possibleMoves.remove("down");
+                break;
+
+            case "down":
+                possibleMoves.remove("up");
+                break;
+            case "left":
+                possibleMoves.remove("right");
+                break;
+
+            case "right":
+                possibleMoves.remove("left");
+                break;
+            default:
+                break;
+            }
+
+        }
+
+        int randomInt = new Random().nextInt(possibleMoves.size());
+
+        return possibleMoves.get(randomInt);
 
     }
 
