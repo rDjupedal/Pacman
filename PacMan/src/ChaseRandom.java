@@ -42,7 +42,7 @@ public class ChaseRandom implements IChaseBehaviour {
         case "right":
 
             while (!onTheMove) {
-                targetX = x + Maze2.INSTANCE.getBrick(x, y).width;
+                targetX = x + Maze.INSTANCE.getBrick(x, y).width;
 
                 onTheMove = true;
             }
@@ -57,7 +57,7 @@ public class ChaseRandom implements IChaseBehaviour {
         case "left":
 
             while (!onTheMove) {
-                targetX = x - Maze2.INSTANCE.getBrick(x, y).width;
+                targetX = x - Maze.INSTANCE.getBrick(x, y).width;
                 onTheMove = true;
             }
 
@@ -71,7 +71,7 @@ public class ChaseRandom implements IChaseBehaviour {
         case "up":
 
             while (!onTheMove) {
-                targetY = y - Maze2.INSTANCE.getBrick(x, y).height;
+                targetY = y - Maze.INSTANCE.getBrick(x, y).height;
                 onTheMove = true;
             }
 
@@ -85,7 +85,7 @@ public class ChaseRandom implements IChaseBehaviour {
         case "down":
 
             while (!onTheMove) {
-                targetY = y + Maze2.INSTANCE.getBrick(x, y).height;
+                targetY = y + Maze.INSTANCE.getBrick(x, y).height;
                 onTheMove = true;
             }
 
@@ -108,19 +108,19 @@ public class ChaseRandom implements IChaseBehaviour {
     private String possibleMoves(int x, int y) {
 
         ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (Maze2.INSTANCE.getBrick(x + 30, y).isWall()) {
+        if (Maze.INSTANCE.getBrick(x + 30, y).isWall()) {
             possibleMoves.remove("right");
 
         }
-        if (Maze2.INSTANCE.getBrick(x - 30, y).isWall()) {
+        if (Maze.INSTANCE.getBrick(x - 30, y).isWall()) {
             possibleMoves.remove("left");
 
         }
-        if (Maze2.INSTANCE.getBrick(x, y + 30).isWall()) {
+        if (Maze.INSTANCE.getBrick(x, y + 30).isWall()) {
             possibleMoves.remove("down");
 
         }
-        if (Maze2.INSTANCE.getBrick(x, y - 30).isWall()) {
+        if (Maze.INSTANCE.getBrick(x, y - 30).isWall()) {
             possibleMoves.remove("up");
 
         }
