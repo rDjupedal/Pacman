@@ -25,7 +25,10 @@ public class BlueGhost extends Ghost implements LivingCharacter {
         super();
         this.x = x;
         this.y = y;
-        IchaseBehaviour = new ChaseRandom();
+        iChaseBehaviour = new ChaseRandom();
+        iScatterBehaviour = new ScatterTopLeftBehaviour();
+        iFrightenedBehaviour = new FrightenedWandering();
+        iWakeUpBehaviour = new WakeUpBehaviour();
 
         try {
 
@@ -43,7 +46,7 @@ public class BlueGhost extends Ghost implements LivingCharacter {
     @Override
     public void doMove() {
 
-        switch (IchaseBehaviour.chase(x, y)) {
+        switch (iChaseBehaviour.chase(x, y)) {
 
         case "up":
             y -= moveDistance;

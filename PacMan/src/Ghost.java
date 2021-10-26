@@ -6,7 +6,10 @@ import javax.swing.JComponent;
 public abstract class Ghost extends JComponent {
     int x, y;
     int number;
-    IChaseBehaviour IchaseBehaviour;
+    IChaseBehaviour iChaseBehaviour;
+    IScatterBehaviour iScatterBehaviour;
+    IFrightenedBehaviour iFrightenedBehaviour;
+    IWakeUpBehaviour iWakeUpBehaviour;
 
     public Ghost() {
 

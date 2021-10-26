@@ -26,7 +26,11 @@ public class PinkGhost extends Ghost implements LivingCharacter {
         super();
         this.x = x;
         this.y = y;
-        IchaseBehaviour = new ChaseRandom();
+        iChaseBehaviour = new ChaseRandom();
+        iScatterBehaviour = new ScatterBottomLeftBehaviour();
+        iFrightenedBehaviour = new FrightenedWandering();
+        iWakeUpBehaviour = new WakeUpBehaviour();
+
         this.name = "Pink Ghost";
 
         // Laddar deras bilder beroende på sekvens. (Ska man göra olika klasser för alla
@@ -47,7 +51,7 @@ public class PinkGhost extends Ghost implements LivingCharacter {
     @Override
     public void doMove() {
 
-        switch (IchaseBehaviour.chase(x, y)) {
+        switch (iChaseBehaviour.chase(x, y)) {
 
         case "up":
             y -= moveDistance;
