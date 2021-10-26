@@ -63,15 +63,17 @@ class PacPanel extends JPanel {
                 System.out.println("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
                         + ", " + pacman.y);
                 debugLabel.setVisible(true);
-                if (timer.getDelay() == 10) timer.setDelay(100);
-                else timer.setDelay(10);
+                if (timer.getDelay() == 10)
+                    timer.setDelay(100);
+                else
+                    timer.setDelay(10);
                 // debugLabel.setOpaque(true);
             }
         });
 
         add(debugLabel);
 
-        //maze = new Maze(this);
+        // maze = new Maze(this);
         Maze.INSTANCE.startMaze(level, new Dimension(width, height), new Dimension(gridWidth, gridHeight));
 
         // todo: Read map, get start coords for all objects and pass them for
@@ -86,10 +88,10 @@ class PacPanel extends JPanel {
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
 
-        ghosts.add(ghostFactory.getCharacter("monster", 30, 30, "red"));
-        // ghosts.add(ghostFactory.getCharacter("monster", 330, 450, "blue"));
-        // ghosts.add(ghostFactory.getCharacter("monster", 480, 390, "yellow"));
-        // ghosts.add(ghostFactory.getCharacter("monster", 480, 450, "pink"));
+        ghosts.add(ghostFactory.getCharacter("monster", 330, 390, "red"));
+        ghosts.add(ghostFactory.getCharacter("monster", 330, 450, "blue"));
+        ghosts.add(ghostFactory.getCharacter("monster", 480, 390, "yellow"));
+        ghosts.add(ghostFactory.getCharacter("monster", 480, 450, "pink"));
 
     }
 
