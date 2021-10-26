@@ -12,6 +12,9 @@ public abstract class Ghost extends JComponent {
 
     }
 
+    /**
+     * Can we get this to work for all ghosts?
+     */
     public void doMove() {
 
     }

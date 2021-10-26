@@ -17,11 +17,9 @@ public class PinkGhost extends Ghost implements LivingCharacter {
     String name;
     final int ghostSize = 30;
     final int moveDistance = 1;
-    // char lastKey;
-    String direction = "up";
-    Color color = Color.RED;
+    String direction;
 
-    ArrayList<BufferedImage> monsterImg = new ArrayList<BufferedImage>();
+    ArrayList<BufferedImage> pinkGhostImgs = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
 
     public PinkGhost(int x, int y) {
@@ -30,56 +28,20 @@ public class PinkGhost extends Ghost implements LivingCharacter {
         this.y = y;
         IchaseBehaviour = new ChaseRandom();
         this.name = "Pink Ghost";
-        System.out.println(name + "created at " + x + ", " + y);
 
         // Laddar deras bilder beroende på sekvens. (Ska man göra olika klasser för alla
         // spöken istället? Färgkodat?)
         try {
 
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkUp.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkDown.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkRight.png")));
-            monsterImg.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkLeft.png")));
+            pinkGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkUp.png")));
+            pinkGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkDown.png")));
+            pinkGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkRight.png")));
+            pinkGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/pinkGhost/pinkLeft.png")));
         } catch (IOException e) {
             System.out.println("Spökenas bild kunde inte hämtas: " + e.getMessage());
         }
-        currentImg = monsterImg.get(0);
+        currentImg = pinkGhostImgs.get(0);
 
-    }
-
-    public BufferedImage getImage() {
-        return monsterImg.get(0);
-    }
-
-    /**
-     * Enkel liten loop som späkena gör. Vänden i olika hörn och snurrar ett helt
-     * varv.
-     * 
-     * @return
-     */
-    private String getDirection() {
-        if (x == 0 && y > 0) {
-            direction = "up";
-
-        } else if (x == 800 && y == 0) {
-            direction = "down";
-
-        } else if (y == 0 && x > 0) {
-            direction = "right";
-
-        } else if (y == 600 && x == 800) {
-            direction = "left";
-        } else if (x == 0 && y == 0) {
-            direction = "right";
-        }
-
-        return direction;
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-        // Empty, as monsters do not listen to keys.
     }
 
     @Override
@@ -89,28 +51,25 @@ public class PinkGhost extends Ghost implements LivingCharacter {
 
         case "up":
             y -= moveDistance;
-            currentImg = monsterImg.get(0);
+            currentImg = pinkGhostImgs.get(0);
             break;
 
         case "down":
             y += moveDistance;
-            currentImg = monsterImg.get(1);
+            currentImg = pinkGhostImgs.get(1);
             break;
 
         case "left":
             x -= moveDistance;
-            currentImg = monsterImg.get(3);
+            currentImg = pinkGhostImgs.get(3);
             break;
 
         case "right":
             x += moveDistance;
-            currentImg = monsterImg.get(2);
+            currentImg = pinkGhostImgs.get(2);
             break;
         }
 
-        // DEbug test.
-        String debug = String.format("%s is at %d, %d", name, x, y);
-        // System.out.println(debug);
     }
 
     /**
@@ -137,6 +96,17 @@ public class PinkGhost extends Ghost implements LivingCharacter {
      */
     public Rectangle getRectangle() {
         return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // Empty because of LivingCharacter
+    }
+
+    @Override
+    public BufferedImage getImage() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

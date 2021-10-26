@@ -4,8 +4,7 @@ import java.util.Random;
 
 public class ChaseRandom implements IChaseBehaviour {
 
-    String[] directions = { "up", "down", "left", "right" };
-    String previousMove;
+    String previousMove = "";
     String direction;
     Boolean onTheMove = false;
     boolean pickDirection = true;
@@ -99,8 +98,6 @@ public class ChaseRandom implements IChaseBehaviour {
             break;
         }
 
-        // GOing right
-
         return "";
 
     }
@@ -108,42 +105,20 @@ public class ChaseRandom implements IChaseBehaviour {
     private String possibleMoves(int x, int y) {
 
         ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (Maze.INSTANCE.getBrick(x + 30, y).isWall()) {
+        if (Maze.INSTANCE.getBrick(x + 30, y).isWall() | previousMove.equalsIgnoreCase("left")) {
             possibleMoves.remove("right");
 
         }
-        if (Maze.INSTANCE.getBrick(x - 30, y).isWall()) {
+        if (Maze.INSTANCE.getBrick(x - 30, y).isWall() | previousMove.equalsIgnoreCase("right")) {
             possibleMoves.remove("left");
 
         }
-        if (Maze.INSTANCE.getBrick(x, y + 30).isWall()) {
+        if (Maze.INSTANCE.getBrick(x, y + 30).isWall() | previousMove.equalsIgnoreCase("up")) {
             possibleMoves.remove("down");
 
         }
-        if (Maze.INSTANCE.getBrick(x, y - 30).isWall()) {
+        if (Maze.INSTANCE.getBrick(x, y - 30).isWall() | previousMove.equalsIgnoreCase("down")) {
             possibleMoves.remove("up");
-
-        }
-
-        if (previousMove != null) {
-            switch (previousMove) {
-            case "up":
-                possibleMoves.remove("down");
-                break;
-
-            case "down":
-                possibleMoves.remove("up");
-                break;
-            case "left":
-                possibleMoves.remove("right");
-                break;
-
-            case "right":
-                possibleMoves.remove("left");
-                break;
-            default:
-                break;
-            }
 
         }
 
@@ -154,8 +129,3 @@ public class ChaseRandom implements IChaseBehaviour {
     }
 
 }
-
-/**
- * Psuedokod Välj riktning, Gå ett steg fram väljriktning gå ett steg fram
- * 
- */
