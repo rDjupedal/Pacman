@@ -125,6 +125,7 @@ public class ChaseAggresive implements IChaseBehaviour {
 
         List<Double> hypos = new ArrayList<>();
 
+        //DEBUG And Fake PAcman Positions. To be removed. 
         System.out.println("Possible moves: " + possibleMovesArray.size());
         pacmanX = 30;
         pacmanY = 800;
