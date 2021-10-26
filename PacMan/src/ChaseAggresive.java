@@ -123,25 +123,23 @@ public class ChaseAggresive implements IChaseBehaviour {
 
         }
 
-        // FÖR VARJE ELEMENT I POSSIBLE MOVES, MÅSTE VI RÄKNA HYPO, ANVÄNDA DEN KORTASTE
-        // OFTAST ÄR DET BARA TVÅ, MEN KAN VAR ATRE I STARTEN.
         List<Double> hypos = new ArrayList<>();
 
         System.out.println("Possible moves: " + possibleMovesArray.size());
-        pacmanX = 642;
-        pacmanY = 900;
+        pacmanX = 800;
+        pacmanY = 0;
 
-        // KOllar vad som är närmast.
-        // TODO! lägga in att den kan jämföra med tre samt att den kan räkna hypotenusa
-        // på negativa tal.
+        // TODO! Check hypo for negative values.
         if (possibleMovesArray.size() == 1) {
             return possibleMovesArray.get(0);
         } else {
 
+            // Works on positive values. Need to implement working on negative values
+            // aswell.
             double tempX = x;
             double tempY = y;
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < possibleMovesArray.size(); i++) {
                 if (possibleMovesArray.get(i).equals("right")) {
                     tempX = x + 30;
                 } else if (possibleMovesArray.get(i).equals("left")) {
