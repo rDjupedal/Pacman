@@ -155,20 +155,7 @@ public class ChaseAggresive implements IChaseBehaviour {
                 hypos.add(Math.sqrt(((pacmanY - tempY) * (pacmanY - tempY)) + ((pacmanX - tempX) * (pacmanX - tempX))));
             }
 
-            int compared = Double.compare(hypos.get(0), hypos.get(1));
-
-            if (compared < 0) {
-                return possibleMovesArray.get(0);
-            } else if (compared > 0) {
-                return possibleMovesArray.get(1);
-
-            } else {
-
-                int randomInt = new Random().nextInt(possibleMovesArray.size());
-
-                return possibleMovesArray.get(randomInt);
-            }
-
+            return possibleMovesArray.get(smallestIndex(hypos));
         }
 
         // double XR = x+30;
@@ -182,8 +169,21 @@ public class ChaseAggresive implements IChaseBehaviour {
 
     }
 
-    private int smallestIndex(ArrayList array) {
+    private int smallestIndex(List<Double> array) {
+        int idx = 0;
+        Double min = array.get(idx);
+
+        for (int i = 0; i < array.size(); i++) {
+
+            if (array.get(i) <= min) {
+                min = array.get(i);
+                idx = i;
+
+            }
+
+        }
+
+        return idx;
 
     }
-
 }
