@@ -36,7 +36,7 @@ public class ChaseAggresive implements IChaseBehaviour {
         case "right":
 
             while (!onTheMove) {
-                targetX = x + Maze2.INSTANCE.getBrick(x, y).width;
+                targetX = x + Maze.INSTANCE.getBrick(x, y).width;
 
                 onTheMove = true;
             }
@@ -51,7 +51,7 @@ public class ChaseAggresive implements IChaseBehaviour {
         case "left":
 
             while (!onTheMove) {
-                targetX = x - Maze2.INSTANCE.getBrick(x, y).width;
+                targetX = x - Maze.INSTANCE.getBrick(x, y).width;
                 onTheMove = true;
             }
 
@@ -65,7 +65,7 @@ public class ChaseAggresive implements IChaseBehaviour {
         case "up":
 
             while (!onTheMove) {
-                targetY = y - Maze2.INSTANCE.getBrick(x, y).height;
+                targetY = y - Maze.INSTANCE.getBrick(x, y).height;
                 onTheMove = true;
             }
 
@@ -79,7 +79,7 @@ public class ChaseAggresive implements IChaseBehaviour {
         case "down":
 
             while (!onTheMove) {
-                targetY = y + Maze2.INSTANCE.getBrick(x, y).height;
+                targetY = y + Maze.INSTANCE.getBrick(x, y).height;
                 onTheMove = true;
             }
 
