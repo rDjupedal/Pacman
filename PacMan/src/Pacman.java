@@ -13,9 +13,11 @@ class Pacman extends JComponent implements LivingCharacter {
     int x, y;
     final int pacSize = 30;
     final int moveDistance = 2;
-    char direction = ' ';
+    // . means no current direction
+    char direction = '.';
+    // . means no lastKey waiting
+    char lastKey = '.';
     boolean isMoving = false;
-    Deque<Character> keyBuffer = new LinkedList<>();
 
     ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
     BufferedImage currentImgBig;
@@ -55,22 +57,20 @@ class Pacman extends JComponent implements LivingCharacter {
 
     public void keyPressed(KeyEvent e) {
 
-        if (!isMoving) {
-            keyBuffer.clear();
-        }
+        if (!isMoving)  lastKey = '.';
 
         switch (e.getKeyCode()) {
         case KeyEvent.VK_UP:
-            keyBuffer.addLast('U');
+            lastKey = 'U';
             break;
         case KeyEvent.VK_DOWN:
-            keyBuffer.addLast('D');
+            lastKey = 'D';
             break;
         case KeyEvent.VK_LEFT:
-            keyBuffer.addLast('L');
+            lastKey = 'L';
             break;
         case KeyEvent.VK_RIGHT:
-            keyBuffer.addLast('R');
+            lastKey = 'R';
             break;
         case 27:
             // key = 'E'; // todo Escape (Stop playing)
@@ -81,44 +81,30 @@ class Pacman extends JComponent implements LivingCharacter {
 
         if (!isMoving) {
             isMoving = true;
-            direction = keyBuffer.pollFirst();
-        }
-
-        System.out.println("size of keyBuffer: " + keyBuffer.size());
-        for (char key : keyBuffer) {
-            System.out.print(key + ", ");
+            direction = lastKey;
         }
     }
 
     public void doMove() {
 
-        for (int i = 0; i < keyBuffer.size(); i++) {
-            if (keyBuffer.peekFirst() == direction) {
-                keyBuffer.removeFirst();
-            }
-        }
+        // Check that there is a pressed key waiting...
+        if (lastKey != '.') {
 
-        if (!keyBuffer.isEmpty()) {
-            char lastKey = keyBuffer.peekFirst();
+            // Only evaluate for free path when Pacman is at the center of a grid
 
-            if (lastKey != direction) {
-
-                // Only evaluate for free path when Pacman crosses the center of a grid
-
-                // Pacman is inside a vertical grid
-                if (inVerticalGrid()) {
-                    if ((lastKey == 'U' && goUp()) || (lastKey == 'D' && goDown())) {
-                        direction = keyBuffer.pollFirst();
-                        System.out.println("direction changed to " + direction + " at pos " + x + ", " + y);
-                    }
+            // Pacman is inside a vertical grid
+            if (inVerticalGrid()) {
+                if ((lastKey == 'U' && goUp()) || (lastKey == 'D' && goDown())) {
+                    direction = lastKey;
+                    lastKey = '.';
                 }
+            }
 
-                // Pacman is inside a horizontal grid
-                if (inHorizontalGrid()) {
-                    if ( (lastKey == 'L' && goLeft()) || lastKey =='R' && goRight() ) {
-                        direction = keyBuffer.pollFirst();
-                        System.out.println("direction changed to " + direction + " at pos " + x + ", " + y);
-                    }
+            // Pacman is inside a horizontal grid
+            if (inHorizontalGrid()) {
+                if ( (lastKey == 'L' && goLeft()) || lastKey =='R' && goRight() ) {
+                    direction = lastKey;
+                    lastKey = '.';
                 }
             }
         }
@@ -131,7 +117,6 @@ class Pacman extends JComponent implements LivingCharacter {
         switch (direction) {
 
         case 'U':
-            //if (!Maze.INSTANCE.getBrick(x, y - moveDistance).isWall()) {
             if (goUp() && inVerticalGrid()) {
                 y -= moveDistance;
                 currentImgBig = pacImages.get(2);
@@ -141,7 +126,6 @@ class Pacman extends JComponent implements LivingCharacter {
             break;
 
         case 'D':
-            //if (!Maze.INSTANCE.getBrick(x, y + pacSize).isWall()) {
             if (goDown() && inVerticalGrid()) {
                 y += moveDistance;
                 currentImgBig = pacImages.get(3);
@@ -155,7 +139,6 @@ class Pacman extends JComponent implements LivingCharacter {
             if (x - moveDistance < 0)
                 x = Maze.INSTANCE.width;
 
-            //if (!Maze.INSTANCE.getBrick(x - moveDistance, y).isWall()) {
             if (goLeft() && inHorizontalGrid()) {
                 x -= moveDistance;
                 currentImgBig = pacImages.get(0);
@@ -169,7 +152,6 @@ class Pacman extends JComponent implements LivingCharacter {
             if (x + pacSize + moveDistance > Maze.INSTANCE.width)
                 x = -pacSize;
 
-            //if (!Maze.INSTANCE.getBrick(x + pacSize, y).isWall()) {
             if (goRight() && inHorizontalGrid()) {
                 x += moveDistance;
                 currentImgBig = pacImages.get(1);
@@ -190,7 +172,7 @@ class Pacman extends JComponent implements LivingCharacter {
     }
 
     private boolean goUp(){
-        return (!Maze.INSTANCE.getBrick(x, y - moveDistance).isWall());
+        return (!Maze.INSTANCE.getBrick(x + pacSize / 2, y - moveDistance).isWall());
     }
 
     private boolean goDown() {
@@ -198,11 +180,11 @@ class Pacman extends JComponent implements LivingCharacter {
     }
 
     private boolean goLeft() {
-        return (!Maze.INSTANCE.getBrick(x - moveDistance, y).isWall());
+        return (!Maze.INSTANCE.getBrick(x - moveDistance, y + pacSize / 2).isWall());
     }
 
     private boolean goRight() {
-        return (!Maze.INSTANCE.getBrick(x + pacSize, y).isWall());
+        return (!Maze.INSTANCE.getBrick(x + pacSize, y + pacSize / 2).isWall());
     }
 
     public void draw(Graphics g) {

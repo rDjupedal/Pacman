@@ -59,9 +59,9 @@ class PacPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
-                        + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+                        + ", " + pacman.y);
                 System.out.println("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
-                        + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+                        + ", " + pacman.y);
                 debugLabel.setVisible(true);
                 if (timer.getDelay() == 10) timer.setDelay(100);
                 else timer.setDelay(10);
@@ -91,12 +91,10 @@ class PacPanel extends JPanel {
         ghosts.add(ghostFactory.getCharacter("monster", 200, 300, "yellow"));
         ghosts.add(ghostFactory.getCharacter("monster", 250, 300, "pink"));
 
-        // timer.start();
     }
 
     protected void gameUpdate() {
-        debugLabel.setText(
-                "Pacmans position: " + pacman.x + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+        debugLabel.setText("Pacmans position: " + pacman.x + ", " + pacman.y);
         pacman.doMove();
         // Only redraws the area surrounding Pacman
         repaint(pacman.getRectangle());
@@ -105,7 +103,6 @@ class PacPanel extends JPanel {
             monster.doMove();
             repaint(monster.getRectangle());
         }
-
     }
 
     protected void paintComponent(Graphics g) {
@@ -121,5 +118,4 @@ class PacPanel extends JPanel {
         }
 
     }
-
 }
