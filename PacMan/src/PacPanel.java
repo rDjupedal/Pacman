@@ -9,7 +9,6 @@ import java.util.ArrayList;
 class PacPanel extends JPanel {
     Pacman pacman;
     RedGhost monster;
-    Maze maze;
     final int width, height;
     final int gridWidth, gridHeight;
     int level = 1;
@@ -60,18 +59,20 @@ class PacPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
-                        + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+                        + ", " + pacman.y);
                 System.out.println("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
-                        + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+                        + ", " + pacman.y);
                 debugLabel.setVisible(true);
+                if (timer.getDelay() == 10) timer.setDelay(100);
+                else timer.setDelay(10);
                 // debugLabel.setOpaque(true);
             }
         });
 
         add(debugLabel);
 
-        // maze = new Maze(this);
-        Maze2.INSTANCE.startMaze(level, new Dimension(width, height), new Dimension(gridWidth, gridHeight));
+        //maze = new Maze(this);
+        Maze.INSTANCE.startMaze(level, new Dimension(width, height), new Dimension(gridWidth, gridHeight));
 
         // todo: Read map, get start coords for all objects and pass them for
         // construction
@@ -90,12 +91,10 @@ class PacPanel extends JPanel {
         ghosts.add(ghostFactory.getCharacter("monster", 480, 390, "yellow"));
         ghosts.add(ghostFactory.getCharacter("monster", 480, 450, "pink"));
 
-        // timer.start();
     }
 
     protected void gameUpdate() {
-        debugLabel.setText(
-                "Pacmans position: " + pacman.x + ", " + pacman.y + " keyBuffer: " + pacman.keyBuffer.toString());
+        debugLabel.setText("Pacmans position: " + pacman.x + ", " + pacman.y);
         pacman.doMove();
         // Only redraws the area surrounding Pacman
         repaint(pacman.getRectangle());
@@ -105,15 +104,13 @@ class PacPanel extends JPanel {
 
             repaint(monster.getRectangle());
         }
-
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         // Important! The order is important! Draw the maze FIRST!
-        // maze.drawMap(g);
-        Maze2.INSTANCE.drawMap(g);
+        Maze.INSTANCE.drawMap(g);
 
         // todo: update moves for all Characters
         pacman.draw(g);
@@ -122,5 +119,4 @@ class PacPanel extends JPanel {
         }
 
     }
-
 }
