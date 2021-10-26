@@ -182,4 +182,8 @@ public class ChaseAggresive implements IChaseBehaviour {
 
     }
 
+    private int smallestIndex(ArrayList array) {
+
+    }
+
 }
