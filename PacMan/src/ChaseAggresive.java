@@ -106,26 +106,26 @@ public class ChaseAggresive implements IChaseBehaviour {
         // TODO! Byta ut +30 till riktiga nummer från mazeBrick.
 
         ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (Maze2.INSTANCE.getBrick(x + 30, y).isWall() | previousMove.equalsIgnoreCase("left")) {
+        if (Maze.INSTANCE.getBrick(x + 30, y).isWall() | previousMove.equalsIgnoreCase("left")) {
             possibleMovesArray.remove("right");
 
         }
-        if (Maze2.INSTANCE.getBrick(x - 30, y).isWall() | previousMove.equalsIgnoreCase("right")) {
+        if (Maze.INSTANCE.getBrick(x - 30, y).isWall() | previousMove.equalsIgnoreCase("right")) {
             possibleMovesArray.remove("left");
 
         }
-        if (Maze2.INSTANCE.getBrick(x, y + 30).isWall() | previousMove.equalsIgnoreCase("up")) {
+        if (Maze.INSTANCE.getBrick(x, y + 30).isWall() | previousMove.equalsIgnoreCase("up")) {
             possibleMovesArray.remove("down");
 
         }
-        if (Maze2.INSTANCE.getBrick(x, y - 30).isWall() | previousMove.equalsIgnoreCase("down")) {
+        if (Maze.INSTANCE.getBrick(x, y - 30).isWall() | previousMove.equalsIgnoreCase("down")) {
             possibleMovesArray.remove("up");
 
         }
 
         List<Double> hypos = new ArrayList<>();
 
-        //DEBUG And Fake PAcman Positions. To be removed. 
+        // DEBUG And Fake PAcman Positions. To be removed.
         System.out.println("Possible moves: " + possibleMovesArray.size());
         pacmanX = 30;
         pacmanY = 800;
