@@ -17,7 +17,6 @@ class Pacman extends JComponent implements LivingCharacter {
     char direction = '.';
     // . means no lastKey waiting
     char lastKey = '.';
-    boolean isMoving = false;
 
     ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
     BufferedImage currentImgBig;
@@ -57,8 +56,6 @@ class Pacman extends JComponent implements LivingCharacter {
 
     public void keyPressed(KeyEvent e) {
 
-        if (!isMoving)  lastKey = '.';
-
         switch (e.getKeyCode()) {
         case KeyEvent.VK_UP:
             lastKey = 'U';
@@ -78,16 +75,11 @@ class Pacman extends JComponent implements LivingCharacter {
         case 80:
             // key = 'P'; // todo P (Pause)
         }
-
-        if (!isMoving) {
-            isMoving = true;
-            direction = lastKey;
-        }
     }
 
     public void doMove() {
 
-        // Check that there is a pressed key waiting...
+        // Check if a key has been pressed...
         if (lastKey != '.') {
 
             // Only evaluate for free path when Pacman is at the center of a grid
@@ -121,8 +113,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 y -= moveDistance;
                 currentImgBig = pacImages.get(2);
                 currentImgSmall = pacImages.get(6);
-            } else
-                isMoving = false;
+            }
             break;
 
         case 'D':
@@ -130,8 +121,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 y += moveDistance;
                 currentImgBig = pacImages.get(3);
                 currentImgSmall = pacImages.get(7);
-            } else
-                isMoving = false;
+            }
             break;
 
         case 'L':
@@ -143,8 +133,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 x -= moveDistance;
                 currentImgBig = pacImages.get(0);
                 currentImgSmall = pacImages.get(4);
-            } else
-                isMoving = false;
+            }
             break;
 
         case 'R':
@@ -156,8 +145,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 x += moveDistance;
                 currentImgBig = pacImages.get(1);
                 currentImgSmall = pacImages.get(5);
-            } else
-                isMoving = false;
+            }
             break;
         }
 
