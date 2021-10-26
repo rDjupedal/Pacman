@@ -106,19 +106,19 @@ public class ChaseAggresive implements IChaseBehaviour {
         // TODO! Byta ut +30 till riktiga nummer från mazeBrick.
 
         ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (Maze.INSTANCE.getBrick(x + 30, y).isWall() | previousMove.equalsIgnoreCase("left")) {
+        if (Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("left")) {
             possibleMovesArray.remove("right");
 
         }
-        if (Maze.INSTANCE.getBrick(x - 30, y).isWall() | previousMove.equalsIgnoreCase("right")) {
+        if (Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("right")) {
             possibleMovesArray.remove("left");
 
         }
-        if (Maze.INSTANCE.getBrick(x, y + 30).isWall() | previousMove.equalsIgnoreCase("up")) {
+        if (Maze.INSTANCE.getBrick(x, y + Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("up")) {
             possibleMovesArray.remove("down");
 
         }
-        if (Maze.INSTANCE.getBrick(x, y - 30).isWall() | previousMove.equalsIgnoreCase("down")) {
+        if (Maze.INSTANCE.getBrick(x, y - Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("down")) {
             possibleMovesArray.remove("up");
 
         }
@@ -126,7 +126,7 @@ public class ChaseAggresive implements IChaseBehaviour {
         List<Double> hypos = new ArrayList<>();
 
         // DEBUG And Fake PAcman Positions. To be removed.
-        System.out.println("Possible moves: " + possibleMovesArray.size());
+        // System.out.println("Possible moves: " + possibleMovesArray.size());
         pacmanX = 30;
         pacmanY = 800;
 
@@ -142,13 +142,13 @@ public class ChaseAggresive implements IChaseBehaviour {
 
             for (int i = 0; i < possibleMovesArray.size(); i++) {
                 if (possibleMovesArray.get(i).equals("right")) {
-                    tempX = x + 30;
+                    tempX = x + Maze.INSTANCE.gridWidth;
                 } else if (possibleMovesArray.get(i).equals("left")) {
-                    tempX = x - 30;
+                    tempX = x - Maze.INSTANCE.gridWidth;
                 } else if (possibleMovesArray.get(i).equals("down")) {
-                    tempY = y + 30;
+                    tempY = y + Maze.INSTANCE.gridHeight;
                 } else if (possibleMovesArray.get(i).equals("up")) {
-                    tempY = y - 30;
+                    tempY = y - Maze.INSTANCE.gridHeight;
                 }
 
                 hypos.add(Math.sqrt(((pacmanY - tempY) * (pacmanY - tempY)) + ((pacmanX - tempX) * (pacmanX - tempX))));

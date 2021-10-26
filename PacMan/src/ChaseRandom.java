@@ -26,13 +26,13 @@ public class ChaseRandom implements IChaseBehaviour {
 
             pickDirection = true;
             onTheMove = false;
-            System.out.println("Pickdirection Active");
+
         }
 
         if (pickDirection) {
 
             direction = possibleMoves(x, y);
-            System.out.println("Picked Direction " + direction);
+
             pickDirection = false;
 
         }
@@ -105,19 +105,19 @@ public class ChaseRandom implements IChaseBehaviour {
     private String possibleMoves(int x, int y) {
 
         ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (Maze.INSTANCE.getBrick(x + 30, y).isWall() | previousMove.equalsIgnoreCase("left")) {
+        if (Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("left")) {
             possibleMoves.remove("right");
 
         }
-        if (Maze.INSTANCE.getBrick(x - 30, y).isWall() | previousMove.equalsIgnoreCase("right")) {
+        if (Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("right")) {
             possibleMoves.remove("left");
 
         }
-        if (Maze.INSTANCE.getBrick(x, y + 30).isWall() | previousMove.equalsIgnoreCase("up")) {
+        if (Maze.INSTANCE.getBrick(x, y + Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("up")) {
             possibleMoves.remove("down");
 
         }
-        if (Maze.INSTANCE.getBrick(x, y - 30).isWall() | previousMove.equalsIgnoreCase("down")) {
+        if (Maze.INSTANCE.getBrick(x, y - Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("down")) {
             possibleMoves.remove("up");
 
         }
