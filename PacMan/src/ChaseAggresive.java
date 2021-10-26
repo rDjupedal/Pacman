@@ -126,8 +126,8 @@ public class ChaseAggresive implements IChaseBehaviour {
         List<Double> hypos = new ArrayList<>();
 
         System.out.println("Possible moves: " + possibleMovesArray.size());
-        pacmanX = 800;
-        pacmanY = 0;
+        pacmanX = 30;
+        pacmanY = 800;
 
         // TODO! Check hypo for negative values.
         if (possibleMovesArray.size() == 1) {
@@ -155,15 +155,6 @@ public class ChaseAggresive implements IChaseBehaviour {
 
             return possibleMovesArray.get(smallestIndex(hypos));
         }
-
-        // double XR = x+30;
-        // double XL = x-30;
-        // double YD = y+30;
-        // double YU = y-30;
-
-        // double a = pacmanY - y;
-        // double b = pacmanX - x;
-        // double hypo = Math.sqrt((a * a) + (b * b));
 
     }
 
