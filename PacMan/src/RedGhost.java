@@ -25,7 +25,7 @@ public class RedGhost extends Ghost implements LivingCharacter {
         super();
         this.x = x;
         this.y = y;
-        IchaseBehaviour = new ChaseRandom();
+        IchaseBehaviour = new ChaseAggresive();
 
         try {
 
