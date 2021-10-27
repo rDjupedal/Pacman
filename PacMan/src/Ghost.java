@@ -25,6 +25,8 @@ public class Ghost extends JComponent implements LivingCharacter {
     String direction;
     ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
+    String[] state = { "chase", "wakeup", "scatter", "fright" };
+    String currentState = state[1];
 
     public Ghost(int x, int y, String color) {
         this.x = x;
@@ -42,16 +44,16 @@ public class Ghost extends JComponent implements LivingCharacter {
             iScatterBehaviour = new ScatterBottomLeftBehaviour();
             break;
         case "blue":
-            iChaseBehaviour = new ChaseRandom();
+            iChaseBehaviour = new ChaseAggresive();
             iScatterBehaviour = new ScatterBottomRightBehaviour();
             break;
 
         case "yellow":
-            iChaseBehaviour = new ChaseRandom();
+            iChaseBehaviour = new ChaseAggresive();
             iScatterBehaviour = new ScatterTopRightBehaviour();
             break;
         case "pink":
-            iChaseBehaviour = new ChaseRandom();
+            iChaseBehaviour = new ChaseAggresive();
             iScatterBehaviour = new ScatterTopLeftBehaviour();
             break;
 
@@ -74,12 +76,11 @@ public class Ghost extends JComponent implements LivingCharacter {
         currentImg = ghostImgs.get(0);
     }
 
-    /**
-     * Can we get this to work for all ghosts?
-     */
     @Override
     public void doMove() {
 
+        // Needs to be changed depending on the ghosts state which are wakeUp, Chase,
+        // Scatter and frightened.
         switch (iChaseBehaviour.chase(x, y)) {
 
         case "up":
