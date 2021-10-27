@@ -45,6 +45,7 @@ class PacPanel extends JPanel {
             public void keyPressed(KeyEvent e) {
                 if (isRunning) {
                     pacman.keyPressed(e);
+                    ghosts.forEach(z -> z.keyPressed(e));
                 } else {
                     isRunning = true;
                     pacman.keyPressed(e);

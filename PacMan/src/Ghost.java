@@ -25,8 +25,9 @@ public class Ghost extends JComponent implements LivingCharacter {
     String direction;
     ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
-    String[] state = { "chase", "wakeup", "scatter", "fright" };
-    String currentState = state[1];
+    Boolean chase = false;
+    String[] state = { "chase", "scatter" };
+    String currentState = "frightened";
 
     public Ghost(int x, int y, String color) {
         this.x = x;
@@ -81,7 +82,7 @@ public class Ghost extends JComponent implements LivingCharacter {
 
         // Needs to be changed depending on the ghosts state which are wakeUp, Chase,
         // Scatter and frightened.
-        switch (iChaseBehaviour.chase(x, y)) {
+        switch (getState()) {
 
         case "up":
             y -= moveDistance;
@@ -135,8 +136,41 @@ public class Ghost extends JComponent implements LivingCharacter {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
 
+        if (e.getKeyCode() == 83) {
+
+            setState();
+
+        }
+
+    }
+
+    private void setState() {
+
+        if (chase) {
+            currentState = "chase";
+        } else {
+            currentState = "scatter";
+        }
+
+        chase = !chase;
+
+        System.out.println("current state is : " + currentState);
+    }
+
+    private String getState() {
+        if (currentState.equalsIgnoreCase("wakeup")) {
+            return iWakeUpBehaviour.awokenBehaviour(x, y);
+
+        } else if (currentState.equalsIgnoreCase("chase")) {
+            return iChaseBehaviour.chase(x, y);
+
+        } else if (currentState.equalsIgnoreCase("scatter")) {
+            return iScatterBehaviour.scatter(x, y);
+
+        } else {
+            return iFrightenedBehaviour.FrightenedBehaviour(x, y);
+        }
     }
 
     public BufferedImage getImage() {

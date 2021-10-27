@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class ScatterBottomLeftBehaviour implements IScatterBehaviour {
     int x, y, targetX, targetY;
-    int scatterX = -10;
+    int scatterX = 10;
     int scatterY = 900;
     String direction;
     String previousMove = "";
@@ -154,6 +154,7 @@ public class ScatterBottomLeftBehaviour implements IScatterBehaviour {
                         .sqrt(((scatterY - tempY) * (scatterY - tempY)) + ((scatterX - tempX) * (scatterX - tempX))));
             }
 
+            System.out.println("Target is " + scatterX + ", " + scatterY);
             return possibleMovesArray.get(smallestIndex(hypos));
         }
 

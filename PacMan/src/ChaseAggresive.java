@@ -130,8 +130,6 @@ public class ChaseAggresive implements IChaseBehaviour {
         pacmanX = Maze.INSTANCE.getPacManPos()[0];
         pacmanY = Maze.INSTANCE.getPacManPos()[1];
 
-        System.out.println("Ghost is targetting pacman at " + pacmanX + " , " + pacmanY);
-
         // TODO! Check hypo for negative values.
         if (possibleMovesArray.size() == 1) {
             return possibleMovesArray.get(0);
