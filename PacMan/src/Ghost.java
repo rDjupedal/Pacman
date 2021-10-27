@@ -34,6 +34,8 @@ public class Ghost extends JComponent implements LivingCharacter {
         this.ghostColor = color.toLowerCase();
         this.name = String.format("%s ghost", ghostColor);
 
+        // Will be changed to reflect the movement of each ghost later when other
+        // movements are implemented.
         switch (ghostColor) {
         case "red":
             iChaseBehaviour = new ChaseRandom();
@@ -59,7 +61,8 @@ public class Ghost extends JComponent implements LivingCharacter {
 
         try {
 
-            // Ändra bilder så att dom kan loopas.
+            // Looping pictures
+
             for (int i = 0; i < 4; i++) {
                 this.imgPath = String.format("resources/%sGhost/%d.png", ghostColor, i);
                 ghostImgs.add(ImageIO.read(this.getClass().getResource(imgPath)));
