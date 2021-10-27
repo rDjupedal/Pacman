@@ -95,7 +95,7 @@ class Pacman extends JComponent implements LivingCharacter {
 
             // Pacman is inside a horizontal grid
             if (inHorizontalGrid()) {
-                if ( (lastKey == 'L' && goLeft()) || lastKey =='R' && goRight() ) {
+                if ((lastKey == 'L' && goLeft()) || lastKey == 'R' && goRight()) {
                     direction = lastKey;
                     lastKey = '.';
                 }
@@ -103,8 +103,8 @@ class Pacman extends JComponent implements LivingCharacter {
         }
 
         /**
-         * Rita pacman med munnen åt rätt håll samt förflytta honom
-         * Kolla innan varje förflyttning at närliggande ruta ej är en vägg
+         * Rita pacman med munnen åt rätt håll samt förflytta honom Kolla innan varje
+         * förflyttning at närliggande ruta ej är en vägg
          */
 
         isMoving = false;
@@ -116,6 +116,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 currentImgBig = pacImages.get(2);
                 currentImgSmall = pacImages.get(6);
                 isMoving = true;
+                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
 
@@ -125,6 +126,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 currentImgBig = pacImages.get(3);
                 currentImgSmall = pacImages.get(7);
                 isMoving = true;
+                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
 
@@ -138,6 +140,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 currentImgBig = pacImages.get(0);
                 currentImgSmall = pacImages.get(4);
                 isMoving = true;
+                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
 
@@ -151,6 +154,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 currentImgBig = pacImages.get(1);
                 currentImgSmall = pacImages.get(5);
                 isMoving = true;
+                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
         }
@@ -165,7 +169,7 @@ class Pacman extends JComponent implements LivingCharacter {
         return (y % Maze.INSTANCE.gridHeight <= 1);
     }
 
-    private boolean goUp(){
+    private boolean goUp() {
         return (!Maze.INSTANCE.getBrick(x + pacSize / 2, y - moveDistance).isWall());
     }
 
@@ -192,17 +196,18 @@ class Pacman extends JComponent implements LivingCharacter {
 
     /**
      * Returns a surrounding rectangle of pacman in order to determine repaint area
+     * 
      * @return rectangle surrounding pacman
      */
     public Rectangle getRectangle() {
 
-        // If pacman is just crossing through the shortcut return a wider rectangle covering both exists
-        if ((x < pacSize && direction == 'R') ||
-                x + pacSize > Maze.INSTANCE.width && direction == 'L' ) {
+        // If pacman is just crossing through the shortcut return a wider rectangle
+        // covering both exists
+        if ((x < pacSize && direction == 'R') || x + pacSize > Maze.INSTANCE.width && direction == 'L') {
             return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, pacSize + 4);
-        }   else {
-                return new Rectangle(x - 2, y - 2, pacSize + 4, pacSize + 4);
-            }
+        } else {
+            return new Rectangle(x - 2, y - 2, pacSize + 4, pacSize + 4);
+        }
     }
 
 }

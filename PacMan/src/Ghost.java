@@ -10,7 +10,7 @@ import java.awt.image.*;
 import java.io.IOException;
 
 public class Ghost extends JComponent implements LivingCharacter {
-    int x, y;
+    private int x, y;
 
     IChaseBehaviour iChaseBehaviour;
     IScatterBehaviour iScatterBehaviour;
@@ -38,7 +38,7 @@ public class Ghost extends JComponent implements LivingCharacter {
         // movements are implemented.
         switch (ghostColor) {
         case "red":
-            iChaseBehaviour = new ChaseRandom();
+            iChaseBehaviour = new ChaseAggresive();
             iScatterBehaviour = new ScatterBottomLeftBehaviour();
             break;
         case "blue":
