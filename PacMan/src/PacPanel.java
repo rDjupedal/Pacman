@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 class PacPanel extends JPanel {
     Pacman pacman;
-    RedGhost monster;
+
     final int width, height;
     final int gridWidth, gridHeight;
     int level = 1;
@@ -88,10 +88,10 @@ class PacPanel extends JPanel {
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
 
-        ghosts.add(ghostFactory.getCharacter("monster", 330, 390, "red"));
-        ghosts.add(ghostFactory.getCharacter("monster", 330, 450, "blue"));
-        ghosts.add(ghostFactory.getCharacter("monster", 480, 390, "yellow"));
-        ghosts.add(ghostFactory.getCharacter("monster", 480, 450, "pink"));
+        ghosts.add(ghostFactory.getCharacter("ghost", 330, 390, "red"));
+        ghosts.add(ghostFactory.getCharacter("ghost", 330, 450, "blue"));
+        ghosts.add(ghostFactory.getCharacter("ghost", 480, 390, "yellow"));
+        ghosts.add(ghostFactory.getCharacter("ghost", 480, 450, "pink"));
 
     }
 

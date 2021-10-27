@@ -8,21 +8,7 @@ public class GhostFactory extends AbstractFactory {
 
     @Override
     Ghost getCharacter(String type, int x, int y, String color) {
-        if (color.equalsIgnoreCase("blue")) {
-            return new BlueGhost(x, y);
+        return new Ghost(x, y, color);
 
-        } else if (color.equalsIgnoreCase("red")) {
-            return new RedGhost(x, y);
-
-        } else if (color.equalsIgnoreCase("yellow")) {
-            return new YellowGhost(x, y);
-
-        }
-
-        else if (color.equalsIgnoreCase("pink")) {
-            return new PinkGhost(x, y);
-        }
-        return null;
     }
-
 }
