@@ -107,6 +107,10 @@ public class Ghost extends JComponent implements LivingCharacter {
                 break;
 
             case "left":
+                if (x - Maze.INSTANCE.gridWidth < 0) {
+                    x = (Maze.INSTANCE.width);
+
+                }
 
                 x -= moveDistance;
                 currentImg = ghostImgs.get(2);
@@ -114,6 +118,10 @@ public class Ghost extends JComponent implements LivingCharacter {
                 break;
 
             case "right":
+                if (x + Maze.INSTANCE.gridWidth >= Maze.INSTANCE.width) {
+                    x = 0;
+
+                }
 
                 x += moveDistance;
                 currentImg = ghostImgs.get(3);
