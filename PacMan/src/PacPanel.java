@@ -83,7 +83,8 @@ class PacPanel extends JPanel {
         AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
         AbstractFactory ghostFactory = FactoryProducer.getFactory(false);
 
-        pacman = pacManFactory.getCharacter("pacman", 30, 30);
+        // todo: replace harcoded startpos with Maze.INSTANCE.getPacmanX() & Maze.INSTANCE.getPacmanY()
+        pacman = pacManFactory.getCharacter("pacman", 400, 690);
 
         // Lägger till monster, 300 + i*30 är för att skapa lite space mellen dom, då
         // dom just nu följer samma rörelsemönster.
