@@ -27,13 +27,13 @@ public class Ghost extends JComponent implements LivingCharacter {
     BufferedImage currentImg;
     Boolean chase = false;
     String[] state = { "chase", "scatter" };
-    String currentState = "frightened";
+    String currentState = "wakeup";
 
     public Ghost(int x, int y, String color) {
         this.x = x;
         this.y = y;
         iFrightenedBehaviour = new FrightenedWandering();
-        iWakeUpBehaviour = new WakeUpBehaviour();
+        iWakeUpBehaviour = new WakeUpBehaviour(this);
         this.ghostColor = color.toLowerCase();
         this.name = String.format("%s ghost", ghostColor);
 
@@ -139,22 +139,28 @@ public class Ghost extends JComponent implements LivingCharacter {
 
         if (e.getKeyCode() == 83) {
 
-            setState();
+            setChase();
 
         }
 
     }
 
-    private void setState() {
+    public void setChase() {
+        currentState = "chase";
 
-        if (chase) {
-            currentState = "chase";
-        } else {
-            currentState = "scatter";
-        }
+        // if (chase) {
+        // currentState = "chase";
+        // } else {
+        // currentState = "scatter";
+        // }
 
-        chase = !chase;
+        // chase = !chase;
 
+        System.out.println("current state is : " + currentState);
+    }
+
+    public void setScatter() {
+        currentState = "scatter";
         System.out.println("current state is : " + currentState);
     }
 

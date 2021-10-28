@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class ChaseAggresive implements IChaseBehaviour {
 
-    int x, y, pacmanX, pacmanY, scatterX, scatterY, targetX, targetY;
+    int x, y, pacmanX, pacmanY, targetX, targetY;
     String direction;
     String previousMove = "";
     Boolean onTheMove = false;
@@ -13,6 +13,15 @@ public class ChaseAggresive implements IChaseBehaviour {
 
     @Override
     public String chase(int x, int y) {
+
+        if (x != targetX | y != targetY) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                System.out.println("Thread interrupted in ChaseAggresive. " + e.getMessage());
+            }
+        }
 
         if (x == targetX | y == targetY) {
 
@@ -125,7 +134,6 @@ public class ChaseAggresive implements IChaseBehaviour {
 
         List<Double> hypos = new ArrayList<>();
 
-        // DEBUG And Fake PAcman Positions. To be removed.
         // System.out.println("Possible moves: " + possibleMovesArray.size());
         pacmanX = Maze.INSTANCE.getPacManPos()[0];
         pacmanY = Maze.INSTANCE.getPacManPos()[1];

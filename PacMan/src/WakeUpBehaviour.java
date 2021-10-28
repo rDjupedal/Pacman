@@ -1,19 +1,30 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class WakeUpBehaviour implements IWakeUpBehaviour {
-    int x, y, targetX, targetY;
-    int wakeUpX = 390;
-    int wakeUpY = 330;
+    int x, y;
+    int targetX, targetY;
+    int wakeUpX = 420;
+    int wakeUpY = 30;
     String direction;
     String previousMove = "";
     Boolean onTheMove = false;
     Boolean pickDirection = true;
+    Ghost ghost;
+
+    public WakeUpBehaviour(Ghost ghost) {
+        this.ghost = ghost;
+
+    }
 
     @Override
     public String awokenBehaviour(int x, int y) {
+
+        if (x == 390 && y == 330 || x == 420 && y == 330) {
+            ghost.setChase();
+
+        }
 
         if (x == targetX | y == targetY) {
 

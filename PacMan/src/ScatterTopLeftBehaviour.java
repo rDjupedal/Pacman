@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class ScatterTopLeftBehaviour implements IScatterBehaviour {
     int x, y, targetX, targetY;
-    int scatterX = 10;
+    int scatterX = 100;
     int scatterY = 10;
     String direction;
     String previousMove = "";
