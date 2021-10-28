@@ -16,7 +16,7 @@ public final class Maze extends JComponent {
     int gridWidth, gridHeight;
     int width, height;
     byte[] readLevel;
-    BufferedImage wall, space;
+    BufferedImage wall, space, food, candy;
     ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
 
     /**
@@ -87,6 +87,8 @@ public final class Maze extends JComponent {
         try {
             wall = ImageIO.read(new File("PacMan/src/resources/wall.jpg"));
             space = ImageIO.read(new File("PacMan/src/resources/space.jpg"));
+            food = ImageIO.read(new File("PacMan/src/resources/food.jpg"));
+            candy = ImageIO.read(new File("PacMan/src/resources/candy.jpg"));
         } catch (IOException e) {
             System.out.println("error loading image");
         }
@@ -97,22 +99,29 @@ public final class Maze extends JComponent {
         int curY = 0;
 
         for (int i = 0; i < readLevel.length; i++) {
-            System.out.println(i);
+
             MazeBrick tempMazeBrick = null;
 
             if (readLevel[i] != 10) {   //ignore new line characters
                 switch(readLevel[i]) {
                     //todo: use a factory instead and pass the byte as argument
-                    case 87: //wall
+
+                    case 67: // (C)andy
+                        tempMazeBrick = new MazeBrick("candy", candy, curX, curY, gridWidth, gridHeight);
+                        break;
+                    case 70: // (F)ood
+                        tempMazeBrick = new MazeBrick("food", food, curX, curY, gridWidth, gridHeight);
+                        break;
+                    case 87: // (W)all
                         tempMazeBrick = new MazeBrick("wall", wall, curX, curY, gridWidth, gridHeight);
                         break;
 
-                    case 83: // space
+                    case 83: // (S)pace
                         tempMazeBrick = new MazeBrick("space", space, curX, curY, gridWidth, gridHeight);
                         break;
 
                     default:
-                        System.out.println(readLevel[i]);
+                        System.out.println("Found unrecognized character at: " + i + ":  " + readLevel[i]);
                         break;
                 }
 
