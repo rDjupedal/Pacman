@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class GameEngine {
 
     protected static final GameEngine INSTANCE = new GameEngine();
-    private int level = 1;
+    private int level = 1, score = 0;
     private Pacman pacman;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     private Dimension gameSize, gridSize;
@@ -44,6 +44,8 @@ public class GameEngine {
         isRunning = true;
     }
 
+    protected void ateFood() { score += 100; }
+    protected int getScore() {return score; }
 
     protected void createMaze() { Maze.INSTANCE.startMaze(level, gameSize, gridSize); }
 

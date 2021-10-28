@@ -4,17 +4,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class PacmanFrame extends JFrame {
-    //private int level = 1;
-    //private boolean isRunning = false;
-    //private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     private JLabel debugLabel = new JLabel();
     private MazePanel mazePanel;
     private JPanel bottomPanel;
-    private JLabel bottomLabel;
-    //private Pacman pacman;
+    private JLabel bottomLabel, scoreLabel;
     private Dimension gameSize, gridSize;
     private Timer timer, scatterTimer;
 
@@ -32,11 +27,18 @@ public class PacmanFrame extends JFrame {
         mazePanel.add(debugLabel);
 
         JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(width, 30));
+        topPanel.setPreferredSize(new Dimension(width, gridSize.height));
         topPanel.setBackground(Color.BLACK);
+        scoreLabel = new JLabel();
+        scoreLabel.setFont(new Font("", Font.BOLD, 25));
+        scoreLabel.setForeground(Color.RED);
+
+
+
+        topPanel.add(scoreLabel);
 
         bottomPanel = new JPanel();
-        bottomPanel.setPreferredSize(new Dimension(width, 30));
+        bottomPanel.setPreferredSize(new Dimension(width, gridSize.height));
         bottomPanel.setBackground(Color.BLACK);
         bottomPanel.setOpaque(true);
         bottomLabel = new JLabel();
@@ -45,9 +47,6 @@ public class PacmanFrame extends JFrame {
         contentPanel.add(topPanel, BorderLayout.BEFORE_FIRST_LINE);
         contentPanel.add(mazePanel, BorderLayout.CENTER);
         contentPanel.add(bottomPanel, BorderLayout.AFTER_LAST_LINE);
-
-        JLabel testLabel = new JLabel("TEST");
-        topPanel.add(testLabel);
 
         add(contentPanel);
 
@@ -72,14 +71,24 @@ public class PacmanFrame extends JFrame {
 
         timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
-            if (GameEngine.INSTANCE.isRunning) gameUpdate();
-            System.out.println("timer ticking..");
+            if (GameEngine.INSTANCE.isRunning) {
+
+                // Update the game
+                gameUpdate();
+
+                //Update game stats in bottom panel
+                updateBottom();
+
+                //Update score i topPanel
+                updateTop();
+            }
+
         }));
 
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println("key pressed");
+
                 if (GameEngine.INSTANCE.isRunning) {
                     GameEngine.INSTANCE.getPacman().keyPressed(e);
                     GameEngine.INSTANCE.getGhosts().forEach(z -> z.keyPressed(e));
@@ -98,35 +107,34 @@ public class PacmanFrame extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
-                //System.out.println("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
-                //        + ", " + pacman.y);
                 debugLabel.setVisible(true);
                 if (timer.getDelay() == 10)
                     timer.setDelay(100);
                 else
                     timer.setDelay(10);
-                // debugLabel.setOpaque(true);
+
             }
         });
     }
 
-
     protected void gameUpdate() {
 
         debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
-        System.out.println("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
+        //System.out.println("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
         GameEngine.INSTANCE.updateGame();
 
         // Repaint the characters
         mazePanel.drawCharacters();
 
-        //Update game stats i bottom panel
-        updateBottom();
     }
 
     private void updateBottom() {
-
         bottomLabel.setText("test");
+    }
+
+    private void updateTop() {
+        //Update score in the top
+        scoreLabel.setText("" + GameEngine.INSTANCE.getScore());
     }
 
 }
