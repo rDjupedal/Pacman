@@ -14,96 +14,6 @@ public class ChaseRandom implements IChaseBehaviour {
     @Override
     public String chase(int x, int y) {
 
-        /**
-         * FÖr moves, Ett ghost kan egentligen bara röra sig åt 3 håll och egentligen
-         * bara åt två håll i och med maze.
-         */
-
-        if (x == targetX | y == targetY) {
-
-            targetX = -300;
-            targetY = -300;
-
-            pickDirection = true;
-            onTheMove = false;
-
-        }
-
-        if (pickDirection) {
-
-            direction = possibleMoves(x, y);
-
-            pickDirection = false;
-
-        }
-
-        switch (direction) {
-        case "right":
-
-            while (!onTheMove) {
-                targetX = x + Maze.INSTANCE.getBrick(x, y).width;
-
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "right";
-                return "right";
-            }
-            break;
-
-        case "left":
-
-            while (!onTheMove) {
-                targetX = x - Maze.INSTANCE.getBrick(x, y).width;
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "left";
-                return "left";
-            }
-            break;
-
-        case "up":
-
-            while (!onTheMove) {
-                targetY = y - Maze.INSTANCE.getBrick(x, y).height;
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "up";
-                return "up";
-            }
-            break;
-
-        case "down":
-
-            while (!onTheMove) {
-                targetY = y + Maze.INSTANCE.getBrick(x, y).height;
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "down";
-                return "down";
-            }
-            break;
-        default:
-            break;
-        }
-
-        return "";
-
-    }
-
-    private String possibleMoves(int x, int y) {
-
         ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
         if (Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("left")) {
             possibleMoves.remove("right");
@@ -124,7 +34,8 @@ public class ChaseRandom implements IChaseBehaviour {
 
         int randomInt = new Random().nextInt(possibleMoves.size());
 
-        return possibleMoves.get(randomInt);
+        previousMove = possibleMoves.get(randomInt);
+        return previousMove;
 
     }
 
