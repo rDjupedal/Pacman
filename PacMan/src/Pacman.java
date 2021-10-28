@@ -26,6 +26,7 @@ class Pacman extends JComponent implements LivingCharacter {
     public Pacman(int x, int y) {
         this.x = x;
         this.y = y;
+        Maze.INSTANCE.setPacManPos(x, y);
         System.out.println("Creating a Pac at " + x + ", " + y);
 
         // Load images.
@@ -107,6 +108,7 @@ class Pacman extends JComponent implements LivingCharacter {
          * förflyttning at närliggande ruta ej är en vägg
          */
 
+        Maze.INSTANCE.setPacManDirection(direction);
         isMoving = false;
         switch (direction) {
 
@@ -147,7 +149,8 @@ class Pacman extends JComponent implements LivingCharacter {
         case 'R':
             // if pacman went thru tunnel
             if (x + pacSize + moveDistance > Maze.INSTANCE.width)
-                x = -pacSize;
+                // x = -pacSize;
+                x = 0;
 
             if (goRight() && inHorizontalGrid()) {
                 x += moveDistance;
@@ -157,6 +160,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
+
         }
 
         // Check for food or candy at new position

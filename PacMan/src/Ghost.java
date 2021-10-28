@@ -23,7 +23,7 @@ public class Ghost extends JComponent implements LivingCharacter {
 
     String name;
     final int ghostSize = 30;
-    final int moveDistance = 1;
+    final int moveDistance = 2;
     String direction;
     ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
@@ -47,16 +47,16 @@ public class Ghost extends JComponent implements LivingCharacter {
             iScatterBehaviour = new ScatterBehaviour("BR");
             break;
         case "blue":
-            iChaseBehaviour = new ChaseAggresive();
-            iScatterBehaviour = new ScatterBehaviour("BL");
+            iChaseBehaviour = new ChaseAmbush();
+            iScatterBehaviour = new ScatterBehaviour("TR");
             break;
 
         case "yellow":
-            iChaseBehaviour = new ChaseAggresive();
-            iScatterBehaviour = new ScatterBehaviour("TR");
+            iChaseBehaviour = new ChasePatrol();
+            iScatterBehaviour = new ScatterBehaviour("BL");
             break;
         case "pink":
-            iChaseBehaviour = new ChaseAggresive();
+            iChaseBehaviour = new ChaseRandom();
             iScatterBehaviour = new ScatterBehaviour("TL");
             break;
 
@@ -107,13 +107,25 @@ public class Ghost extends JComponent implements LivingCharacter {
                 break;
 
             case "left":
+                if (x - Maze.INSTANCE.gridWidth < 0) {
+                    x = (Maze.INSTANCE.width);
+
+                }
+
                 x -= moveDistance;
                 currentImg = ghostImgs.get(2);
+
                 break;
 
             case "right":
+                if (x + Maze.INSTANCE.gridWidth >= Maze.INSTANCE.width) {
+                    x = 0;
+
+                }
+
                 x += moveDistance;
                 currentImg = ghostImgs.get(3);
+
                 break;
             }
         }
@@ -151,7 +163,14 @@ public class Ghost extends JComponent implements LivingCharacter {
      */
 
     public Rectangle getRectangle() {
-        return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
+
+        if ((x < Maze.INSTANCE.gridWidth && direction.equalsIgnoreCase("right"))
+                || (x + Maze.INSTANCE.gridWidth > Maze.INSTANCE.width && direction.equalsIgnoreCase("left"))) {
+            return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, Maze.INSTANCE.gridHeight + 4);
+        } else {
+            return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
+        }
+
     }
 
     @Override
@@ -178,6 +197,38 @@ public class Ghost extends JComponent implements LivingCharacter {
     }
 
     private String getState() {
+
+        /*
+         * boolean inTunnel = false; // Tunnel
+         * 
+         * // Inte göra checks innan x%0 är kollad löser det hela.
+         * 
+         * if (x - Maze.INSTANCE.gridWidth < 0) { x = Maze.INSTANCE.width -
+         * moveDistance; System.out.println("Vänster tunnel check, X: " + x + " Y: " +
+         * y);
+         * 
+         * inTunnel = true; }
+         * 
+         * if (x + Maze.INSTANCE.gridWidth > Maze.INSTANCE.width && !inTunnel) { x = 0 +
+         * moveDistance; System.out.println("höger tunnel check, X: " + x + " Y: " + y);
+         * 
+         * } inTunnel = false;
+         */
+
+        // TUNNEL
+
+        if (direction != null) {
+            if (direction.equalsIgnoreCase("left")) {
+                if (x - moveDistance < 0)
+                    x = Maze.INSTANCE.width;
+            }
+
+            if (direction.equalsIgnoreCase("right")) {
+                if (x + Maze.INSTANCE.gridWidth + moveDistance > Maze.INSTANCE.width)
+                    x = 0;
+            }
+        }
+
         if (currentState.equalsIgnoreCase("wakeup")) {
             return iWakeUpBehaviour.awokenBehaviour(x, y);
 
