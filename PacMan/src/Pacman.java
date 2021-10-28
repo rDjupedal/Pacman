@@ -25,6 +25,7 @@ class Pacman extends JComponent implements LivingCharacter {
     public Pacman(int x, int y) {
         this.x = x;
         this.y = y;
+        Maze.INSTANCE.setPacManPos(x, y);
         System.out.println("Creating a Pac at " + x + ", " + y);
 
         // Load images.

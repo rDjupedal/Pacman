@@ -98,16 +98,16 @@ class PacPanel extends JPanel {
         // dom just nu följer samma rörelsemönster.
 
         ghosts.add(ghostFactory.getCharacter("ghost", 330, 390, "red"));
-        ghosts.add(ghostFactory.getCharacter("ghost", 330, 450, "blue"));
-        ghosts.add(ghostFactory.getCharacter("ghost", 480, 390, "yellow"));
-        ghosts.add(ghostFactory.getCharacter("ghost", 480, 450, "pink"));
+        // ghosts.add(ghostFactory.getCharacter("ghost", 330, 450, "blue"));
+        // ghosts.add(ghostFactory.getCharacter("ghost", 480, 390, "yellow"));
+        // ghosts.add(ghostFactory.getCharacter("ghost", 480, 450, "pink"));
 
     }
 
     protected void setScatter() {
-        ghosts.forEach(ghost -> {
-            ghost.setScatter();
-        });
+        // ghosts.forEach(ghost -> {
+        // ghost.setScatter();
+        // });
     }
 
     protected void gameUpdate() {

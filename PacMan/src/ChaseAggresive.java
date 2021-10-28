@@ -4,17 +4,17 @@ import java.util.List;
 
 public class ChaseAggresive implements IChaseBehaviour {
 
-    int x, y, pacmanX, pacmanY;
+    int pacmanX, pacmanY;
     String previousMove = "";
     Boolean onTheMove = false;
     Boolean pickDirection = true;
 
     @Override
     public String chase(int x, int y) {
-        // Tunnel
-        if (x - Maze.INSTANCE.gridWidth < 1) {
-            x = Maze.INSTANCE.width;
+        if (x - Maze.INSTANCE.gridWidth < 0) {
+            x = Maze.INSTANCE.width - Maze.INSTANCE.gridWidth;
         }
+
         if (x + Maze.INSTANCE.gridWidth > Maze.INSTANCE.width) {
             x = 0;
         }

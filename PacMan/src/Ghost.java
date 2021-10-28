@@ -108,22 +108,15 @@ public class Ghost extends JComponent implements LivingCharacter {
 
             case "left":
 
-                if (x - moveDistance < 0) {
-                    x = Maze.INSTANCE.width;
-                } else {
-                    x -= moveDistance;
-                    currentImg = ghostImgs.get(2);
-                }
+                x -= moveDistance;
+                currentImg = ghostImgs.get(2);
+
                 break;
 
             case "right":
-                if (x + ghostSize + moveDistance > Maze.INSTANCE.width) {
-                    x = 0;
-                } else {
 
-                    x += moveDistance;
-                    currentImg = ghostImgs.get(3);
-                }
+                x += moveDistance;
+                currentImg = ghostImgs.get(3);
 
                 break;
             }
@@ -189,6 +182,7 @@ public class Ghost extends JComponent implements LivingCharacter {
     }
 
     private String getState() {
+
         if (currentState.equalsIgnoreCase("wakeup")) {
             return iWakeUpBehaviour.awokenBehaviour(x, y);
 
