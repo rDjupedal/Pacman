@@ -18,6 +18,8 @@ public class Ghost extends JComponent implements LivingCharacter {
     IWakeUpBehaviour iWakeUpBehaviour;
     String ghostColor;
     String imgPath;
+    Boolean onTheMove = false;
+    Boolean pickDirection = true;
 
     String name;
     final int ghostSize = 30;
@@ -80,31 +82,49 @@ public class Ghost extends JComponent implements LivingCharacter {
     @Override
     public void doMove() {
 
-        // Needs to be changed depending on the ghosts state which are wakeUp, Chase,
-        // Scatter and frightened.
-        switch (getState()) {
+        if (inHorizontalGrid() && inVerticalGrid()) {
+            pickDirection = true;
+        }
+        while (pickDirection) {
+            direction = getState();
+            pickDirection = false;
 
-        case "up":
-            y -= moveDistance;
-            currentImg = ghostImgs.get(0);
-            break;
-
-        case "down":
-            y += moveDistance;
-            currentImg = ghostImgs.get(1);
-            break;
-
-        case "left":
-            x -= moveDistance;
-            currentImg = ghostImgs.get(2);
-            break;
-
-        case "right":
-            x += moveDistance;
-            currentImg = ghostImgs.get(3);
-            break;
         }
 
+        if (!pickDirection) {
+            switch (direction) {
+
+            case "up":
+
+                y -= moveDistance;
+                currentImg = ghostImgs.get(0);
+
+                break;
+
+            case "down":
+                y += moveDistance;
+                currentImg = ghostImgs.get(1);
+                break;
+
+            case "left":
+                x -= moveDistance;
+                currentImg = ghostImgs.get(2);
+                break;
+
+            case "right":
+                x += moveDistance;
+                currentImg = ghostImgs.get(3);
+                break;
+            }
+        }
+    }
+
+    private boolean inVerticalGrid() {
+        return (x % Maze.INSTANCE.gridWidth == 0);
+    }
+
+    private boolean inHorizontalGrid() {
+        return (y % Maze.INSTANCE.gridHeight == 0);
     }
 
     /**
@@ -160,6 +180,8 @@ public class Ghost extends JComponent implements LivingCharacter {
     }
 
     public void setScatter() {
+        // Set Wait here.
+
         currentState = "scatter";
         System.out.println("current state is : " + currentState);
     }
