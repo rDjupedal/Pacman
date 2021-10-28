@@ -16,6 +16,7 @@ class Pacman extends JComponent implements LivingCharacter {
     // . means no lastKey waiting
     char lastKey = '.';
     boolean isMoving = false;
+    int highOnCandyMs = 0;
 
     ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
     BufferedImage currentImgBig;
@@ -77,6 +78,7 @@ class Pacman extends JComponent implements LivingCharacter {
     }
 
     public void doMove() {
+        if (highOnCandyMs > 0) highOnCandyMs -= 1;
 
         // Check if a key has been pressed...
         if (lastKey != '.') {
@@ -159,16 +161,15 @@ class Pacman extends JComponent implements LivingCharacter {
 
             if (brick.getType() == "food") {
                 //Maze.INSTANCE.getBrick(x, y).changeBrick("space", Maze.INSTANCE.space);
+                Maze.INSTANCE.ateFood();
                 brick.changeBrick("space", Maze.INSTANCE.space);
             }
 
             if  (brick.getType() == "candy") {
                 brick.changeBrick("space", Maze.INSTANCE.space);
-                // todo: candy implmentation
-                System.out.println("ate candy!");
+                // Sets pacman to be invincible for 800 ticks
+                highOnCandyMs = 800;
             }
-
-
         }
 
     }
