@@ -106,6 +106,7 @@ class Pacman extends JComponent implements LivingCharacter {
          * förflyttning at närliggande ruta ej är en vägg
          */
 
+        Maze.INSTANCE.setPacManDirection(direction);
         isMoving = false;
         switch (direction) {
 
@@ -157,6 +158,7 @@ class Pacman extends JComponent implements LivingCharacter {
                 Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
+
         }
 
     }

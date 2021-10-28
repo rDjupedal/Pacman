@@ -62,6 +62,11 @@ public class ChaseAmbush implements IChaseBehaviour {
             break;
         }
 
+        System.out
+                .println("PacmanX: " + Maze.INSTANCE.getPacManPos()[0] + "pacmanY: " + Maze.INSTANCE.getPacManPos()[1]);
+
+        System.out.println("TargetX: " + pacmanX + "TargetY: " + pacmanY);
+
         // TODO! Check hypo for negative values.
         if (possibleMovesArray.size() == 1) {
             previousMove = possibleMovesArray.get(0);
