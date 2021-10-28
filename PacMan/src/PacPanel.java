@@ -122,7 +122,7 @@ class PacPanel extends JPanel {
         repaint(pacman.getRectangle());
 
         for (Ghost monster : ghosts) {
-            //monster.doMove();
+            monster.doMove();
 
             repaint(monster.getRectangle());
         }

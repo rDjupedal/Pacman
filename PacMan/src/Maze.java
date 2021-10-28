@@ -17,6 +17,7 @@ public final class Maze extends JComponent {
     protected int width, height;
     protected BufferedImage wall, space, food, candy, door;
     private int foodLeft = 0;
+    private int pacmanX, pacmanY;
     private byte[] readLevel;
     private ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
 
