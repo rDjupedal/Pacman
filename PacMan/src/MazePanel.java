@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-class PacPanel extends JPanel {
+class MazePanel extends JPanel {
     private Pacman pacman;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 
-    public PacPanel(Pacman pacman, ArrayList<Ghost> ghosts) {
+    public MazePanel(Pacman pacman, ArrayList<Ghost> ghosts) {
         setOpaque(true);
         setBackground(Color.BLACK);
 

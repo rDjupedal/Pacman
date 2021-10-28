@@ -11,7 +11,7 @@ public class GameEngineFrame extends JFrame {
     boolean isRunning = false;
     ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     JLabel debugLabel = new JLabel();
-    private PacPanel pacPanel;
+    private MazePanel mazePanel;
     Pacman pacman;
     private Dimension gameSize, gridSize;
 
@@ -23,10 +23,10 @@ public class GameEngineFrame extends JFrame {
 
         setupEngine();
 
-        pacPanel = new PacPanel(pacman, ghosts);
+        mazePanel = new MazePanel(pacman, ghosts);
 
-        pacPanel.setPreferredSize(gameSize);
-        pacPanel.add(debugLabel);
+        mazePanel.setPreferredSize(gameSize);
+        mazePanel.add(debugLabel);
 
         JPanel topPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
@@ -39,7 +39,7 @@ public class GameEngineFrame extends JFrame {
         bottomPanel.setOpaque(true);
 
         contentPanel.add(topPanel, BorderLayout.BEFORE_FIRST_LINE);
-        contentPanel.add(pacPanel, BorderLayout.CENTER);
+        contentPanel.add(mazePanel, BorderLayout.CENTER);
         contentPanel.add(bottomPanel, BorderLayout.AFTER_LAST_LINE);
 
         JLabel testLabel = new JLabel("TEST");
@@ -53,7 +53,7 @@ public class GameEngineFrame extends JFrame {
 
         setFocusable(true);
         requestFocusInWindow();
-        //setupEngine();
+
     }
 
     protected void setupEngine() {
@@ -103,9 +103,6 @@ public class GameEngineFrame extends JFrame {
 
         Maze.INSTANCE.startMaze(level, gameSize, gridSize);
 
-        // todo: Read map, get start coords for all objects and pass them for
-        // construction
-
         // Creation of characters
         AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
         AbstractFactory ghostFactory = FactoryProducer.getFactory(false);
@@ -143,7 +140,7 @@ public class GameEngineFrame extends JFrame {
         }
 
         // Repaint the characters
-        pacPanel.drawCharacters();
+        mazePanel.drawCharacters();
 
     }
 

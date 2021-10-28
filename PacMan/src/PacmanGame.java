@@ -13,8 +13,6 @@ public class PacmanGame {
             engine.setTitle("Pacman 1.0");
             engine.pack();
 
-            // ?? ta bort
-
         });
 
     }
