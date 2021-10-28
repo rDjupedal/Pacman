@@ -8,7 +8,7 @@ public class PacmanGame {
     public static void main(String[] args) {
 
         EventQueue.invokeLater(() -> {
-            GameEngineFrame engine = new GameEngineFrame(width, height);
+            PacmanFrame engine = new PacmanFrame(width, height);
             engine.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             engine.setTitle("Pacman 1.0");
             engine.pack();
