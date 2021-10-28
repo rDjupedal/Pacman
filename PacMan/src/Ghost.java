@@ -163,6 +163,15 @@ public class Ghost extends JComponent implements LivingCharacter {
      */
 
     public Rectangle getRectangle() {
+
+//        if (((x < Maze.INSTANCE.gridWidth && direction.equalsIgnoreCase("right")) ||
+//                (x + Maze.INSTANCE.gridWidth > Maze.INSTANCE.width && direction.equalsIgnoreCase("left"))) {
+
+         //return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, Maze.INSTANCE.gridHeight + 4);
+
+
+
+
         return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
     }
 
@@ -191,6 +200,7 @@ public class Ghost extends JComponent implements LivingCharacter {
 
     private String getState() {
 
+       /*
         boolean inTunnel = false;
         // Tunnel
 
@@ -209,6 +219,22 @@ public class Ghost extends JComponent implements LivingCharacter {
 
         }
         inTunnel = false;
+        */
+
+        // TUNNEL
+
+        if (direction != null) {
+            if (direction.equalsIgnoreCase("left")) {
+                if (x - moveDistance < 0) x = Maze.INSTANCE.width;
+            }
+
+            if (direction.equalsIgnoreCase("right")) {
+                if (x + Maze.INSTANCE.gridWidth + moveDistance > Maze.INSTANCE.width) x = 0;
+            }
+        }
+
+
+
 
         if (currentState.equalsIgnoreCase("wakeup")) {
             return iWakeUpBehaviour.awokenBehaviour(x, y);
