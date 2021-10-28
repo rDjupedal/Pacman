@@ -15,6 +15,7 @@ public final class Maze extends JComponent {
     int gridWidth, gridHeight;
     int width, height;
     int pacmanX, pacmanY;
+    char pacManDirection;
     byte[] readLevel;
     BufferedImage wall, space, food, candy, door;
     ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
@@ -149,10 +150,18 @@ public final class Maze extends JComponent {
         this.pacmanY = pacManY;
     }
 
+    public void setPacManDirection(char pacManDirection) {
+        this.pacManDirection = pacManDirection;
+    }
+
     public int[] getPacManPos() {
         int[] pacManPos = { pacmanX, pacmanY };
         return pacManPos;
 
+    }
+
+    public char getPacManDirection() {
+        return pacManDirection;
     }
 
     protected void drawMap(Graphics g) {
