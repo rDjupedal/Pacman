@@ -164,15 +164,13 @@ public class Ghost extends JComponent implements LivingCharacter {
 
     public Rectangle getRectangle() {
 
-//        if (((x < Maze.INSTANCE.gridWidth && direction.equalsIgnoreCase("right")) ||
-//                (x + Maze.INSTANCE.gridWidth > Maze.INSTANCE.width && direction.equalsIgnoreCase("left"))) {
+        if ((x < Maze.INSTANCE.gridWidth && direction.equalsIgnoreCase("right")) ||
+                (x + Maze.INSTANCE.gridWidth > Maze.INSTANCE.width && direction.equalsIgnoreCase("left"))) {
+            return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, Maze.INSTANCE.gridHeight + 4);
+        } else {
+            return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
+        }
 
-         //return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, Maze.INSTANCE.gridHeight + 4);
-
-
-
-
-        return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
     }
 
     @Override
