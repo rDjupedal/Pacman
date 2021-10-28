@@ -1,104 +1,29 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class WakeUpBehaviour implements IWakeUpBehaviour {
-    int x, y, targetX, targetY;
-    int wakeUpX = 390;
+    int x, y;
+    int wakeUpX = 420;
     int wakeUpY = 330;
     String direction;
     String previousMove = "";
     Boolean onTheMove = false;
     Boolean pickDirection = true;
+    Ghost ghost;
 
-    @Override
-    public String awokenBehaviour(int x, int y) {
-
-        if (x == targetX | y == targetY) {
-
-            targetX = -300;
-            targetY = -300;
-
-            pickDirection = true;
-            onTheMove = false;
-            // System.out.println("Pick direction Active");
-        }
-
-        if (pickDirection) {
-
-            direction = possibleMoves(x, y);
-            // System.out.println("Picked Direction " + direction);
-            pickDirection = false;
-
-        }
-
-        switch (direction) {
-        case "right":
-
-            while (!onTheMove) {
-                targetX = x + Maze.INSTANCE.gridWidth;
-
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "right";
-                return "right";
-            }
-            break;
-
-        case "left":
-
-            while (!onTheMove) {
-                targetX = x - Maze.INSTANCE.gridWidth;
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "left";
-                return "left";
-            }
-            break;
-
-        case "up":
-
-            while (!onTheMove) {
-                targetY = y - Maze.INSTANCE.gridHeight;
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "up";
-                return "up";
-            }
-            break;
-
-        case "down":
-
-            while (!onTheMove) {
-                targetY = y + Maze.INSTANCE.gridHeight;
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "down";
-                return "down";
-            }
-            break;
-        default:
-            break;
-        }
-
-        return "";
+    public WakeUpBehaviour(Ghost ghost) {
+        this.ghost = ghost;
 
     }
 
-    private String possibleMoves(int x, int y) {
+    @Override
+    public String awokenBehaviour(int x, int y) {
+        this.x = x;
+        this.y = y;
+        if (atTarget()) {
+            ghost.setChase();
+        }
 
         /**
          * Hypo = Math.sqrt()
@@ -131,7 +56,8 @@ public class WakeUpBehaviour implements IWakeUpBehaviour {
 
         // TODO! Check hypo for negative values.
         if (possibleMovesArray.size() == 1) {
-            return possibleMovesArray.get(0);
+            previousMove = possibleMovesArray.get(0);
+            return previousMove;
         } else {
 
             // Works on positive values. Need to implement working on negative values
@@ -153,7 +79,9 @@ public class WakeUpBehaviour implements IWakeUpBehaviour {
                 hypos.add(Math.sqrt(((wakeUpY - tempY) * (wakeUpY - tempY)) + ((wakeUpX - tempX) * (wakeUpX - tempX))));
             }
 
-            return possibleMovesArray.get(smallestIndex(hypos));
+            previousMove = possibleMovesArray.get(smallestIndex(hypos));
+
+            return previousMove;
         }
 
     }
@@ -174,6 +102,10 @@ public class WakeUpBehaviour implements IWakeUpBehaviour {
 
         return idx;
 
+    }
+
+    private boolean atTarget() {
+        return (x == wakeUpX && y == wakeUpY);
     }
 
 }

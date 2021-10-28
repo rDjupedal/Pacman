@@ -35,6 +35,11 @@ class PacPanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
 
+        Timer scatterTimer = new Timer(10000, (ae -> {
+            Toolkit.getDefaultToolkit().sync();
+            setScatter();
+        }));
+
         Timer timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
             gameUpdate();
@@ -45,10 +50,12 @@ class PacPanel extends JPanel {
             public void keyPressed(KeyEvent e) {
                 if (isRunning) {
                     pacman.keyPressed(e);
+                    ghosts.forEach(z -> z.keyPressed(e));
                 } else {
                     isRunning = true;
                     pacman.keyPressed(e);
                     timer.start();
+                    scatterTimer.start();
                 }
             }
         });
@@ -94,6 +101,12 @@ class PacPanel extends JPanel {
         ghosts.add(ghostFactory.getCharacter("ghost", 480, 390, "yellow"));
         ghosts.add(ghostFactory.getCharacter("ghost", 480, 450, "pink"));
 
+    }
+
+    protected void setScatter() {
+        ghosts.forEach(ghost -> {
+            ghost.setScatter();
+        });
     }
 
     protected void gameUpdate() {

@@ -10,7 +10,7 @@ import java.awt.image.*;
 import java.io.IOException;
 
 public class Ghost extends JComponent implements LivingCharacter {
-    int x, y;
+    private int x, y;
 
     IChaseBehaviour iChaseBehaviour;
     IScatterBehaviour iScatterBehaviour;
@@ -18,6 +18,8 @@ public class Ghost extends JComponent implements LivingCharacter {
     IWakeUpBehaviour iWakeUpBehaviour;
     String ghostColor;
     String imgPath;
+    Boolean onTheMove = false;
+    Boolean pickDirection = true;
 
     String name;
     final int ghostSize = 30;
@@ -25,12 +27,15 @@ public class Ghost extends JComponent implements LivingCharacter {
     String direction;
     ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
+    Boolean chase = false;
+    String[] state = { "chase", "scatter" };
+    String currentState = "wakeup";
 
     public Ghost(int x, int y, String color) {
         this.x = x;
         this.y = y;
         iFrightenedBehaviour = new FrightenedWandering();
-        iWakeUpBehaviour = new WakeUpBehaviour();
+        iWakeUpBehaviour = new WakeUpBehaviour(this);
         this.ghostColor = color.toLowerCase();
         this.name = String.format("%s ghost", ghostColor);
 
@@ -38,21 +43,21 @@ public class Ghost extends JComponent implements LivingCharacter {
         // movements are implemented.
         switch (ghostColor) {
         case "red":
-            iChaseBehaviour = new ChaseRandom();
-            iScatterBehaviour = new ScatterBottomLeftBehaviour();
+            iChaseBehaviour = new ChaseAggresive();
+            iScatterBehaviour = new ScatterBehaviour("BR");
             break;
         case "blue":
-            iChaseBehaviour = new ChaseRandom();
-            iScatterBehaviour = new ScatterBottomRightBehaviour();
+            iChaseBehaviour = new ChaseAggresive();
+            iScatterBehaviour = new ScatterBehaviour("BL");
             break;
 
         case "yellow":
-            iChaseBehaviour = new ChaseRandom();
-            iScatterBehaviour = new ScatterTopRightBehaviour();
+            iChaseBehaviour = new ChaseAggresive();
+            iScatterBehaviour = new ScatterBehaviour("TR");
             break;
         case "pink":
-            iChaseBehaviour = new ChaseRandom();
-            iScatterBehaviour = new ScatterTopLeftBehaviour();
+            iChaseBehaviour = new ChaseAggresive();
+            iScatterBehaviour = new ScatterBehaviour("TL");
             break;
 
         default:
@@ -74,35 +79,52 @@ public class Ghost extends JComponent implements LivingCharacter {
         currentImg = ghostImgs.get(0);
     }
 
-    /**
-     * Can we get this to work for all ghosts?
-     */
     @Override
     public void doMove() {
 
-        switch (iChaseBehaviour.chase(x, y)) {
+        if (inHorizontalGrid() && inVerticalGrid()) {
+            pickDirection = true;
+        }
+        while (pickDirection) {
+            direction = getState();
+            pickDirection = false;
 
-        case "up":
-            y -= moveDistance;
-            currentImg = ghostImgs.get(0);
-            break;
-
-        case "down":
-            y += moveDistance;
-            currentImg = ghostImgs.get(1);
-            break;
-
-        case "left":
-            x -= moveDistance;
-            currentImg = ghostImgs.get(2);
-            break;
-
-        case "right":
-            x += moveDistance;
-            currentImg = ghostImgs.get(3);
-            break;
         }
 
+        if (!pickDirection) {
+            switch (direction) {
+
+            case "up":
+
+                y -= moveDistance;
+                currentImg = ghostImgs.get(0);
+
+                break;
+
+            case "down":
+                y += moveDistance;
+                currentImg = ghostImgs.get(1);
+                break;
+
+            case "left":
+                x -= moveDistance;
+                currentImg = ghostImgs.get(2);
+                break;
+
+            case "right":
+                x += moveDistance;
+                currentImg = ghostImgs.get(3);
+                break;
+            }
+        }
+    }
+
+    private boolean inVerticalGrid() {
+        return (x % Maze.INSTANCE.gridWidth == 0);
+    }
+
+    private boolean inHorizontalGrid() {
+        return (y % Maze.INSTANCE.gridHeight == 0);
     }
 
     /**
@@ -134,8 +156,40 @@ public class Ghost extends JComponent implements LivingCharacter {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
 
+        if (e.getKeyCode() == 83) {
+
+            setChase();
+
+        }
+
+    }
+
+    public void setChase() {
+        currentState = "chase";
+
+        System.out.println("current state is : " + currentState);
+    }
+
+    public void setScatter() {
+
+        currentState = "scatter";
+        System.out.println("current state is : " + currentState);
+    }
+
+    private String getState() {
+        if (currentState.equalsIgnoreCase("wakeup")) {
+            return iWakeUpBehaviour.awokenBehaviour(x, y);
+
+        } else if (currentState.equalsIgnoreCase("chase")) {
+            return iChaseBehaviour.chase(x, y);
+
+        } else if (currentState.equalsIgnoreCase("scatter")) {
+            return iScatterBehaviour.scatter(x, y);
+
+        } else {
+            return iFrightenedBehaviour.FrightenedBehaviour(x, y);
+        }
     }
 
     public BufferedImage getImage() {
