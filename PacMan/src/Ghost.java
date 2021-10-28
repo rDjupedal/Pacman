@@ -168,19 +168,10 @@ public class Ghost extends JComponent implements LivingCharacter {
     public void setChase() {
         currentState = "chase";
 
-        // if (chase) {
-        // currentState = "chase";
-        // } else {
-        // currentState = "scatter";
-        // }
-
-        // chase = !chase;
-
         System.out.println("current state is : " + currentState);
     }
 
     public void setScatter() {
-        // Set Wait here.
 
         currentState = "scatter";
         System.out.println("current state is : " + currentState);
