@@ -27,8 +27,6 @@ public class Ghost extends JComponent implements LivingCharacter {
     String direction;
     ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
-    Boolean chase = false;
-    String[] state = { "chase", "scatter" };
     String currentState = "wakeup";
 
     public Ghost(int x, int y, String color) {
