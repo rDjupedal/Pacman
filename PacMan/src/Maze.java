@@ -14,6 +14,7 @@ public final class Maze extends JComponent {
     protected int level;
     protected int gridWidth, gridHeight;
     protected int width, height;
+    protected int foodLeft;
     private int pacmanX, pacmanY;
     private char pacManDirection;
     private byte[] readLevel;
