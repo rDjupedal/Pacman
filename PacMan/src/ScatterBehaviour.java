@@ -3,102 +3,44 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class ScatterBottomLeftBehaviour implements IScatterBehaviour {
+public class ScatterBehaviour implements IScatterBehaviour {
     int x, y, targetX, targetY;
-    int scatterX = 140;
-    int scatterY = 900;
+    int scatterX;
+    int scatterY;
     String direction;
     String previousMove = "";
     Boolean onTheMove = false;
     Boolean pickDirection = true;
 
-    @Override
-    public String scatter(int x, int y) {
-
-        if (x == targetX | y == targetY) {
-
-            targetX = -300;
-            targetY = -300;
-
-            pickDirection = true;
-            onTheMove = false;
-            // System.out.println("Pick direction Active");
-        }
-
-        if (pickDirection) {
-
-            direction = possibleMoves(x, y);
-            // System.out.println("Picked Direction " + direction);
-            pickDirection = false;
-
-        }
-
-        switch (direction) {
-        case "right":
-
-            while (!onTheMove) {
-                targetX = x + Maze.INSTANCE.gridWidth;
-
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "right";
-                return "right";
-            }
+    public ScatterBehaviour(String corner) {
+        switch (corner) {
+        case "TL":
+            scatterX = 100;
+            scatterY = 10;
             break;
 
-        case "left":
-
-            while (!onTheMove) {
-                targetX = x - Maze.INSTANCE.gridWidth;
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "left";
-                return "left";
-            }
+        case "TR":
+            scatterX = 730;
+            scatterY = 10;
             break;
 
-        case "up":
-
-            while (!onTheMove) {
-                targetY = y - Maze.INSTANCE.gridHeight;
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "up";
-                return "up";
-            }
+        case "BL":
+            scatterX = 140;
+            scatterY = 900;
             break;
 
-        case "down":
-
-            while (!onTheMove) {
-                targetY = y + Maze.INSTANCE.gridHeight;
-                onTheMove = true;
-            }
-
-            while (onTheMove) {
-
-                previousMove = "down";
-                return "down";
-            }
+        case "BR":
+            scatterX = 700;
+            scatterY = 900;
             break;
+
         default:
             break;
         }
-
-        return "";
-
     }
 
-    private String possibleMoves(int x, int y) {
+    @Override
+    public String scatter(int x, int y) {
 
         /**
          * Hypo = Math.sqrt()
@@ -131,7 +73,8 @@ public class ScatterBottomLeftBehaviour implements IScatterBehaviour {
 
         // TODO! Check hypo for negative values.
         if (possibleMovesArray.size() == 1) {
-            return possibleMovesArray.get(0);
+            previousMove = possibleMovesArray.get(0);
+            return previousMove;
         } else {
 
             // Works on positive values. Need to implement working on negative values
@@ -155,7 +98,9 @@ public class ScatterBottomLeftBehaviour implements IScatterBehaviour {
             }
 
             System.out.println("Target is " + scatterX + ", " + scatterY);
-            return possibleMovesArray.get(smallestIndex(hypos));
+
+            previousMove = possibleMovesArray.get(smallestIndex(hypos));
+            return previousMove;
         }
 
     }
