@@ -5,6 +5,7 @@ import java.util.List;
 public class ChaseAmbush implements IChaseBehaviour {
 
     int pacmanX, pacmanY;
+    char pacManDirection;
     String previousMove = "";
     Boolean onTheMove = false;
     Boolean pickDirection = true;
@@ -32,8 +33,34 @@ public class ChaseAmbush implements IChaseBehaviour {
 
         List<Double> hypos = new ArrayList<>();
 
-        pacmanX = Maze.INSTANCE.getPacManPos()[0];
-        pacmanY = Maze.INSTANCE.getPacManPos()[1];
+        pacManDirection = Maze.INSTANCE.getPacManDirection();
+        switch (pacManDirection) {
+        case 'U':
+            pacmanX = Maze.INSTANCE.getPacManPos()[0] - (Maze.INSTANCE.gridWidth * 2);
+            pacmanY = Maze.INSTANCE.getPacManPos()[1] + (Maze.INSTANCE.gridHeight * 3);
+
+            break;
+        case 'D':
+            pacmanX = Maze.INSTANCE.getPacManPos()[0];
+            pacmanY = Maze.INSTANCE.getPacManPos()[1] - (Maze.INSTANCE.gridHeight * 3);
+
+            break;
+
+        case 'L':
+            pacmanX = Maze.INSTANCE.getPacManPos()[0] - (Maze.INSTANCE.gridWidth * 3);
+            pacmanY = Maze.INSTANCE.getPacManPos()[1];
+
+            break;
+
+        case 'R':
+            pacmanX = Maze.INSTANCE.getPacManPos()[0] + (Maze.INSTANCE.gridWidth * 3);
+            pacmanY = Maze.INSTANCE.getPacManPos()[1];
+
+            break;
+
+        default:
+            break;
+        }
 
         // TODO! Check hypo for negative values.
         if (possibleMovesArray.size() == 1) {
