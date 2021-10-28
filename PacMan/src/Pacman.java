@@ -6,8 +6,6 @@ import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
 
 class Pacman extends JComponent implements LivingCharacter {
     int x, y;
