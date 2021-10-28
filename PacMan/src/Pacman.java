@@ -78,8 +78,12 @@ class Pacman extends JComponent implements LivingCharacter {
     }
 
     private boolean withingBoundary() {
-        return (y >= moveDistance + pacSize && y <= Maze.INSTANCE.height - moveDistance - pacSize)
-                && (x >= moveDistance + pacSize && x <= Maze.INSTANCE.width - moveDistance - pacSize);
+        if ((y >= pacSize && y <= Maze.INSTANCE.height - pacSize)
+                && (x >= pacSize && x <= Maze.INSTANCE.width - pacSize)) return true;
+        else {
+            System.out.println("Out of boundary, " + x + ", " + y);
+            return false;
+        }
     }
 
     public void doMove() {
