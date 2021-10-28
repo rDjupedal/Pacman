@@ -100,6 +100,7 @@ public class ScatterBehaviour implements IScatterBehaviour {
             System.out.println("Target is " + scatterX + ", " + scatterY);
 
             previousMove = possibleMovesArray.get(smallestIndex(hypos));
+
             return previousMove;
         }
 

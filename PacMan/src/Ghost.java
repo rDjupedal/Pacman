@@ -48,12 +48,12 @@ public class Ghost extends JComponent implements LivingCharacter {
             break;
         case "blue":
             iChaseBehaviour = new ChaseAmbush();
-            iScatterBehaviour = new ScatterBehaviour("BL");
+            iScatterBehaviour = new ScatterBehaviour("TR");
             break;
 
         case "yellow":
-            iChaseBehaviour = new ChaseAggresive();
-            iScatterBehaviour = new ScatterBehaviour("TR");
+            iChaseBehaviour = new ChasePatrol();
+            iScatterBehaviour = new ScatterBehaviour("BL");
             break;
         case "pink":
             iChaseBehaviour = new ChaseRandom();
