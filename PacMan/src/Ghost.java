@@ -23,7 +23,7 @@ public class Ghost extends JComponent implements LivingCharacter {
 
     String name;
     final int ghostSize = 30;
-    final int moveDistance = 1;
+    final int moveDistance = 2;
     String direction;
     ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
@@ -107,13 +107,24 @@ public class Ghost extends JComponent implements LivingCharacter {
                 break;
 
             case "left":
-                x -= moveDistance;
-                currentImg = ghostImgs.get(2);
+
+                if (x - moveDistance < 0) {
+                    x = Maze.INSTANCE.width;
+                } else {
+                    x -= moveDistance;
+                    currentImg = ghostImgs.get(2);
+                }
                 break;
 
             case "right":
-                x += moveDistance;
-                currentImg = ghostImgs.get(3);
+                if (x + ghostSize + moveDistance > Maze.INSTANCE.width) {
+                    x = 0;
+                } else {
+
+                    x += moveDistance;
+                    currentImg = ghostImgs.get(3);
+                }
+
                 break;
             }
         }

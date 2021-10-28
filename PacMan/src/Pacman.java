@@ -145,7 +145,8 @@ class Pacman extends JComponent implements LivingCharacter {
         case 'R':
             // if pacman went thru tunnel
             if (x + pacSize + moveDistance > Maze.INSTANCE.width)
-                x = -pacSize;
+                // x = -pacSize;
+                x = 0;
 
             if (goRight() && inHorizontalGrid()) {
                 x += moveDistance;

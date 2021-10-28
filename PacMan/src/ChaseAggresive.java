@@ -11,6 +11,13 @@ public class ChaseAggresive implements IChaseBehaviour {
 
     @Override
     public String chase(int x, int y) {
+        // Tunnel
+        if (x - Maze.INSTANCE.gridWidth < 1) {
+            x = Maze.INSTANCE.width;
+        }
+        if (x + Maze.INSTANCE.gridWidth > Maze.INSTANCE.width) {
+            x = 0;
+        }
 
         ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
         if (Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("left")) {

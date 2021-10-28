@@ -15,23 +15,23 @@ public class ScatterBehaviour implements IScatterBehaviour {
     public ScatterBehaviour(String corner) {
         switch (corner) {
         case "TL":
-            scatterX = 100;
-            scatterY = 10;
+            scatterX = 162;
+            scatterY = -10;
             break;
 
         case "TR":
-            scatterX = 730;
-            scatterY = 10;
+            scatterX = 685;
+            scatterY = -10;
             break;
 
         case "BL":
-            scatterX = 140;
-            scatterY = 900;
+            scatterX = 230;
+            scatterY = 950;
             break;
 
         case "BR":
-            scatterX = 700;
-            scatterY = 900;
+            scatterX = 615;
+            scatterY = 950;
             break;
 
         default:
