@@ -9,27 +9,27 @@ public class FrightenedWandering implements IFrightenedBehaviour {
     @Override
     public String FrightenedBehaviour(int x, int y) {
 
-        ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("left")) {
-            possibleMoves.remove("right");
+        ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
+        if (previousMove.equalsIgnoreCase("left") || Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall()) {
+            possibleMovesArray.remove("right");
 
         }
-        if (Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("right")) {
-            possibleMoves.remove("left");
+        if (previousMove.equalsIgnoreCase("right") || Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall()) {
+            possibleMovesArray.remove("left");
 
         }
         if (Maze.INSTANCE.getBrick(x, y + Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("up")) {
-            possibleMoves.remove("down");
+            possibleMovesArray.remove("down");
 
         }
         if (Maze.INSTANCE.getBrick(x, y - Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("down")) {
-            possibleMoves.remove("up");
+            possibleMovesArray.remove("up");
 
         }
 
-        int randomInt = new Random().nextInt(possibleMoves.size());
+        int randomInt = new Random().nextInt(possibleMovesArray.size());
 
-        previousMove = possibleMoves.get(randomInt);
+        previousMove = possibleMovesArray.get(randomInt);
         return previousMove;
 
     }
