@@ -42,12 +42,6 @@ public class ScatterBehaviour implements IScatterBehaviour {
     @Override
     public String scatter(int x, int y) {
 
-        /**
-         * Hypo = Math.sqrt()
-         */
-
-        // TODO! Byta ut +30 till riktiga nummer från mazeBrick.
-
         ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
         if (Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("left")) {
             possibleMovesArray.remove("right");
@@ -68,17 +62,11 @@ public class ScatterBehaviour implements IScatterBehaviour {
 
         List<Double> hypos = new ArrayList<>();
 
-        // DEBUG And Fake PAcman Positions. To be removed.
-        // System.out.println("Possible moves: " + possibleMovesArray.size());
-
-        // TODO! Check hypo for negative values.
         if (possibleMovesArray.size() == 1) {
             previousMove = possibleMovesArray.get(0);
             return previousMove;
         } else {
 
-            // Works on positive values. Need to implement working on negative values
-            // aswell.
             double tempX = x;
             double tempY = y;
 
@@ -96,8 +84,6 @@ public class ScatterBehaviour implements IScatterBehaviour {
                 hypos.add(Math
                         .sqrt(((scatterY - tempY) * (scatterY - tempY)) + ((scatterX - tempX) * (scatterX - tempX))));
             }
-
-            System.out.println("Target is " + scatterX + ", " + scatterY);
 
             previousMove = possibleMovesArray.get(smallestIndex(hypos));
 
