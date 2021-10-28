@@ -42,7 +42,7 @@ class PacPanel extends JPanel {
 
         Timer timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
-            gameUpdate();
+            if (isRunning) gameUpdate();
         }));
 
         addKeyListener(new KeyAdapter() {
@@ -65,8 +65,8 @@ class PacPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
-                        + ", " + pacman.y);
+                //debugLabel.setText("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
+                //        + ", " + pacman.y + " food left: " + Maze.INSTANCE.getFoodLeft());
                 System.out.println("Mouse coords: " + e.getX() + ", " + e.getY() + "   Pacmans position: " + pacman.x
                         + ", " + pacman.y);
                 debugLabel.setVisible(true);
@@ -110,13 +110,19 @@ class PacPanel extends JPanel {
     }
 
     protected void gameUpdate() {
-        debugLabel.setText("Pacmans position: " + pacman.x + ", " + pacman.y);
+        // Check if game is finished (if food is still left)
+        if (Maze.INSTANCE.getFoodLeft() < 1) {
+            System.out.println("game finished!!");
+
+            isRunning = false;
+        }
+        debugLabel.setText("Pacmans position: " + pacman.x + ", " + pacman.y + " food " + Maze.INSTANCE.getFoodLeft());
         pacman.doMove();
         // Only redraws the area surrounding Pacman
         repaint(pacman.getRectangle());
 
         for (Ghost monster : ghosts) {
-            monster.doMove();
+            //monster.doMove();
 
             repaint(monster.getRectangle());
         }

@@ -9,21 +9,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+
 public final class Maze extends JComponent {
     protected static final Maze INSTANCE = new Maze();
-    int level;
-    int gridWidth, gridHeight;
-    int width, height;
-    int pacmanX, pacmanY;
-    byte[] readLevel;
-    BufferedImage wall, space, food, candy, door;
-    ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
+    protected int level;
+    protected int gridWidth, gridHeight;
+    protected int width, height;
+    protected BufferedImage wall, space, food, candy, door;
+    private int foodLeft = 0;
+    private byte[] readLevel;
+    private ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
 
     /**
      * Empty private constructor, Singleton
      */
-    private Maze() {
-    }
+    private Maze() {}
 
     protected ArrayList<MazeBrick> getNeighbourBricks(Dimension position) {
         ArrayList<MazeBrick> neighbours = new ArrayList<MazeBrick>();
@@ -32,7 +32,7 @@ public final class Maze extends JComponent {
 
     /**
      * Returns brick at point
-     * 
+     *
      * @param x x-coord for point
      * @param y y-coord for point
      * @return brick at position
@@ -48,6 +48,9 @@ public final class Maze extends JComponent {
         System.out.println("Could not find a brick at position " + x + ", " + y);
         return null;
     }
+
+    protected int getFoodLeft() { return foodLeft; }
+    protected void ateFood() { foodLeft--; }
 
     protected void startMaze(int level, Dimension paneSize, Dimension gridSize) {
         this.level = level;
@@ -109,22 +112,22 @@ public final class Maze extends JComponent {
                 switch (readLevel[i]) {
                 // todo: use a factory instead and pass the byte as argument
 
-                case 67: // (C)andy
-                    tempMazeBrick = new MazeBrick("candy", candy, curX, curY, gridWidth, gridHeight);
-                    break;
-                case 68: // (D)oor
-                    tempMazeBrick = new MazeBrick("door", door, curX, curY, gridWidth, gridHeight);
-                    break;
-                case 70: // (F)ood
-                    tempMazeBrick = new MazeBrick("food", food, curX, curY, gridWidth, gridHeight);
-                    break;
-                case 87: // (W)all
-                    tempMazeBrick = new MazeBrick("wall", wall, curX, curY, gridWidth, gridHeight);
-                    break;
-
-                case 83: // (S)pace
-                    tempMazeBrick = new MazeBrick("space", space, curX, curY, gridWidth, gridHeight);
-                    break;
+                    case 67: // (C)andy
+                        tempMazeBrick = new MazeBrick("candy", candy, curX, curY, gridWidth, gridHeight);
+                        break;
+                    case 68: // (D)oor
+                        tempMazeBrick = new MazeBrick("door", door, curX, curY, gridWidth, gridHeight);
+                        break;
+                    case 70: // (F)ood
+                        tempMazeBrick = new MazeBrick("food", food, curX, curY, gridWidth, gridHeight);
+                        foodLeft++;
+                        break;
+                    case 83: // (S)pace
+                        tempMazeBrick = new MazeBrick("space", space, curX, curY, gridWidth, gridHeight);
+                        break;
+                    case 87: // (W)all
+                        tempMazeBrick = new MazeBrick("wall", wall, curX, curY, gridWidth, gridHeight);
+                        break;
 
                 default:
                     System.out.println("Found unrecognized character at: " + i + ":  " + readLevel[i]);

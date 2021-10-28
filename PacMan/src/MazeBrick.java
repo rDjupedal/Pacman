@@ -18,6 +18,11 @@ public class MazeBrick {
         // System.out.println("brick created at " + x + ", " + y );
     }
 
+    protected void changeBrick (String newType, BufferedImage newImage) {
+        this.type = newType;
+        this.image = newImage;
+    }
+
     protected Rectangle getBrickRectangle() {
         return new Rectangle(x, y, width, height);
     }
