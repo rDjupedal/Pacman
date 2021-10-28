@@ -154,7 +154,7 @@ class Pacman extends JComponent implements LivingCharacter {
         }
 
         // Check for food at new position
-        if (isMoving) {
+        if (isMoving && x >= 0) {
             if (Maze.INSTANCE.getBrick(x, y).getType() == "food") {
                 Maze.INSTANCE.getBrick(x, y).changeBrick("space", Maze.INSTANCE.space);
             }
