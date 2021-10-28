@@ -16,7 +16,7 @@ public final class Maze extends JComponent {
     int gridWidth, gridHeight;
     int width, height;
     byte[] readLevel;
-    BufferedImage wall, space, food, candy;
+    BufferedImage wall, space, food, candy, door;
     ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
 
     /**
@@ -89,6 +89,7 @@ public final class Maze extends JComponent {
             space = ImageIO.read(new File("PacMan/src/resources/space.jpg"));
             food = ImageIO.read(new File("PacMan/src/resources/food.jpg"));
             candy = ImageIO.read(new File("PacMan/src/resources/candy.jpg"));
+            door = ImageIO.read(new File("PacMan/src/resources/door.jpg"));
         } catch (IOException e) {
             System.out.println("error loading image");
         }
@@ -108,6 +109,9 @@ public final class Maze extends JComponent {
 
                     case 67: // (C)andy
                         tempMazeBrick = new MazeBrick("candy", candy, curX, curY, gridWidth, gridHeight);
+                        break;
+                    case 68: // (D)oor
+                        tempMazeBrick = new MazeBrick("door", door, curX, curY, gridWidth, gridHeight);
                         break;
                     case 70: // (F)ood
                         tempMazeBrick = new MazeBrick("food", food, curX, curY, gridWidth, gridHeight);
