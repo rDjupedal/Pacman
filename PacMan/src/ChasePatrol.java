@@ -66,10 +66,11 @@ public class ChasePatrol implements IChaseBehaviour {
 
         // Gets the shortest hypo and stores is
         double shortestHypo = hypos.get(smallestIndex(hypos));
-        // If the shortest hypo is less than 250 units away, returns a scatterBehaviour,
+
+        // If the shortest hypo is less than 200 units away, returns a scatterBehaviour,
         // else continous to chase PacMan
         // instead.
-        if (shortestHypo < 250) {
+        if (shortestHypo < 200) {
             return iScatterBehaviour.scatter(x, y);
         } else {
             return previousMove;
