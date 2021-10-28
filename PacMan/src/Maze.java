@@ -116,12 +116,11 @@ public final class Maze extends JComponent {
                     case 70: // (F)ood
                         tempMazeBrick = new MazeBrick("food", food, curX, curY, gridWidth, gridHeight);
                         break;
-                    case 87: // (W)all
-                        tempMazeBrick = new MazeBrick("wall", wall, curX, curY, gridWidth, gridHeight);
-                        break;
-
                     case 83: // (S)pace
                         tempMazeBrick = new MazeBrick("space", space, curX, curY, gridWidth, gridHeight);
+                        break;
+                    case 87: // (W)all
+                        tempMazeBrick = new MazeBrick("wall", wall, curX, curY, gridWidth, gridHeight);
                         break;
 
                     default:
@@ -146,7 +145,6 @@ public final class Maze extends JComponent {
     protected void drawMap(Graphics g) {
         for (MazeBrick brick : mazeBricks) { brick.draw(g); }
         drawDebugGrid(g);
-
     }
 
     private void drawDebugGrid(Graphics g) {
