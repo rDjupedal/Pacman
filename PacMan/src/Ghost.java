@@ -191,6 +191,22 @@ public class Ghost extends JComponent implements LivingCharacter {
 
     private String getState() {
 
+        // Tunnel
+
+        // Inte göra checks innan x%0 är kollad löser det hela.
+
+        if (x - Maze.INSTANCE.gridWidth < 0) {
+            x = (Maze.INSTANCE.width - Maze.INSTANCE.gridWidth);
+
+            return "left";
+        }
+
+        if (x + Maze.INSTANCE.gridWidth >= Maze.INSTANCE.width) {
+            x = 0;
+
+            return "right";
+        }
+
         if (currentState.equalsIgnoreCase("wakeup")) {
             return iWakeUpBehaviour.awokenBehaviour(x, y);
 
