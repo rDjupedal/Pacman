@@ -6,19 +6,14 @@ public class PacmanGame {
     final static int height = 930;
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(() ->
-        {
-            JFrame pFrame = new JFrame();
-            pFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            pFrame.setTitle("Pacman 1.0");
-            PacPanel pacPanel = new PacPanel(new Dimension(width, height));
-            pFrame.add(pacPanel);
-            pFrame.pack();
 
-            // ?? ta bort
-            pFrame.setContentPane(pacPanel);
+        EventQueue.invokeLater(() -> {
+            PacmanFrame engine = new PacmanFrame(width, height);
+            engine.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            engine.setTitle("Pacman 1.0");
+            engine.pack();
 
-            pFrame.setVisible(true);
         });
+
     }
 }

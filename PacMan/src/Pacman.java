@@ -78,6 +78,11 @@ class Pacman extends JComponent implements LivingCharacter {
         }
     }
 
+    private boolean withingBoundary() {
+        return (y >= moveDistance + pacSize && y <= Maze.INSTANCE.height - moveDistance - pacSize)
+                && (x >= moveDistance + pacSize && x <= Maze.INSTANCE.width - moveDistance - pacSize);
+    }
+
     public void doMove() {
         if (highOnCandyMs > 0) highOnCandyMs -= 1;
 
@@ -87,7 +92,7 @@ class Pacman extends JComponent implements LivingCharacter {
             // Only evaluate for free path when Pacman is at the center of a grid
 
             // Pacman is inside a vertical grid
-            if (inVerticalGrid()) {
+            if (inVerticalGrid() && withingBoundary()) {
                 if ((lastKey == 'U' && goUp()) || (lastKey == 'D' && goDown())) {
                     direction = lastKey;
                     lastKey = '.';
@@ -95,7 +100,7 @@ class Pacman extends JComponent implements LivingCharacter {
             }
 
             // Pacman is inside a horizontal grid
-            if (inHorizontalGrid()) {
+            if (inHorizontalGrid() && withingBoundary()) {
                 if ((lastKey == 'L' && goLeft()) || lastKey == 'R' && goRight()) {
                     direction = lastKey;
                     lastKey = '.';
@@ -168,8 +173,8 @@ class Pacman extends JComponent implements LivingCharacter {
             MazeBrick brick = Maze.INSTANCE.getBrick(x, y);
 
             if (brick.getType() == "food") {
-                //Maze.INSTANCE.getBrick(x, y).changeBrick("space", Maze.INSTANCE.space);
                 Maze.INSTANCE.ateFood();
+                GameEngine.INSTANCE.ateFood();
                 brick.changeBrick("space", Maze.INSTANCE.space);
             }
 
