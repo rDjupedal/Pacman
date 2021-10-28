@@ -130,6 +130,7 @@ public class PacmanFrame extends JFrame {
 
     private void updateBottom() {
         bottomLabel.setText("test");
+
     }
 
     private void updateTop() {

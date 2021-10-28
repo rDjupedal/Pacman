@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class GameEngine {
 
     protected static final GameEngine INSTANCE = new GameEngine();
-    private int level = 1, score = 0;
+    private int level = 1, score = 0, lives = 3;
     private Pacman pacman;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     private Dimension gameSize, gridSize;
@@ -29,7 +29,6 @@ public class GameEngine {
         for (Ghost monster : ghosts) {
             monster.doMove();
         }
-
     }
 
     protected void initilizeGame() {
@@ -70,8 +69,6 @@ public class GameEngine {
         this.gameSize = gameSize;
         this.gridSize = gridSize;
     }
-
-
 
     protected ArrayList<Ghost> getGhosts() { return ghosts; }
 
