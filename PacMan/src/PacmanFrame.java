@@ -75,16 +75,21 @@ public class PacmanFrame extends JFrame {
             GameEngine.INSTANCE.setScatter();
         }));
 
+        Timer chaseTimer = new Timer(13000, (ae -> {
+            Toolkit.getDefaultToolkit().sync();
+            GameEngine.INSTANCE.setChase();
+        }));
+
         timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
-                // Update the game
-                gameUpdate();
+            // Update the game
+            gameUpdate();
 
-                //Update game stats in bottom panel
-                updateBottom();
+            // Update game stats in bottom panel
+            updateBottom();
 
-                //Update score in topPanel
-                updateTop();
+            // Update score in topPanel
+            updateTop();
 
         }));
 
@@ -94,12 +99,13 @@ public class PacmanFrame extends JFrame {
 
                 if (GameEngine.INSTANCE.isRunning) {
                     GameEngine.INSTANCE.getPacman().keyPressed(e);
-                    //GameEngine.INSTANCE.getGhosts().forEach(z -> z.keyPressed(e));
+                    // GameEngine.INSTANCE.getGhosts().forEach(z -> z.keyPressed(e));
                 } else {
                     GameEngine.INSTANCE.startGame();
                     GameEngine.INSTANCE.getPacman().keyPressed(e);
                     timer.start();
                     scatterTimer.start();
+                    chaseTimer.start();
                 }
             }
         });
@@ -128,13 +134,16 @@ public class PacmanFrame extends JFrame {
 
             if (GameEngine.INSTANCE.isGameOver) {
                 gameOverDialog.add(new JLabel("Game over, score: " + GameEngine.INSTANCE.getScore()));
-                gameOverDialog.setSize(200,200);
+                gameOverDialog.setSize(200, 200);
                 gameOverDialog.setVisible(true);
                 System.out.println("game over from frame");
             }
         } else {
-            debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", " + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
-            //System.out.println("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
+            debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", "
+                    + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
+            // System.out.println("Pacmans position: " + GameEngine.INSTANCE.getPacman().x +
+            // ", " + GameEngine.INSTANCE.getPacman().y + " food " +
+            // Maze.INSTANCE.getFoodLeft());
             GameEngine.INSTANCE.updateGame();
 
             // Repaint the characters
@@ -159,7 +168,7 @@ public class PacmanFrame extends JFrame {
     }
 
     private void updateTop() {
-        //Update score in the top
+        // Update score in the top
         scoreLabel.setText("" + GameEngine.INSTANCE.getScore());
     }
 

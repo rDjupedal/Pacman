@@ -11,29 +11,34 @@ public class GameEngine {
     private Dimension gameSize, gridSize;
     protected boolean isRunning = false;
     protected boolean isGameOver = false;
+    protected boolean pacManHigh = false;
+    State stateSetter = new State();
 
-    private GameEngine() {}
+    private GameEngine() {
+    }
 
     /*
-    Called at every tick
+     * Called at every tick
      */
     protected void updateGame() {
 
         // Check if game is finished (if food is still left)
-        if (Maze.INSTANCE.getFoodLeft() < 1) { finishGame(); }
+        if (Maze.INSTANCE.getFoodLeft() < 1) {
+            finishGame();
+        }
 
         // Move the characters & check for collisions
         pacman.doMove();
         for (Ghost ghost : ghosts) {
             ghost.doMove();
-            if ( ghost.getCollisionRectangle().intersects(pacman.getCollisionRectangle()) ) {
+            if (ghost.getCollisionRectangle().intersects(pacman.getCollisionRectangle())) {
                 collisionDetected();
             }
         }
     }
 
     private void collisionDetected() {
-        if ( pacman.highOnCandyMs < 1) {
+        if (pacman.highOnCandyMs < 1) {
             lives--;
 
             // MazePanel checks this and repaints the whole screen
@@ -45,7 +50,8 @@ public class GameEngine {
             // stops the EDT timer
             isRunning = false;
 
-            if (lives < 1) gameOver();
+            if (lives < 1)
+                gameOver();
 
         } else {
             System.out.println("Ghost dies");
@@ -53,12 +59,10 @@ public class GameEngine {
         }
     }
 
-
-    private void gameOver(){
+    private void gameOver() {
         System.out.println("Game over");
         isGameOver = true;
     }
-
 
     private void finishGame() {
         System.out.println("game finished!!");
@@ -70,6 +74,7 @@ public class GameEngine {
         createPacman();
         createMaze();
         createGhosts();
+        stateSetter.setCurrentState("wakeup");
     }
 
     protected void startGame() {
@@ -78,48 +83,75 @@ public class GameEngine {
         isGameOver = false;
     }
 
-    protected void ateFood() { score += 10; }
-    protected int getScore() { return score; }
+    protected void ateFood() {
+        score += 10;
+    }
 
-    protected void createMaze() { Maze.INSTANCE.startMaze(level, gameSize, gridSize); }
+    protected int getScore() {
+        return score;
+    }
+
+    protected void createMaze() {
+        Maze.INSTANCE.startMaze(level, gameSize, gridSize);
+    }
 
     protected void resetCharacterPositions() {
         pacman.x = pacmanStartX;
         pacman.y = pacmanStartY;
-        ghosts.get(0).setPos(330,390);
-        ghosts.get(1).setPos(330,450);
-        ghosts.get(2).setPos(480,390);
-        ghosts.get(3).setPos(480,450);
+        ghosts.get(0).setPos(330, 390);
+        ghosts.get(1).setPos(330, 450);
+        ghosts.get(2).setPos(480, 390);
+        ghosts.get(3).setPos(480, 450);
+        stateSetter.setCurrentState("wakeup");
     }
 
     protected void createPacman() {
         AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
-        //todo: replace harcoded startpos with Maze.INSTANCE.getPacmanX() & Maze.INSTANCE.getPacmanY()
+        // todo: replace harcoded startpos with Maze.INSTANCE.getPacmanX() &
+        // Maze.INSTANCE.getPacmanY()
         pacman = pacManFactory.getCharacter("pacman", pacmanStartX, pacmanStartY);
     }
 
     protected void createGhosts() {
         AbstractFactory ghostFactory = FactoryProducer.getFactory(false);
-        //todo: replace harcoded startpos with Maze.INSTANCE.getPacmanX() & Maze.INSTANCE.getPacmanY()
+        // todo: replace harcoded startpos with Maze.INSTANCE.getPacmanX() &
+        // Maze.INSTANCE.getPacmanY()
         ghosts.add(ghostFactory.getCharacter("ghost", 330, 390, "red"));
         ghosts.add(ghostFactory.getCharacter("ghost", 330, 450, "blue"));
         ghosts.add(ghostFactory.getCharacter("ghost", 480, 390, "yellow"));
         ghosts.add(ghostFactory.getCharacter("ghost", 480, 450, "pink"));
+        ghosts.forEach(ghost -> {
+            stateSetter.addObserver(ghost);
+        });
     }
 
-    protected Pacman getPacman() { return pacman; }
+    protected Pacman getPacman() {
+        return pacman;
+    }
 
-    protected void setSizes (Dimension gameSize,Dimension gridSize) {
+    protected void setSizes(Dimension gameSize, Dimension gridSize) {
         this.gameSize = gameSize;
         this.gridSize = gridSize;
     }
 
-    protected ArrayList<Ghost> getGhosts() { return ghosts; }
-    protected int getLives() {return lives; }
+    protected ArrayList<Ghost> getGhosts() {
+        return ghosts;
+    }
+
+    protected int getLives() {
+        return lives;
+    }
 
     protected void setScatter() {
-        ghosts.forEach(ghost -> {
-            ghost.setScatter();
-        });
+        stateSetter.setCurrentState("scatter");
+
+    }
+
+    protected void setChase() {
+        stateSetter.setCurrentState("chase");
+    }
+
+    protected void setFright() {
+        stateSetter.setCurrentState("fright");
     }
 }
