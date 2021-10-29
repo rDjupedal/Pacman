@@ -8,7 +8,6 @@ public class GameEngine {
     private Pacman pacman;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     private Dimension gameSize, gridSize;
-
     protected boolean isRunning = false;
 
     private GameEngine() {}
@@ -31,7 +30,7 @@ public class GameEngine {
         }
     }
 
-    protected void initilizeGame() {
+    protected void initGame() {
         System.out.println("Game initialized");
         createMaze();
         createGhosts();
@@ -44,7 +43,7 @@ public class GameEngine {
     }
 
     protected void ateFood() { score += 100; }
-    protected int getScore() {return score; }
+    protected int getScore() { return score; }
 
     protected void createMaze() { Maze.INSTANCE.startMaze(level, gameSize, gridSize); }
 

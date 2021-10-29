@@ -11,7 +11,6 @@ public class PacmanFrame extends JFrame {
     private JPanel bottomPanel;
     private JLabel bottomLabel, scoreLabel;
     private Dimension gameSize, gridSize;
-    private Timer timer, scatterTimer;
 
     protected PacmanFrame(int width, int height) {
         JPanel contentPanel = new JPanel(new BorderLayout(3, 1));
@@ -32,9 +31,6 @@ public class PacmanFrame extends JFrame {
         scoreLabel = new JLabel();
         scoreLabel.setFont(new Font("", Font.BOLD, 25));
         scoreLabel.setForeground(Color.RED);
-
-
-
         topPanel.add(scoreLabel);
 
         bottomPanel = new JPanel();
@@ -49,27 +45,24 @@ public class PacmanFrame extends JFrame {
         contentPanel.add(bottomPanel, BorderLayout.AFTER_LAST_LINE);
 
         add(contentPanel);
-
         setContentPane(contentPanel);
         setVisible(true);
-
         setFocusable(true);
         requestFocusInWindow();
 
         setupControls();
-
         GameEngine.INSTANCE.setSizes(gameSize, gridSize);
         GameEngine.INSTANCE.initilizeGame();
     }
 
     private void setupControls() {
 
-        scatterTimer = new Timer(10000, (ae -> {
+        Timer scatterTimer = new Timer(10000, (ae -> {
             Toolkit.getDefaultToolkit().sync();
             GameEngine.INSTANCE.setScatter();
         }));
 
-        timer = new Timer(10, (ae -> {
+        Timer timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
             if (GameEngine.INSTANCE.isRunning) {
 
