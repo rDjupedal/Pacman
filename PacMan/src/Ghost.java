@@ -1,6 +1,5 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
-import javax.swing.JComponent;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
