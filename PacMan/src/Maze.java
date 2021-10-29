@@ -54,6 +54,7 @@ public final class Maze extends JComponent {
     }
 
     protected void startMaze(int level, Dimension paneSize, Dimension gridSize) {
+
         this.level = level;
         this.width = paneSize.width;
         this.height = paneSize.height;

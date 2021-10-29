@@ -10,6 +10,7 @@ public class GameEngine {
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     private Dimension gameSize, gridSize;
     protected boolean isRunning = false;
+    protected boolean isGameOver = false;
 
     private GameEngine() {}
 
@@ -43,12 +44,13 @@ public class GameEngine {
         // stops the EDT timer
         isRunning = false;
 
-        if (lives < 0) gameOver();
+        if (lives < 1) gameOver();
     }
 
 
     private void gameOver(){
         System.out.println("Game over");
+        isGameOver = true;
     }
 
 
@@ -67,6 +69,7 @@ public class GameEngine {
     protected void startGame() {
         System.out.println("Game started");
         isRunning = true;
+        isGameOver = false;
     }
 
     protected void ateFood() { score += 10; }

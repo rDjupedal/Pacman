@@ -13,6 +13,7 @@ public class PacmanFrame extends JFrame {
     private JLabel bottomLabel, scoreLabel;
     private Dimension gameSize, gridSize;
     private ImageIcon liveIcon;
+    private JDialog gameOverDialog;
     private ArrayList<JLabel> livesLeft = new ArrayList<>();
     Timer timer;
 
@@ -20,7 +21,10 @@ public class PacmanFrame extends JFrame {
         JPanel contentPanel = new JPanel(new BorderLayout(3, 1));
 
         gameSize = new Dimension(width, height);
-        gridSize = new Dimension(width / 28, height / 31);
+        gridSize = new Dimension((int) width / 28, (int) height / 31);
+
+        // round down
+
 
         GameEngine.INSTANCE.setSizes(gameSize, gridSize);
         GameEngine.INSTANCE.initGame();
@@ -48,6 +52,8 @@ public class PacmanFrame extends JFrame {
         contentPanel.add(mazePanel, BorderLayout.CENTER);
         contentPanel.add(bottomPanel, BorderLayout.AFTER_LAST_LINE);
 
+        gameOverDialog = new JDialog(this, "Game over !");
+
         add(contentPanel);
         setContentPane(contentPanel);
         setVisible(true);
@@ -55,9 +61,8 @@ public class PacmanFrame extends JFrame {
         requestFocusInWindow();
 
         setupControls();
-        //GameEngine.INSTANCE.setSizes(gameSize, gridSize);
-        //GameEngine.INSTANCE.initGame();
 
+        // The pacman icons in the bottom bar indicating number of lives left
         liveIcon = new ImageIcon(GameEngine.INSTANCE.getPacman().pacImages.get(1));
         for (int i = 0; i < GameEngine.INSTANCE.getLives(); i++) {
             JLabel label = new JLabel(liveIcon);
@@ -75,17 +80,14 @@ public class PacmanFrame extends JFrame {
 
         timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
-            if (GameEngine.INSTANCE.isRunning) {
-
                 // Update the game
                 gameUpdate();
 
                 //Update game stats in bottom panel
                 updateBottom();
 
-                //Update score i topPanel
+                //Update score in topPanel
                 updateTop();
-            }
 
         }));
 
@@ -126,6 +128,13 @@ public class PacmanFrame extends JFrame {
         // Check if game has been stopped
         if (!GameEngine.INSTANCE.isRunning) {
             timer.stop();
+
+            if (GameEngine.INSTANCE.isGameOver) {
+                gameOverDialog.add(new JLabel("Game over, score: " + GameEngine.INSTANCE.getScore()));
+                gameOverDialog.setSize(200,200);
+                gameOverDialog.setVisible(true);
+                System.out.println("game over from frame");
+            }
         } else {
             debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", " + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
             //System.out.println("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
