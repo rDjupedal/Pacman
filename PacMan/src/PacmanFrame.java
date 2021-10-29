@@ -11,6 +11,7 @@ public class PacmanFrame extends JFrame {
     private JPanel bottomPanel;
     private JLabel bottomLabel, scoreLabel;
     private Dimension gameSize, gridSize;
+    Timer timer;
 
     protected PacmanFrame(int width, int height) {
         JPanel contentPanel = new JPanel(new BorderLayout(3, 1));
@@ -52,7 +53,7 @@ public class PacmanFrame extends JFrame {
 
         setupControls();
         GameEngine.INSTANCE.setSizes(gameSize, gridSize);
-        GameEngine.INSTANCE.initilizeGame();
+        GameEngine.INSTANCE.initGame();
     }
 
     private void setupControls() {
@@ -62,7 +63,7 @@ public class PacmanFrame extends JFrame {
             GameEngine.INSTANCE.setScatter();
         }));
 
-        Timer timer = new Timer(10, (ae -> {
+        timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
             if (GameEngine.INSTANCE.isRunning) {
 
@@ -112,13 +113,17 @@ public class PacmanFrame extends JFrame {
 
     protected void gameUpdate() {
 
-        debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
-        //System.out.println("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
-        GameEngine.INSTANCE.updateGame();
+        // Check if game has been stopped
+        if (!GameEngine.INSTANCE.isRunning) {
+            timer.stop();
+        } else {
+            debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", " + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
+            //System.out.println("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
+            GameEngine.INSTANCE.updateGame();
 
-        // Repaint the characters
-        mazePanel.drawCharacters();
-
+            // Repaint the characters
+            mazePanel.drawCharacters();
+        }
     }
 
     private void updateBottom() {

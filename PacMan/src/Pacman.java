@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 class Pacman extends JComponent implements LivingCharacter {
-    int x, y;
+    private int x, y;
     final int pacSize = 30;
     final int moveDistance = 2;
     // . means no current direction
@@ -239,5 +239,16 @@ class Pacman extends JComponent implements LivingCharacter {
             return new Rectangle(x - 2, y - 2, pacSize + 4, pacSize + 4);
         }
     }
+
+    /**
+     * Returns a rectangle for collision check
+     * @return rectangle only covering pacman
+     */
+    public Rectangle getCollisionRectangle() {
+        return new Rectangle(x + moveDistance, y + moveDistance, pacSize - moveDistance, pacSize - moveDistance);
+    }
+
+    protected int get_X() { return x; }
+    protected int get_Y() { return y; }
 
 }

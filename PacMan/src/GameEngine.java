@@ -1,3 +1,5 @@
+import org.ietf.jgss.GSSManager;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -18,16 +20,30 @@ public class GameEngine {
     protected void updateGame() {
 
         // Check if game is finished (if food is still left)
-        if (Maze.INSTANCE.getFoodLeft() < 1) {
-            System.out.println("game finished!!");
-            GameEngine.INSTANCE.isRunning = false;
-        }
+        if (Maze.INSTANCE.getFoodLeft() < 1) { finishGame(); }
 
-        // Move the characters
+        // Move the characters & check for collisions
         pacman.doMove();
-        for (Ghost monster : ghosts) {
-            monster.doMove();
+        for (Ghost ghost : ghosts) {
+            ghost.doMove();
+            if ( ghost.getCollisionRectangle().intersects(pacman.getCollisionRectangle()) ) {
+                System.out.println("COLLISION DETECTED!");
+                lives--;
+                isRunning = false;
+                if (lives < 0) gameOver();
+                else {} // stop EDT timer
+
+            }
         }
+    }
+
+
+    private void gameOver(){}
+
+
+    private void finishGame() {
+        System.out.println("game finished!!");
+        GameEngine.INSTANCE.isRunning = false;
     }
 
     protected void initGame() {

@@ -86,7 +86,6 @@ public class Ghost extends JComponent implements LivingCharacter {
         while (pickDirection) {
             direction = getState();
             pickDirection = false;
-
         }
 
         if (!pickDirection) {
@@ -221,6 +220,15 @@ public class Ghost extends JComponent implements LivingCharacter {
             return iFrightenedBehaviour.FrightenedBehaviour(x, y);
         }
     }
+
+    /**
+     * Returns a rectangle for collision check
+     * @return rectangle only covering pacman
+     */
+    public Rectangle getCollisionRectangle() {
+        return new Rectangle(x + moveDistance, y + moveDistance, ghostSize - moveDistance, ghostSize - moveDistance);
+    }
+
 
     public BufferedImage getImage() {
         // TODO Auto-generated method stub
