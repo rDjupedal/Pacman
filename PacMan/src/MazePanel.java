@@ -15,9 +15,16 @@ class MazePanel extends JPanel {
     }
 
     protected void drawCharacters () {
-        repaint(pacman.getRectangle());
-        for (Ghost monster : ghosts) {
-            repaint(monster.getRectangle());
+        //If Pacman died, repaint the whole panel
+        if (pacman.died()) {
+            System.out.println("pacman died, clean the screen..");
+            repaint();
+
+        } else {
+            repaint(pacman.getRectangle());
+            for (Ghost monster : ghosts) {
+                repaint(monster.getRectangle());
+            }
         }
     }
 

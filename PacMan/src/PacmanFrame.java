@@ -4,6 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class PacmanFrame extends JFrame {
     private JLabel debugLabel = new JLabel();
@@ -11,6 +12,8 @@ public class PacmanFrame extends JFrame {
     private JPanel bottomPanel;
     private JLabel bottomLabel, scoreLabel;
     private Dimension gameSize, gridSize;
+    private ImageIcon liveIcon;
+    private ArrayList<JLabel> livesLeft = new ArrayList<>();
     Timer timer;
 
     protected PacmanFrame(int width, int height) {
@@ -19,8 +22,8 @@ public class PacmanFrame extends JFrame {
         gameSize = new Dimension(width, height);
         gridSize = new Dimension(width / 28, height / 31);
 
-        GameEngine.INSTANCE.createPacman();
-        GameEngine.INSTANCE.createGhosts();
+        GameEngine.INSTANCE.setSizes(gameSize, gridSize);
+        GameEngine.INSTANCE.initGame();
 
         mazePanel = new MazePanel(GameEngine.INSTANCE.getPacman(), GameEngine.INSTANCE.getGhosts());
         mazePanel.setPreferredSize(gameSize);
@@ -52,8 +55,15 @@ public class PacmanFrame extends JFrame {
         requestFocusInWindow();
 
         setupControls();
-        GameEngine.INSTANCE.setSizes(gameSize, gridSize);
-        GameEngine.INSTANCE.initGame();
+        //GameEngine.INSTANCE.setSizes(gameSize, gridSize);
+        //GameEngine.INSTANCE.initGame();
+
+        liveIcon = new ImageIcon(GameEngine.INSTANCE.getPacman().pacImages.get(1));
+        for (int i = 0; i < GameEngine.INSTANCE.getLives(); i++) {
+            JLabel label = new JLabel(liveIcon);
+            livesLeft.add(label);
+            bottomPanel.add(label);
+        }
     }
 
     private void setupControls() {
@@ -126,9 +136,20 @@ public class PacmanFrame extends JFrame {
         }
     }
 
+    /**
+     * Checks if the number of lives has changed, and if so updates labels
+     */
     private void updateBottom() {
-        bottomLabel.setText("test");
 
+        if (!livesLeft.isEmpty()) {
+            if (livesLeft.size() != GameEngine.INSTANCE.getLives()) {
+                livesLeft.get(livesLeft.size() - 1).setVisible(false);
+                this.remove(livesLeft.get(livesLeft.size() - 1));
+                System.out.println("setting the last one to invisibble..");
+                livesLeft.remove(livesLeft.size() - 1);
+                System.out.println("Lives left " + livesLeft.size());
+            }
+        }
     }
 
     private void updateTop() {

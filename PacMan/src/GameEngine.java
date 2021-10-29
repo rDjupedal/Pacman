@@ -6,6 +6,7 @@ public class GameEngine {
     protected static final GameEngine INSTANCE = new GameEngine();
     private int level = 1, score = 0, lives = 3;
     private Pacman pacman;
+    private int pacmanStartX = 400, pacmanStartY = 690;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     private Dimension gameSize, gridSize;
     protected boolean isRunning = false;
@@ -25,18 +26,30 @@ public class GameEngine {
         for (Ghost ghost : ghosts) {
             ghost.doMove();
             if ( ghost.getCollisionRectangle().intersects(pacman.getCollisionRectangle()) ) {
-                System.out.println("COLLISION DETECTED!");
-                lives--;
-                isRunning = false;
-                if (lives < 0) gameOver();
-                else {} // stop EDT timer
-
+                collisionDetected();
             }
         }
     }
 
+    private void collisionDetected() {
+        lives--;
 
-    private void gameOver(){}
+        // MazePanel checks this and repaints the whole screen
+        pacman.died = true;
+
+        // Reset the position of the characters
+        resetCharacterPositions();
+
+        // stops the EDT timer
+        isRunning = false;
+
+        if (lives < 0) gameOver();
+    }
+
+
+    private void gameOver(){
+        System.out.println("Game over");
+    }
 
 
     private void finishGame() {
@@ -46,25 +59,34 @@ public class GameEngine {
 
     protected void initGame() {
         System.out.println("Game initialized");
+        createPacman();
         createMaze();
-        createGhosts();
         createGhosts();
     }
 
     protected void startGame() {
-        System.out.println("Game started .");
+        System.out.println("Game started");
         isRunning = true;
     }
 
-    protected void ateFood() { score += 100; }
+    protected void ateFood() { score += 10; }
     protected int getScore() { return score; }
 
     protected void createMaze() { Maze.INSTANCE.startMaze(level, gameSize, gridSize); }
 
+    protected void resetCharacterPositions() {
+        pacman.x = pacmanStartX;
+        pacman.y = pacmanStartY;
+        ghosts.get(0).setPos(330,390);
+        ghosts.get(1).setPos(330,450);
+        ghosts.get(2).setPos(480,390);
+        ghosts.get(3).setPos(480,450);
+    }
+
     protected void createPacman() {
         AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
         //todo: replace harcoded startpos with Maze.INSTANCE.getPacmanX() & Maze.INSTANCE.getPacmanY()
-        pacman = pacManFactory.getCharacter("pacman", 400, 690);
+        pacman = pacManFactory.getCharacter("pacman", pacmanStartX, pacmanStartY);
     }
 
     protected void createGhosts() {
@@ -84,12 +106,11 @@ public class GameEngine {
     }
 
     protected ArrayList<Ghost> getGhosts() { return ghosts; }
+    protected int getLives() {return lives; }
 
     protected void setScatter() {
         ghosts.forEach(ghost -> {
             ghost.setScatter();
         });
     }
-
-
 }

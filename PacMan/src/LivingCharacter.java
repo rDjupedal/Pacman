@@ -74,6 +74,11 @@ class LivingCharacter extends JComponent {
     protected int get_X() { return x; }
     protected int get_Y() { return y; }
 
+    protected void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public void draw(Graphics g) {
         // Stops animation if pacman is not moving.
         if (isMoving) {

@@ -24,13 +24,7 @@ public final class Maze extends JComponent {
     /**
      * Empty private constructor, Singleton
      */
-    private Maze() {
-    }
-
-    protected ArrayList<MazeBrick> getNeighbourBricks(Dimension position) {
-        ArrayList<MazeBrick> neighbours = new ArrayList<MazeBrick>();
-        return neighbours;
-    }
+    private Maze() {}
 
     /**
      * Returns brick at point

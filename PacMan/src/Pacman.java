@@ -12,10 +12,19 @@ class Pacman extends LivingCharacter {
     // . means no lastKey waiting
     char lastKey = '.';
     int highOnCandyMs = 0;
+    boolean died = false;
 
     ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
     BufferedImage currentImgBig;
     BufferedImage currentImgSmall;
+
+    protected boolean died() {
+        if (died) {
+            died = false;
+            return true;
+        }
+        return false;
+    }
 
     public Pacman(int x, int y) {
         this.x = x;
@@ -38,7 +47,7 @@ class Pacman extends LivingCharacter {
             pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacDownSmall.png"))); // 7
 
             // Initial pic.
-            currentImgBig = pacImages.get(0);
+            currentImgBig = pacImages.get(1);
             currentImgSmall = pacImages.get(4);
 
         } catch (IOException e) {
