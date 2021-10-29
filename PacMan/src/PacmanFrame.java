@@ -85,7 +85,7 @@ public class PacmanFrame extends JFrame {
 
                 if (GameEngine.INSTANCE.isRunning) {
                     GameEngine.INSTANCE.getPacman().keyPressed(e);
-                    GameEngine.INSTANCE.getGhosts().forEach(z -> z.keyPressed(e));
+                    //GameEngine.INSTANCE.getGhosts().forEach(z -> z.keyPressed(e));
                 } else {
                     GameEngine.INSTANCE.startGame();
                     GameEngine.INSTANCE.getPacman().keyPressed(e);

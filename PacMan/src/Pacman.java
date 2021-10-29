@@ -7,26 +7,21 @@ import java.awt.image.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-class Pacman extends JComponent implements LivingCharacter {
-    private int x, y;
-    final int pacSize = 30;
-    final int moveDistance = 2;
-    // . means no current direction
-    char direction = '.';
+class Pacman extends LivingCharacter {
+
     // . means no lastKey waiting
     char lastKey = '.';
-    boolean isMoving = false;
     int highOnCandyMs = 0;
 
     ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
     BufferedImage currentImgBig;
     BufferedImage currentImgSmall;
-    Boolean animation = true;
 
     public Pacman(int x, int y) {
         this.x = x;
         this.y = y;
         Maze.INSTANCE.setPacManPos(x, y);
+        animation = true;
         System.out.println("Creating a Pac at " + x + ", " + y);
 
         // Load images.
@@ -78,14 +73,6 @@ class Pacman extends JComponent implements LivingCharacter {
         }
     }
 
-    private boolean withinBoundary() {
-        if ((y >= pacSize && y <= Maze.INSTANCE.height - pacSize)
-                && (x >= pacSize && x <= Maze.INSTANCE.width - pacSize)) return true;
-        else {
-            System.out.println("Out of boundary, " + x + ", " + y);
-            return false;
-        }
-    }
 
     public void doMove() {
         if (highOnCandyMs > 0) highOnCandyMs -= 1;
@@ -157,7 +144,7 @@ class Pacman extends JComponent implements LivingCharacter {
 
         case 'R':
             // if pacman went thru tunnel
-            if (x + pacSize + moveDistance > Maze.INSTANCE.width)
+            if (x + cSize + moveDistance > Maze.INSTANCE.width)
                 // x = -pacSize;
                 x = 0;
 
@@ -191,64 +178,12 @@ class Pacman extends JComponent implements LivingCharacter {
 
     }
 
-    private boolean inVerticalGrid() {
-        return (x % Maze.INSTANCE.gridWidth <= 1);
-    }
-
-    private boolean inHorizontalGrid() {
-        return (y % Maze.INSTANCE.gridHeight <= 1);
-    }
-
-    private boolean goUp() {
-        return (!Maze.INSTANCE.getBrick(x + pacSize / 2, y - moveDistance).isWall());
-    }
-
-    private boolean goDown() {
-        return (!Maze.INSTANCE.getBrick(x + pacSize / 2, y + pacSize).isWall());
-    }
-
-    private boolean goLeft() {
-        return (!Maze.INSTANCE.getBrick(x - moveDistance, y + pacSize / 2).isWall());
-    }
-
-    private boolean goRight() {
-        return (!Maze.INSTANCE.getBrick(x + pacSize, y + pacSize / 2).isWall());
-    }
-
     public void draw(Graphics g) {
         // Stops animation if pacman is not moving.
         if (isMoving) {
             animation = !animation;
         }
-
-        g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, pacSize, pacSize, null);
+        //pacman:
+        g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, cSize, cSize, null);
     }
-
-    /**
-     * Returns a surrounding rectangle of pacman in order to determine repaint area
-     * 
-     * @return rectangle surrounding pacman
-     */
-    public Rectangle getRectangle() {
-
-        // If pacman is just crossing through the shortcut return a wider rectangle
-        // covering both exists
-        if ((x < pacSize && direction == 'R') || x + pacSize > Maze.INSTANCE.width && direction == 'L') {
-            return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, pacSize + 4);
-        } else {
-            return new Rectangle(x - 2, y - 2, pacSize + 4, pacSize + 4);
-        }
-    }
-
-    /**
-     * Returns a rectangle for collision check
-     * @return rectangle only covering pacman
-     */
-    public Rectangle getCollisionRectangle() {
-        return new Rectangle(x + moveDistance, y + moveDistance, pacSize - moveDistance, pacSize - moveDistance);
-    }
-
-    protected int get_X() { return x; }
-    protected int get_Y() { return y; }
-
 }

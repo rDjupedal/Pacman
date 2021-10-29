@@ -1,17 +1,11 @@
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.awt.event.KeyEvent;
-import javax.swing.*;
-import java.awt.*;
 import javax.swing.JComponent;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
 
-public class Ghost extends JComponent implements LivingCharacter {
-    private int x, y;
-
+public class Ghost extends LivingCharacter {
     IChaseBehaviour iChaseBehaviour;
     IScatterBehaviour iScatterBehaviour;
     IFrightenedBehaviour iFrightenedBehaviour;
@@ -22,7 +16,7 @@ public class Ghost extends JComponent implements LivingCharacter {
     Boolean pickDirection = true;
 
     String name;
-    final int ghostSize = 30;
+    final int cSize = 30;
     final int moveDistance = 2;
     String direction;
     ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
@@ -36,6 +30,7 @@ public class Ghost extends JComponent implements LivingCharacter {
         iWakeUpBehaviour = new WakeUpBehaviour(this);
         this.ghostColor = color.toLowerCase();
         this.name = String.format("%s ghost", ghostColor);
+        animation = false;
 
         // Will be changed to reflect the movement of each ghost later when other
         // movements are implemented.
@@ -77,7 +72,6 @@ public class Ghost extends JComponent implements LivingCharacter {
         currentImg = ghostImgs.get(0);
     }
 
-    @Override
     public void doMove() {
 
         if (inHorizontalGrid() && inVerticalGrid()) {
@@ -128,67 +122,12 @@ public class Ghost extends JComponent implements LivingCharacter {
         }
     }
 
-    private boolean inVerticalGrid() {
-        return (x % Maze.INSTANCE.gridWidth == 0);
-    }
-
-    private boolean inHorizontalGrid() {
-        return (y % Maze.INSTANCE.gridHeight == 0);
-    }
-
-    /**
-     * Getters för positionen.
-     */
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    @Override
-    public void draw(Graphics g) {
-        // System.out.printf("Drawing %s from Monsterclass %n", name);
-        g.drawImage(currentImg, x, y, ghostSize, ghostSize, null);
-    }
-
-    /**
-     * Returns a rectangle around pacman in order to only redraw this part
-     * 
-     * @return rectangle surronding object
-     */
-
-    public Rectangle getRectangle() {
-
-        if ((x < Maze.INSTANCE.gridWidth && direction.equalsIgnoreCase("right"))
-                || (x + Maze.INSTANCE.gridWidth > Maze.INSTANCE.width && direction.equalsIgnoreCase("left"))) {
-            return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, Maze.INSTANCE.gridHeight + 4);
-        } else {
-            return new Rectangle(x - 2, y - 2, ghostSize + 4, ghostSize + 4);
-        }
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-        if (e.getKeyCode() == 83) {
-
-            setChase();
-
-        }
-
-    }
-
     public void setChase() {
         currentState = "chase";
-
         System.out.println("current state is : " + currentState);
     }
 
     public void setScatter() {
-
         currentState = "scatter";
         System.out.println("current state is : " + currentState);
     }
@@ -221,17 +160,12 @@ public class Ghost extends JComponent implements LivingCharacter {
         }
     }
 
-    /**
-     * Returns a rectangle for collision check
-     * @return rectangle only covering pacman
-     */
-    public Rectangle getCollisionRectangle() {
-        return new Rectangle(x + moveDistance, y + moveDistance, ghostSize - moveDistance, ghostSize - moveDistance);
+    public void draw(Graphics g) {
+        // Stops animation if pacman is not moving.
+        if (isMoving) {
+            animation = !animation;
+        }
+        g.drawImage(currentImg, x, y, cSize, cSize, null);
     }
 
-
-    public BufferedImage getImage() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }
