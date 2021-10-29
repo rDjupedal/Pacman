@@ -163,10 +163,7 @@ public class Ghost extends LivingCharacter {
     }
 
     public void draw(Graphics g) {
-        // Stops animation if pacman is not moving.
-        if (isMoving) {
-            animation = !animation;
-        }
+
         g.drawImage(currentImg, x, y, cSize, cSize, null);
     }
 

@@ -188,7 +188,7 @@ class Pacman extends LivingCharacter {
         if (isMoving) {
             animation = !animation;
         }
-        //pacman:
+
         g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, cSize, cSize, null);
     }
 }

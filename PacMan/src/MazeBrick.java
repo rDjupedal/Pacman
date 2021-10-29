@@ -3,7 +3,6 @@ import java.awt.image.BufferedImage;
 
 public class MazeBrick {
     int x, y, width, height;
-    int state;
     String type;
     BufferedImage image;
 
@@ -14,8 +13,6 @@ public class MazeBrick {
         this.y = y;
         this.width = width;
         this.height = height;
-        // DEBUg
-        // System.out.println("brick created at " + x + ", " + y );
     }
 
     protected void changeBrick (String newType, BufferedImage newImage) {
