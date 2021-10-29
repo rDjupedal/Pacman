@@ -1,5 +1,3 @@
-import org.ietf.jgss.GSSManager;
-
 import java.awt.*;
 import java.util.ArrayList;
 
