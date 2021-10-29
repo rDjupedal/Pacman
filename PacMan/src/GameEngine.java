@@ -33,18 +33,24 @@ public class GameEngine {
     }
 
     private void collisionDetected() {
-        lives--;
+        if ( pacman.highOnCandyMs < 1) {
+            lives--;
 
-        // MazePanel checks this and repaints the whole screen
-        pacman.died = true;
+            // MazePanel checks this and repaints the whole screen
+            pacman.died = true;
 
-        // Reset the position of the characters
-        resetCharacterPositions();
+            // Reset the position of the characters
+            resetCharacterPositions();
 
-        // stops the EDT timer
-        isRunning = false;
+            // stops the EDT timer
+            isRunning = false;
 
-        if (lives < 1) gameOver();
+            if (lives < 1) gameOver();
+
+        } else {
+            System.out.println("Ghost dies");
+            score += 500;
+        }
     }
 
 

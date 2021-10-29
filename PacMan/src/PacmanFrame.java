@@ -23,9 +23,6 @@ public class PacmanFrame extends JFrame {
         gameSize = new Dimension(width, height);
         gridSize = new Dimension((int) width / 28, (int) height / 31);
 
-        // round down
-
-
         GameEngine.INSTANCE.setSizes(gameSize, gridSize);
         GameEngine.INSTANCE.initGame();
 
