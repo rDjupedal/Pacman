@@ -2,18 +2,46 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-//Image imports
-import java.awt.image.*;
 
-class LivingCharacter extends JComponent {
+abstract class LivingCharacter extends JComponent {
     protected int x, y;
     boolean animation;
     boolean isMoving = false;
-
     // . means no current direction
     char direction = '.';
     final int cSize = 30;
     final int moveDistance = 2;
+
+    /**
+     * Template method pattern to make a move
+    */
+    protected final void doMove() {
+        setDirection();
+        moveCharacter();
+    }
+
+    /**
+     * Sets an allowed direction of the character
+     */
+    protected abstract void setDirection();
+
+    /**
+     * Physically moves the character
+     */
+    protected abstract void moveCharacter();
+
+    /**
+     * Hook method, not mandatory for baseclass to implement if it doesn't want to
+     * listen to key presses
+     * @param e KeyEvent
+     */
+    protected void keyPressed(KeyEvent e){}
+
+    /**
+     * Draws the character
+     * @param g
+     */
+    abstract public void draw(Graphics g);
 
     protected boolean withinBoundary() {
         if ((y >= cSize && y <= Maze.INSTANCE.height - cSize)
@@ -79,16 +107,5 @@ class LivingCharacter extends JComponent {
         this.y = y;
     }
 
-    public void draw(Graphics g) {
-        // Stops animation if pacman is not moving.
-        if (isMoving) {
-            animation = !animation;
-        }
 
-        //pacman:
-        //g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, cSize, cSize, null);
-
-        // ghosts:
-        //g.drawImage(currentImg, x, y, cSize, cSize, null);
-    }
 }

@@ -71,7 +71,7 @@ public class Ghost extends LivingCharacter {
         currentImg = ghostImgs.get(0);
     }
 
-    public void doMove() {
+    protected void setDirection() {
 
         if (inHorizontalGrid() && inVerticalGrid()) {
             pickDirection = true;
@@ -80,6 +80,9 @@ public class Ghost extends LivingCharacter {
             direction = getState();
             pickDirection = false;
         }
+    }
+
+    protected void moveCharacter() {
 
         if (!pickDirection) {
             switch (direction) {

@@ -26,12 +26,11 @@ class Pacman extends LivingCharacter {
         return false;
     }
 
-    public Pacman(int x, int y) {
+    protected Pacman(int x, int y) {
         this.x = x;
         this.y = y;
         Maze.INSTANCE.setPacManPos(x, y);
         animation = true;
-        System.out.println("Creating a Pac at " + x + ", " + y);
 
         // Load images.
         try {
@@ -55,11 +54,7 @@ class Pacman extends LivingCharacter {
         }
     }
 
-    public BufferedImage getImage() {
-        return currentImgBig;
-    }
-
-    public void keyPressed(KeyEvent e) {
+    protected void keyPressed(KeyEvent e) {
 
         switch (e.getKeyCode()) {
         case KeyEvent.VK_UP:
@@ -82,8 +77,7 @@ class Pacman extends LivingCharacter {
         }
     }
 
-
-    public void doMove() {
+    protected void setDirection() {
         if (highOnCandyMs > 0) highOnCandyMs -= 1;
 
         // Check if a key has been pressed...
@@ -107,7 +101,9 @@ class Pacman extends LivingCharacter {
                 }
             }
         }
+    }
 
+    protected void moveCharacter() {
         /**
          * Rita pacman med munnen åt rätt håll samt förflytta honom Kolla innan varje
          * förflyttning at närliggande ruta ej är en vägg
