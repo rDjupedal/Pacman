@@ -20,17 +20,17 @@ public class ScatterBehaviour implements IScatterBehaviour {
             break;
 
         case "TR":
-            scatterX = 685;
+            scatterX = 660;
             scatterY = -10;
             break;
 
         case "BL":
-            scatterX = 230;
+            scatterX = 0;
             scatterY = 950;
             break;
 
         case "BR":
-            scatterX = 615;
+            scatterX = 810;
             scatterY = 950;
             break;
 
@@ -43,11 +43,11 @@ public class ScatterBehaviour implements IScatterBehaviour {
     public String scatter(int x, int y) {
 
         ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("left")) {
+        if (previousMove.equalsIgnoreCase("left") || Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall()) {
             possibleMovesArray.remove("right");
 
         }
-        if (Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("right")) {
+        if (previousMove.equalsIgnoreCase("right") || Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall()) {
             possibleMovesArray.remove("left");
 
         }

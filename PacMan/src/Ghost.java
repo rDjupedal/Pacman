@@ -36,11 +36,11 @@ public class Ghost extends LivingCharacter {
         switch (ghostColor) {
         case "red":
             iChaseBehaviour = new ChaseAggresive();
-            iScatterBehaviour = new ScatterBehaviour("BR");
+            iScatterBehaviour = new ScatterBehaviour("BTR");
             break;
         case "blue":
             iChaseBehaviour = new ChaseAmbush();
-            iScatterBehaviour = new ScatterBehaviour("TR");
+            iScatterBehaviour = new ScatterBehaviour("BR");
             break;
 
         case "yellow":
