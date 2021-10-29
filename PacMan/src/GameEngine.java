@@ -5,13 +5,15 @@ public class GameEngine {
 
     protected static final GameEngine INSTANCE = new GameEngine();
     private int level = 1, score = 0, lives = 3;
+    private int scatterCounter = 300;
+    private int chaseCounter = 1000;
     private Pacman pacman;
     private int pacmanStartX = 400, pacmanStartY = 690;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     private Dimension gameSize, gridSize;
     protected boolean isRunning = false;
     protected boolean isGameOver = false;
-    protected boolean pacManHigh = false;
+
     State stateSetter = new State();
 
     private GameEngine() {
@@ -21,6 +23,20 @@ public class GameEngine {
      * Called at every tick
      */
     protected void updateGame() {
+        if (stateSetter.isScatter()) {
+            scatterCounter -= 1;
+            if (scatterCounter == 0) {
+                setChase();
+                scatterCounter = 300;
+            }
+        }
+        if (stateSetter.isChase()) {
+            chaseCounter -= 1;
+            if (chaseCounter == 0) {
+                setScatter();
+                chaseCounter = 1000;
+            }
+        }
 
         // Check if game is finished (if food is still left)
         if (Maze.INSTANCE.getFoodLeft() < 1) {

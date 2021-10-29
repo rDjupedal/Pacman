@@ -84,7 +84,6 @@ class Pacman extends LivingCharacter {
         }
         if (highOnCandyMs == 1) {
             GameEngine.INSTANCE.setChase();
-
         }
 
         // Check if a key has been pressed...

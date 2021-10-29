@@ -30,4 +30,12 @@ public class State {
 
     }
 
+    public boolean isScatter() {
+        return CurrentState.equalsIgnoreCase("scatter");
+    }
+
+    public boolean isChase() {
+        return CurrentState.equalsIgnoreCase("chase");
+    }
+
 }

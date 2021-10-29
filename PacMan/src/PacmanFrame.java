@@ -70,16 +70,6 @@ public class PacmanFrame extends JFrame {
 
     private void setupControls() {
 
-        Timer scatterTimer = new Timer(10000, (ae -> {
-            Toolkit.getDefaultToolkit().sync();
-            GameEngine.INSTANCE.setScatter();
-        }));
-
-        Timer chaseTimer = new Timer(13000, (ae -> {
-            Toolkit.getDefaultToolkit().sync();
-            GameEngine.INSTANCE.setChase();
-        }));
-
         timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
             // Update the game
@@ -104,8 +94,7 @@ public class PacmanFrame extends JFrame {
                     GameEngine.INSTANCE.startGame();
                     GameEngine.INSTANCE.getPacman().keyPressed(e);
                     timer.start();
-                    scatterTimer.start();
-                    chaseTimer.start();
+
                 }
             }
         });
