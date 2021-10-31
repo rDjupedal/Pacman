@@ -5,26 +5,24 @@ import java.awt.image.*;
 import java.io.IOException;
 
 public class Ghost extends LivingCharacter implements StateObserver {
-    IChaseBehaviour iChaseBehaviour;
-    IScatterBehaviour iScatterBehaviour;
-    IFrightenedBehaviour iFrightenedBehaviour;
-    IWakeUpBehaviour iWakeUpBehaviour;
+    private IChaseBehaviour iChaseBehaviour;
+    private IScatterBehaviour iScatterBehaviour;
+    private IFrightenedBehaviour iFrightenedBehaviour;
+    private IWakeUpBehaviour iWakeUpBehaviour;
 
-    String ghostColor;
-    String imgPath;
-    Boolean onTheMove = false;
-    Boolean pickDirection = true;
-    boolean frigthened = false;
-    boolean animation = false;
+    private String ghostColor;
+    private String imgPath;
+    private Boolean pickDirection = true;
+    private boolean frigthened = false;
+    private boolean animation = false;
 
-    String name;
-    final int cSize = 30;
-    final int moveDistance = 2;
-    String direction;
-    ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
-    ArrayList<BufferedImage> frigthenedGhostImgs = new ArrayList<BufferedImage>();
-    BufferedImage currentImg;
-    String currentState = "wakeup";
+    private final int cSize = 30;
+    private final int moveDistance = 2;
+    private String direction;
+    private ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
+    private ArrayList<BufferedImage> frigthenedGhostImgs = new ArrayList<BufferedImage>();
+    private BufferedImage currentImg;
+    private String currentState = "wakeup";
 
     public Ghost(int x, int y, String color) {
         this.x = x;
@@ -33,7 +31,6 @@ public class Ghost extends LivingCharacter implements StateObserver {
         iWakeUpBehaviour = new WakeUpBehaviour(this);
 
         this.ghostColor = color.toLowerCase();
-        this.name = String.format("%s ghost", ghostColor);
         animation = false;
 
         // Will be changed to reflect the movement of each ghost later when other
