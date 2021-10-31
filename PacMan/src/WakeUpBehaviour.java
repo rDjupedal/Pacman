@@ -21,15 +21,6 @@ public class WakeUpBehaviour implements IWakeUpBehaviour {
     public String awokenBehaviour(int x, int y) {
         this.x = x;
         this.y = y;
-        if (atTarget()) {
-            // GameEngine.INSTANCE.setChase();
-        }
-
-        /**
-         * Hypo = Math.sqrt()
-         */
-
-        // TODO! Byta ut +30 till riktiga nummer från mazeBrick.
 
         ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
         if (Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("left")) {
@@ -51,10 +42,6 @@ public class WakeUpBehaviour implements IWakeUpBehaviour {
 
         List<Double> hypos = new ArrayList<>();
 
-        // DEBUG And Fake PAcman Positions. To be removed.
-        // System.out.println("Possible moves: " + possibleMovesArray.size());
-
-        // TODO! Check hypo for negative values.
         if (possibleMovesArray.size() == 1) {
             previousMove = possibleMovesArray.get(0);
             return previousMove;
@@ -102,10 +89,6 @@ public class WakeUpBehaviour implements IWakeUpBehaviour {
 
         return idx;
 
-    }
-
-    private boolean atTarget() {
-        return (x == wakeUpX && y == wakeUpY);
     }
 
 }

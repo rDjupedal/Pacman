@@ -5,7 +5,6 @@ public class GameEngine {
 
     protected static final GameEngine INSTANCE = new GameEngine();
     private int level = 1, score = 0, lives = 3;
-    private int scatterCounter = 300;
     private int chaseCounter = 1500;
     private Pacman pacman;
     private boolean highOnCandy = false;
@@ -44,7 +43,6 @@ public class GameEngine {
             }
 
             chaseCounter -= 1;
-            System.out.println("chaseCounter: " + chaseCounter);
         }
 
         if (highOnCandy) {
