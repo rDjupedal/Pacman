@@ -18,14 +18,6 @@ class Pacman extends LivingCharacter {
     BufferedImage currentImgBig;
     BufferedImage currentImgSmall;
 
-    protected boolean died() {
-        if (died) {
-            died = false;
-            return true;
-        }
-        return false;
-    }
-
     protected Pacman(int x, int y) {
         this.x = x;
         this.y = y;
@@ -45,13 +37,17 @@ class Pacman extends LivingCharacter {
             pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacUpSmall.png"))); // 6
             pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacDownSmall.png"))); // 7
 
-            // Initial pic.
-            currentImgBig = pacImages.get(1);
-            currentImgSmall = pacImages.get(4);
+            setInitImage();
 
         } catch (IOException e) {
             System.out.println("Pacmans bild kunde inte hämtas: " + e.getMessage());
         }
+    }
+
+    protected void setInitImage() {
+        // Initial pic.
+        currentImgBig = pacImages.get(1);
+        currentImgSmall = pacImages.get(4);
     }
 
     protected void keyPressed(KeyEvent e) {

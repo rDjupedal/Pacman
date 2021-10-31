@@ -125,6 +125,7 @@ public class GameEngine {
         ghosts.get(2).setPos(480,390);
         ghosts.get(3).setPos(480,450);
 
+        pacman.setInitImage();
         clearScreen = true;
     }
 
