@@ -138,12 +138,6 @@ public class PacmanFrame extends JFrame {
 
     protected void gameUpdate() {
 
-        /*
-        GameEngine.INSTANCE.isRunning = false;
-        GameEngine.INSTANCE.isGameOver = true;
-
-         */
-
         // Check if game has been stopped
         if (!GameEngine.INSTANCE.isRunning) {
             timer.stop();
@@ -160,6 +154,8 @@ public class PacmanFrame extends JFrame {
             // Repaint the characters
             mazePanel.drawCharacters();
         }
+
+
     }
 
     /**

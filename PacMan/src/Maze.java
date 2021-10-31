@@ -19,7 +19,7 @@ public final class Maze extends JComponent {
     private char pacManDirection;
     private byte[] readLevel;
     protected BufferedImage wall, space, food, candy, door;
-    private ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();
+    private ArrayList<MazeBrick> mazeBricks;
 
     /**
      * Empty private constructor, Singleton
@@ -105,6 +105,8 @@ public final class Maze extends JComponent {
     private void createMazeBricks() {
         int curX = 0;
         int curY = 0;
+        foodLeft = 0;
+        mazeBricks = new ArrayList<MazeBrick>();
 
         for (int i = 0; i < readLevel.length; i++) {
 
