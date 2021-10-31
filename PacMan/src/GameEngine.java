@@ -84,11 +84,12 @@ public class GameEngine {
     protected void newGame() {
         // Old Maze handled by garbage collector..
         createMaze();
+
         lives = 3;
         score = 0;
 
         // MazePanel checks this and repaints the whole screen
-        //clearScreen = true;
+        clearScreen = true;
     }
 
     protected boolean getClearScreen() {

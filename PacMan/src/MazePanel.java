@@ -15,7 +15,7 @@ class MazePanel extends JPanel {
     }
 
     protected void drawCharacters () {
-        //If Pacman died, repaint the whole panel
+        // Check if the whole panel should be repainted
         if (GameEngine.INSTANCE.getClearScreen()) {
             System.out.println("Repaint whole screen");
             repaint();

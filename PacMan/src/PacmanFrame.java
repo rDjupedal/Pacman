@@ -146,7 +146,6 @@ public class PacmanFrame extends JFrame {
                 gameOverDialog = new GameOverDialog();
                 gameOverDialog.setLocationRelativeTo(this);
                 gameOverDialog.setVisible(true);
-
             }
         } else {
             debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", " + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
@@ -155,7 +154,6 @@ public class PacmanFrame extends JFrame {
             // Repaint the characters
             mazePanel.drawCharacters();
         }
-
 
     }
 
