@@ -3,6 +3,7 @@ import java.util.List;
 
 public class State {
     private String CurrentState;
+    private String previousState = "";
     private final List<StateObserver> observers;
 
     public State() {
@@ -18,16 +19,24 @@ public class State {
         observers.remove(observer);
     }
 
-    public void notifyObservers() {
+    private void notifyObservers() {
         observers.forEach(observer -> {
             observer.updateState(CurrentState);
         });
     }
 
     public void setCurrentState(String state) {
-        CurrentState = state;
-        notifyObservers();
+        if (!isNewState(state)) {
+            previousState = CurrentState;
+            CurrentState = state;
+            notifyObservers();
 
+        }
+
+    }
+
+    private boolean isNewState(String state) {
+        return state.equalsIgnoreCase(previousState);
     }
 
     public boolean isScatter() {
