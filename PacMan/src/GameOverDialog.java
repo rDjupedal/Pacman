@@ -1,13 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class GameOverPanel extends JPanel {
+public class GameOverDialog extends JDialog {
+    private int score;
+    private int highScore;
+    private JTextField yourName;
 
-    boolean highScore = true;
+    protected GameOverDialog() {
+        score = GameEngine.INSTANCE.getScore();
+        highScore = HighScore.INSTANCE.getHighScore();
+        boolean isHighScore = score > highScore;
 
-    protected GameOverPanel() {
+        setTitle("Game over!");
         setLayout(new GridLayout(3,1, 3, 0));
 
         JLabel label1 = new JLabel("",JLabel.CENTER);
@@ -20,29 +25,37 @@ public class GameOverPanel extends JPanel {
         okBtn.addActionListener((ActionEvent e) -> {
             // Save to highscore
             System.out.println("Save to highscore..");
-            //this.getParent().di
-            // Clean board for new game
+            if (isHighScore) {
+                // todo: check input
+                String name = yourName.getText();
+
+                HighScore.INSTANCE.writeHighScore(name, score);
+            }
+
+            dispose();
+
+            // todo: Clean board for new game
             System.out.println(e.toString());
         });
-        //okBtn.setHorizontalAlignment(JButton.CENTER);
-        JTextField yourName = new JTextField();
+
+        yourName = new JTextField();
         yourName.setText("Enter your name..");
-        //yourName.setPreferredSize(new Dimension(150,20));
 
         JPanel p = new JPanel();
 
         //p.setLayout(new GridLayout());
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.setBackground(Color.GRAY);
 
         add(label1);
         add(label2);
 
-        if (highScore) {
+        if (isHighScore) {
+            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             label1.setText("You got a highscore!");
             yourName.setVisible(true);
             p.add(yourName);
         } else {
+            p.setLayout(new FlowLayout());
             label1.setText("Game over !");
             yourName.setVisible(false);
         }
@@ -50,9 +63,7 @@ public class GameOverPanel extends JPanel {
         p.add(okBtn);
         add(p);
 
-
-
-
     }
+
 
 }

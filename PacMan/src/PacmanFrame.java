@@ -10,7 +10,7 @@ public class PacmanFrame extends JFrame {
     private JLabel debugLabel = new JLabel();
     private MazePanel mazePanel;
     //private JPanel bottomPanel, topPanel;
-    private GameOverPanel gameOverPanel;
+    private GameOverDialog gameOverPanel;
     private JLabel bottomLabel, scoreLabel;
     private Dimension gameSize, gridSize;
     private ImageIcon liveIcon;
@@ -50,11 +50,12 @@ public class PacmanFrame extends JFrame {
         contentPanel.add(mazePanel, BorderLayout.CENTER);
         contentPanel.add(bottomPanel, BorderLayout.AFTER_LAST_LINE);
 
-        gameOverDialog = new JDialog(this, "Game over !");
+        //gameOverDialog = new JDialog(this, "Game over !");
+        gameOverDialog = new GameOverDialog();
         gameOverDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         gameOverDialog.setSize(400,300);
-        gameOverPanel = new GameOverPanel();
-        gameOverDialog.add(gameOverPanel);
+        //gameOverPanel = new GameOverDialog();
+        //gameOverDialog.add(gameOverPanel);
 
         //HighscorePanel highscorePanel = new HighscorePanel();
         //gameOverDialog.add(highscorePanel);
