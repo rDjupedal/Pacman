@@ -61,6 +61,7 @@ public class GameEngine {
     private void finishLevel() {
         System.out.println("game finished!!");
         GameEngine.INSTANCE.isRunning = false;
+        resetCharacterPositions();
         //todo level..
         //level++;
         createMaze();
@@ -103,6 +104,7 @@ public class GameEngine {
 
         // MazePanel checks this and repaints the whole screen
         clearScreen = true;
+        System.out.println("screen cleared from StartGame()");
 
         isRunning = true;
         isGameOver = false;

@@ -10,6 +10,7 @@ public class GameOverDialog extends JDialog {
     protected GameOverDialog() {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setSize(400,300);
+        setResizable(false);
         score = GameEngine.INSTANCE.getScore();
         highScore = HighScore.INSTANCE.getHighScore();
         boolean isHighScore = score > highScore;

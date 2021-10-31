@@ -144,6 +144,7 @@ public class PacmanFrame extends JFrame {
 
             if (GameEngine.INSTANCE.isGameOver) {
                 gameOverDialog = new GameOverDialog();
+                gameOverDialog.setLocationRelativeTo(this);
                 gameOverDialog.setVisible(true);
 
             }
@@ -162,7 +163,7 @@ public class PacmanFrame extends JFrame {
      * Checks if the number of lives has changed, and if so updates labels
      */
     private void updateBottom() {
-
+        /*
         if (!livesLeft.isEmpty()) {
             if (livesLeft.size() != GameEngine.INSTANCE.getLives()) {
                 livesLeft.get(livesLeft.size() - 1).setVisible(false);
@@ -170,7 +171,38 @@ public class PacmanFrame extends JFrame {
                 livesLeft.remove(livesLeft.size() - 1);
             }
         }
+         */
+
+        // how many are visible?
+        int visible = 0;
+        for (JLabel label : livesLeft) {
+            if (label.isVisible()) visible++;
+        }
+
+        if (visible > GameEngine.INSTANCE.getLives()) {
+            // Make first visible not visible
+
+            for (JLabel label : livesLeft) {
+                if (label.isVisible()) {
+                    label.setVisible(false);
+                    break;
+                }
+            }
+        }
+
+        if (visible < GameEngine.INSTANCE.getLives()) {
+            // Make first invisible visible
+            for (JLabel label : livesLeft) {
+                if (!label.isVisible()) {
+                    label.setVisible(true);
+                    break;
+                }
+            }
+        }
+
     }
+
+
 
     private void updateTop() {
         //Update score in the top
