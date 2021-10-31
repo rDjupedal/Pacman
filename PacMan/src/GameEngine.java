@@ -38,34 +38,9 @@ public class GameEngine {
         default:
             break;
         }
-        chaseCounter -= 1;
-
-        // EN COUNTER
-        // if (chaseCounter == 1300) {
-        // setChase();
-        // } else if (chaseCounter == 300) {
-        // setScatter();
-        // } else if (chaseCounter == 0) {
-        // chaseCounter = 1300;
-        // }
-        // chaseCounter -= 1;
-        // System.out.println(chaseCounter);
-
-        /// TVÅ COUNTERS
-        // if (stateSetter.isScatter()) {
-        // scatterCounter -= 1;
-        // if (scatterCounter == 0) {
-        // setChase();
-        // scatterCounter = 300;
-        // }
-        // }
-        // if (stateSetter.isChase()) {
-        // chaseCounter -= 1;
-        // if (chaseCounter == 0) {
-        // setScatter();
-        // chaseCounter = 1000;
-        // }
-        // }
+        if (!stateSetter.isFright()) {
+            chaseCounter -= 1;
+        }
 
         // Check if game is finished (if food is still left)
         if (Maze.INSTANCE.getFoodLeft() < 1) {

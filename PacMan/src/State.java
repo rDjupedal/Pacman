@@ -47,4 +47,8 @@ public class State {
         return CurrentState.equalsIgnoreCase("chase");
     }
 
+    public boolean isFright() {
+        return CurrentState.equalsIgnoreCase("fright");
+    }
+
 }
