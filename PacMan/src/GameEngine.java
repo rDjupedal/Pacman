@@ -6,8 +6,10 @@ public class GameEngine {
     protected static final GameEngine INSTANCE = new GameEngine();
     private int level = 1, score = 0, lives = 3;
     private int scatterCounter = 300;
-    private int chaseCounter = 1600;
+    private int chaseCounter = 1500;
     private Pacman pacman;
+    private boolean highOnCandy = false;
+    private int highOnCandyMs = 800;
     private int pacmanStartX = 400, pacmanStartY = 690;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     private Dimension gameSize, gridSize;
@@ -24,22 +26,30 @@ public class GameEngine {
      */
     protected void updateGame() {
 
-        switch (chaseCounter) {
-        case 1300:
-            setChase();
-            break;
-        case 300:
-            setScatter();
-            break;
-
-        case 0:
-            chaseCounter = 1300;
-            break;
-        default:
-            break;
-        }
         if (!stateSetter.isFright()) {
+            switch (chaseCounter) {
+            case 1300:
+                stateSetter.setChase();
+                break;
+            case 300:
+                stateSetter.setScatter();
+                break;
+
+            case 0:
+                chaseCounter = 1300;
+                break;
+            default:
+                break;
+            }
+
             chaseCounter -= 1;
+        }
+
+        if (highOnCandy) {
+            highOnCandyMs -= 1;
+            if (highOnCandyMs < 1) {
+                endhighOnCandy();
+            }
         }
 
         // Check if game is finished (if food is still left)
@@ -58,7 +68,8 @@ public class GameEngine {
     }
 
     private void collisionDetected() {
-        if (pacman.highOnCandyMs < 1) {
+        System.out.println(highOnCandy);
+        if (!highOnCandy) {
             lives--;
 
             // MazePanel checks this and repaints the whole screen
@@ -94,7 +105,7 @@ public class GameEngine {
         createPacman();
         createMaze();
         createGhosts();
-        stateSetter.setCurrentState("wakeup");
+        stateSetter.setWakeUp();
     }
 
     protected void startGame() {
@@ -122,7 +133,8 @@ public class GameEngine {
         ghosts.get(1).setPos(330, 450);
         ghosts.get(2).setPos(480, 390);
         ghosts.get(3).setPos(480, 450);
-        stateSetter.setCurrentState("wakeup");
+        stateSetter.setWakeUp();
+
     }
 
     protected void createPacman() {
@@ -162,16 +174,23 @@ public class GameEngine {
         return lives;
     }
 
-    protected void setScatter() {
-        stateSetter.setCurrentState("scatter");
-
-    }
-
     protected void setChase() {
         stateSetter.setCurrentState("chase");
     }
 
-    protected void setFright() {
-        stateSetter.setCurrentState("fright");
+    protected void setHighOnCandy() {
+        if (highOnCandy) {
+            highOnCandyMs += 800;
+        } else {
+
+            highOnCandy = true;
+            stateSetter.setFright();
+        }
+    }
+
+    private void endhighOnCandy() {
+        highOnCandy = false;
+        stateSetter.setPreviousState();
+        highOnCandyMs = 800;
     }
 }
