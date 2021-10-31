@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class PacmanFrame extends JFrame {
     private JLabel debugLabel = new JLabel();
     private MazePanel mazePanel;
-    private JPanel bottomPanel;
+    //private JPanel bottomPanel, topPanel;
+    private GameOverPanel gameOverPanel;
     private JLabel bottomLabel, scoreLabel;
     private Dimension gameSize, gridSize;
     private ImageIcon liveIcon;
@@ -38,7 +39,7 @@ public class PacmanFrame extends JFrame {
         scoreLabel.setForeground(Color.RED);
         topPanel.add(scoreLabel);
 
-        bottomPanel = new JPanel();
+        JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.setPreferredSize(new Dimension(width, gridSize.height));
         bottomPanel.setBackground(Color.BLACK);
         bottomPanel.setOpaque(true);
@@ -50,6 +51,13 @@ public class PacmanFrame extends JFrame {
         contentPanel.add(bottomPanel, BorderLayout.AFTER_LAST_LINE);
 
         gameOverDialog = new JDialog(this, "Game over !");
+        gameOverDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        gameOverDialog.setSize(400,300);
+        gameOverPanel = new GameOverPanel();
+        gameOverDialog.add(gameOverPanel);
+
+        //HighscorePanel highscorePanel = new HighscorePanel();
+        //gameOverDialog.add(highscorePanel);
 
         add(contentPanel);
         setContentPane(contentPanel);
@@ -122,15 +130,17 @@ public class PacmanFrame extends JFrame {
 
     protected void gameUpdate() {
 
+        //todo: ta bort
+        GameEngine.INSTANCE.isRunning = false;
+        GameEngine.INSTANCE.isGameOver = true;
+
         // Check if game has been stopped
         if (!GameEngine.INSTANCE.isRunning) {
             timer.stop();
 
             if (GameEngine.INSTANCE.isGameOver) {
-                gameOverDialog.add(new JLabel("Game over, score: " + GameEngine.INSTANCE.getScore()));
-                gameOverDialog.setSize(200,200);
                 gameOverDialog.setVisible(true);
-                System.out.println("game over from frame");
+
             }
         } else {
             debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", " + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
@@ -151,9 +161,7 @@ public class PacmanFrame extends JFrame {
             if (livesLeft.size() != GameEngine.INSTANCE.getLives()) {
                 livesLeft.get(livesLeft.size() - 1).setVisible(false);
                 this.remove(livesLeft.get(livesLeft.size() - 1));
-                System.out.println("setting the last one to invisibble..");
                 livesLeft.remove(livesLeft.size() - 1);
-                System.out.println("Lives left " + livesLeft.size());
             }
         }
     }
