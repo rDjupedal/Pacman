@@ -34,7 +34,7 @@ public class PacmanFrame extends JFrame {
         topPanel.setPreferredSize(new Dimension(width, gridSize.height));
         topPanel.setBackground(Color.BLACK);
 
-        Font topFont = new Font("", Font.BOLD, 25);
+        Font topFont = new Font("", Font.BOLD, 22);
 
         scoreLabel = new JLabel("0");
         scoreLabel.setFont(topFont);
@@ -42,7 +42,6 @@ public class PacmanFrame extends JFrame {
 
         JLabel highScoreLabel = new JLabel(HighScore.INSTANCE.getHighScoreName() + " " + HighScore.INSTANCE.getHighScore(), JLabel.RIGHT);
         highScoreLabel.setFont(topFont);
-        highScoreLabel.setOpaque(true);
         highScoreLabel.setForeground(Color.WHITE);
 
         topPanel.add(scoreLabel);
@@ -68,9 +67,11 @@ public class PacmanFrame extends JFrame {
         requestFocusInWindow();
 
         // GAME OVER DIALOG
+        /*
         gameOverDialog = new GameOverDialog();
         gameOverDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         gameOverDialog.setSize(400,300);
+         */
 
         setupControls();
 
@@ -137,15 +138,18 @@ public class PacmanFrame extends JFrame {
 
     protected void gameUpdate() {
 
-        //todo: ta bort
+        /*
         GameEngine.INSTANCE.isRunning = false;
         GameEngine.INSTANCE.isGameOver = true;
+
+         */
 
         // Check if game has been stopped
         if (!GameEngine.INSTANCE.isRunning) {
             timer.stop();
 
             if (GameEngine.INSTANCE.isGameOver) {
+                gameOverDialog = new GameOverDialog();
                 gameOverDialog.setVisible(true);
 
             }

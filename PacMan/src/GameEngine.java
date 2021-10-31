@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class GameEngine {
 
     protected static final GameEngine INSTANCE = new GameEngine();
-    private int level = 1, score = 14, lives = 3;
+    private int level = 1, score = 0, lives = 3;
     private Pacman pacman;
     private int pacmanStartX = 400, pacmanStartY = 690;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
@@ -63,8 +63,12 @@ public class GameEngine {
     private void finishGame() {
         System.out.println("game finished!!");
         GameEngine.INSTANCE.isRunning = false;
+        level++;
     }
 
+    /**
+     * Called only on program start
+     */
     protected void initGame() {
         System.out.println("Game initialized");
         createPacman();
@@ -72,8 +76,18 @@ public class GameEngine {
         createGhosts();
     }
 
+    /**
+     * Called after GameOver
+     */
+    protected void newGame() {
+        lives = 3;
+        score = 0;
+    }
+
+    /**
+     * Called after Pacman died / new game
+     */
     protected void startGame() {
-        System.out.println("Game started");
         isRunning = true;
         isGameOver = false;
     }

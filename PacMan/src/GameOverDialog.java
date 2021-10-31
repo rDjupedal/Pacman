@@ -8,6 +8,8 @@ public class GameOverDialog extends JDialog {
     private JTextField yourName;
 
     protected GameOverDialog() {
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setSize(400,300);
         score = GameEngine.INSTANCE.getScore();
         highScore = HighScore.INSTANCE.getHighScore();
         boolean isHighScore = score > highScore;
@@ -23,19 +25,19 @@ public class GameOverDialog extends JDialog {
 
         JButton okBtn = new JButton("OK");
         okBtn.addActionListener((ActionEvent e) -> {
+
             // Save to highscore
-            System.out.println("Save to highscore..");
             if (isHighScore) {
                 // todo: check input
                 String name = yourName.getText();
-
                 HighScore.INSTANCE.writeHighScore(name, score);
             }
 
+            // Close dialog
             dispose();
 
-            // todo: Clean board for new game
-            System.out.println(e.toString());
+            // New game
+            GameEngine.INSTANCE.newGame();
         });
 
         yourName = new JTextField();
@@ -43,7 +45,6 @@ public class GameOverDialog extends JDialog {
 
         JPanel p = new JPanel();
 
-        //p.setLayout(new GridLayout());
         p.setBackground(Color.GRAY);
 
         add(label1);
@@ -65,6 +66,4 @@ public class GameOverDialog extends JDialog {
         add(p);
 
     }
-
-
 }
