@@ -4,21 +4,25 @@ import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
 
-public class Ghost extends LivingCharacter {
+public class Ghost extends LivingCharacter implements StateObserver {
     IChaseBehaviour iChaseBehaviour;
     IScatterBehaviour iScatterBehaviour;
     IFrightenedBehaviour iFrightenedBehaviour;
     IWakeUpBehaviour iWakeUpBehaviour;
+
     String ghostColor;
     String imgPath;
     Boolean onTheMove = false;
     Boolean pickDirection = true;
+    boolean frigthened = false;
+    boolean animation = false;
 
     String name;
     final int cSize = 30;
     final int moveDistance = 2;
     String direction;
     ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
+    ArrayList<BufferedImage> frigthenedGhostImgs = new ArrayList<BufferedImage>();
     BufferedImage currentImg;
     String currentState = "wakeup";
 
@@ -27,6 +31,7 @@ public class Ghost extends LivingCharacter {
         this.y = y;
         iFrightenedBehaviour = new FrightenedWandering();
         iWakeUpBehaviour = new WakeUpBehaviour(this);
+
         this.ghostColor = color.toLowerCase();
         this.name = String.format("%s ghost", ghostColor);
         animation = false;
@@ -36,7 +41,7 @@ public class Ghost extends LivingCharacter {
         switch (ghostColor) {
         case "red":
             iChaseBehaviour = new ChaseAggresive();
-            iScatterBehaviour = new ScatterBehaviour("BTR");
+            iScatterBehaviour = new ScatterBehaviour("TR");
             break;
         case "blue":
             iChaseBehaviour = new ChaseAmbush();
@@ -59,6 +64,8 @@ public class Ghost extends LivingCharacter {
         try {
 
             // Looping pictures
+            frigthenedGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/ghost/scaredGhost0.png")));
+            frigthenedGhostImgs.add(ImageIO.read(this.getClass().getResource("resources/ghost/scaredGhost1.png")));
 
             for (int i = 0; i < 4; i++) {
                 this.imgPath = String.format("resources/%sGhost/%d.png", ghostColor, i);
@@ -124,16 +131,6 @@ public class Ghost extends LivingCharacter {
         }
     }
 
-    public void setChase() {
-        currentState = "chase";
-        System.out.println("current state is : " + currentState);
-    }
-
-    public void setScatter() {
-        currentState = "scatter";
-        System.out.println("current state is : " + currentState);
-    }
-
     private String getState() {
 
         if (direction != null) {
@@ -157,14 +154,34 @@ public class Ghost extends LivingCharacter {
         } else if (currentState.equalsIgnoreCase("scatter")) {
             return iScatterBehaviour.scatter(x, y);
 
-        } else {
+        } else if (currentState.equalsIgnoreCase("fright")) {
+            frigthened = true;
             return iFrightenedBehaviour.FrightenedBehaviour(x, y);
+        } else {
+            return "";
         }
     }
 
     public void draw(Graphics g) {
 
-        g.drawImage(currentImg, x, y, cSize, cSize, null);
+        if (!frigthened) {
+
+            g.drawImage(currentImg, x, y, cSize, cSize, null);
+        } else {
+            animation = !animation;
+            g.drawImage(animation ? frigthenedGhostImgs.get(0) : frigthenedGhostImgs.get(1), x, y, cSize, cSize, null);
+
+        }
+    }
+
+    @Override
+    public void updateState(String newState) {
+        if (frigthened) {
+            frigthened = false;
+        }
+        currentState = newState;
+        System.out.println("current state is : " + currentState);
+
     }
 
 }

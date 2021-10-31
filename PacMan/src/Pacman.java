@@ -74,7 +74,6 @@ class Pacman extends LivingCharacter {
     }
 
     protected void setDirection() {
-        if (highOnCandyMs > 0) highOnCandyMs -= 1;
 
         // Check if a key has been pressed...
         if (lastKey != '.') {
@@ -170,10 +169,10 @@ class Pacman extends LivingCharacter {
                 brick.changeBrick("space", Maze.INSTANCE.space);
             }
 
-            if  (brick.getType() == "candy") {
+            if (brick.getType() == "candy") {
                 brick.changeBrick("space", Maze.INSTANCE.space);
-                // Sets pacman to be invincible for 800 ticks
-                highOnCandyMs = 800;
+                // Calls gameEngine which sets highOnCandy
+                GameEngine.INSTANCE.setHighOnCandy();
             }
         }
 

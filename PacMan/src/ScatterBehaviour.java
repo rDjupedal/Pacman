@@ -20,8 +20,8 @@ public class ScatterBehaviour implements IScatterBehaviour {
             break;
 
         case "TR":
-            scatterX = 660;
-            scatterY = -10;
+            scatterX = 780;
+            scatterY = -105;
             break;
 
         case "BL":

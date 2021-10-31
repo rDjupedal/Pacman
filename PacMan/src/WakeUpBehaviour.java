@@ -22,7 +22,7 @@ public class WakeUpBehaviour implements IWakeUpBehaviour {
         this.x = x;
         this.y = y;
         if (atTarget()) {
-            ghost.setChase();
+            // GameEngine.INSTANCE.setChase();
         }
 
         /**

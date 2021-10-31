@@ -30,7 +30,7 @@ public class PacmanFrame extends JFrame {
         mazePanel.add(debugLabel);
 
         // TOP PANEL
-        JPanel topPanel = new JPanel(new GridLayout(1,2));
+        JPanel topPanel = new JPanel(new GridLayout(1, 2));
         topPanel.setPreferredSize(new Dimension(width, gridSize.height));
         topPanel.setBackground(Color.BLACK);
 
@@ -40,13 +40,13 @@ public class PacmanFrame extends JFrame {
         scoreLabel.setFont(topFont);
         scoreLabel.setForeground(Color.WHITE);
 
-        JLabel highScoreLabel = new JLabel(HighScore.INSTANCE.getHighScoreName() + " " + HighScore.INSTANCE.getHighScore(), JLabel.RIGHT);
+        JLabel highScoreLabel = new JLabel(
+                HighScore.INSTANCE.getHighScoreName() + " " + HighScore.INSTANCE.getHighScore(), JLabel.RIGHT);
         highScoreLabel.setFont(topFont);
         highScoreLabel.setForeground(Color.WHITE);
 
         topPanel.add(scoreLabel);
         topPanel.add(highScoreLabel);
-
 
         // BOTTOM PANEL
         JPanel bottomPanel = new JPanel(new FlowLayout());
@@ -68,9 +68,9 @@ public class PacmanFrame extends JFrame {
 
         // GAME OVER DIALOG
         /*
-        gameOverDialog = new GameOverDialog();
-        gameOverDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        gameOverDialog.setSize(400,300);
+         * gameOverDialog = new GameOverDialog();
+         * gameOverDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+         * gameOverDialog.setSize(400,300);
          */
 
         setupControls();
@@ -86,21 +86,16 @@ public class PacmanFrame extends JFrame {
 
     private void setupControls() {
 
-        Timer scatterTimer = new Timer(10000, (ae -> {
-            Toolkit.getDefaultToolkit().sync();
-            GameEngine.INSTANCE.setScatter();
-        }));
-
         timer = new Timer(10, (ae -> {
             Toolkit.getDefaultToolkit().sync();
-                // Update the game
-                gameUpdate();
+            // Update the game
+            gameUpdate();
 
-                //Update game stats in bottom panel
-                updateBottom();
+            // Update game stats in bottom panel
+            updateBottom();
 
-                //Update score in topPanel
-                updateTop();
+            // Update score in topPanel
+            updateTop();
 
         }));
 
@@ -110,12 +105,12 @@ public class PacmanFrame extends JFrame {
 
                 if (GameEngine.INSTANCE.isRunning) {
                     GameEngine.INSTANCE.getPacman().keyPressed(e);
-                    //GameEngine.INSTANCE.getGhosts().forEach(z -> z.keyPressed(e));
+                    // GameEngine.INSTANCE.getGhosts().forEach(z -> z.keyPressed(e));
                 } else {
                     GameEngine.INSTANCE.startGame();
                     GameEngine.INSTANCE.getPacman().keyPressed(e);
                     timer.start();
-                    scatterTimer.start();
+
                 }
             }
         });
@@ -148,7 +143,8 @@ public class PacmanFrame extends JFrame {
                 gameOverDialog.setVisible(true);
             }
         } else {
-            debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", " + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
+            debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", "
+                    + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
             GameEngine.INSTANCE.updateGame();
 
             // Repaint the characters
@@ -162,19 +158,17 @@ public class PacmanFrame extends JFrame {
      */
     private void updateBottom() {
         /*
-        if (!livesLeft.isEmpty()) {
-            if (livesLeft.size() != GameEngine.INSTANCE.getLives()) {
-                livesLeft.get(livesLeft.size() - 1).setVisible(false);
-                this.remove(livesLeft.get(livesLeft.size() - 1));
-                livesLeft.remove(livesLeft.size() - 1);
-            }
-        }
+         * if (!livesLeft.isEmpty()) { if (livesLeft.size() !=
+         * GameEngine.INSTANCE.getLives()) { livesLeft.get(livesLeft.size() -
+         * 1).setVisible(false); this.remove(livesLeft.get(livesLeft.size() - 1));
+         * livesLeft.remove(livesLeft.size() - 1); } }
          */
 
         // how many are visible?
         int visible = 0;
         for (JLabel label : livesLeft) {
-            if (label.isVisible()) visible++;
+            if (label.isVisible())
+                visible++;
         }
 
         if (visible > GameEngine.INSTANCE.getLives()) {
@@ -200,10 +194,8 @@ public class PacmanFrame extends JFrame {
 
     }
 
-
-
     private void updateTop() {
-        //Update score in the top
+        // Update score in the top
         scoreLabel.setText("" + GameEngine.INSTANCE.getScore());
     }
 

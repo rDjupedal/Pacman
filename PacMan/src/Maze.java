@@ -24,7 +24,8 @@ public final class Maze extends JComponent {
     /**
      * Empty private constructor, Singleton
      */
-    private Maze() {}
+    private Maze() {
+    }
 
     /**
      * Returns brick at point
