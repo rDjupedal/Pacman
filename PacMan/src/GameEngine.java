@@ -11,6 +11,7 @@ public class GameEngine {
     private Dimension gameSize, gridSize;
     protected boolean isRunning = false;
     protected boolean isGameOver = false;
+    private boolean clearScreen = false;
 
     private GameEngine() {}
 
@@ -20,7 +21,7 @@ public class GameEngine {
     protected void updateGame() {
 
         // Check if game is finished (if food is still left)
-        if (Maze.INSTANCE.getFoodLeft() < 1) { finishGame(); }
+        if (Maze.INSTANCE.getFoodLeft() < 1) { finishLevel(); }
 
         // Move the characters & check for collisions
         pacman.doMove();
@@ -35,12 +36,10 @@ public class GameEngine {
     private void collisionDetected() {
         if ( pacman.highOnCandyMs < 1) {
             lives--;
-
-            // MazePanel checks this and repaints the whole screen
-            pacman.died = true;
-
             // Reset the position of the characters
             resetCharacterPositions();
+
+            //clearScreen = true;
 
             // stops the EDT timer
             isRunning = false;
@@ -48,8 +47,8 @@ public class GameEngine {
             if (lives < 1) gameOver();
 
         } else {
-            System.out.println("Ghost dies");
             score += 500;
+            // todo: respawn the ghost into its cage!
         }
     }
 
@@ -57,23 +56,59 @@ public class GameEngine {
     private void gameOver(){
         System.out.println("Game over");
         isGameOver = true;
+
     }
 
 
-    private void finishGame() {
+    private void finishLevel() {
         System.out.println("game finished!!");
         GameEngine.INSTANCE.isRunning = false;
+        resetCharacterPositions();
+        //todo level..
+        //level++;
+        createMaze();
     }
 
+    /**
+     * Called only on program start
+     */
     protected void initGame() {
-        System.out.println("Game initialized");
         createPacman();
         createMaze();
         createGhosts();
     }
 
+    /**
+     * Called after GameOver
+     */
+    protected void newGame() {
+        // Old Maze handled by garbage collector..
+        createMaze();
+
+        lives = 3;
+        score = 0;
+
+        // MazePanel checks this and repaints the whole screen
+        clearScreen = true;
+    }
+
+    protected boolean getClearScreen() {
+        if (clearScreen) {
+            clearScreen = false;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Called after Pacman died / new game
+     */
     protected void startGame() {
-        System.out.println("Game started");
+
+        // MazePanel checks this and repaints the whole screen
+        //clearScreen = true;
+        System.out.println("screen cleared from StartGame()");
+
         isRunning = true;
         isGameOver = false;
     }
@@ -90,6 +125,9 @@ public class GameEngine {
         ghosts.get(1).setPos(330,450);
         ghosts.get(2).setPos(480,390);
         ghosts.get(3).setPos(480,450);
+
+        pacman.setInitImage();
+        clearScreen = true;
     }
 
     protected void createPacman() {

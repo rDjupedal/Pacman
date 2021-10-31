@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class PacmanFrame extends JFrame {
     private JLabel debugLabel = new JLabel();
     private MazePanel mazePanel;
-    private JPanel bottomPanel;
     private JLabel bottomLabel, scoreLabel;
     private Dimension gameSize, gridSize;
     private ImageIcon liveIcon;
@@ -30,32 +29,49 @@ public class PacmanFrame extends JFrame {
         mazePanel.setPreferredSize(gameSize);
         mazePanel.add(debugLabel);
 
-        JPanel topPanel = new JPanel();
+        // TOP PANEL
+        JPanel topPanel = new JPanel(new GridLayout(1,2));
         topPanel.setPreferredSize(new Dimension(width, gridSize.height));
         topPanel.setBackground(Color.BLACK);
-        scoreLabel = new JLabel();
-        scoreLabel.setFont(new Font("", Font.BOLD, 25));
-        scoreLabel.setForeground(Color.RED);
-        topPanel.add(scoreLabel);
 
-        bottomPanel = new JPanel();
+        Font topFont = new Font("", Font.BOLD, 22);
+
+        scoreLabel = new JLabel("0");
+        scoreLabel.setFont(topFont);
+        scoreLabel.setForeground(Color.WHITE);
+
+        JLabel highScoreLabel = new JLabel(HighScore.INSTANCE.getHighScoreName() + " " + HighScore.INSTANCE.getHighScore(), JLabel.RIGHT);
+        highScoreLabel.setFont(topFont);
+        highScoreLabel.setForeground(Color.WHITE);
+
+        topPanel.add(scoreLabel);
+        topPanel.add(highScoreLabel);
+
+
+        // BOTTOM PANEL
+        JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.setPreferredSize(new Dimension(width, gridSize.height));
         bottomPanel.setBackground(Color.BLACK);
         bottomPanel.setOpaque(true);
         bottomLabel = new JLabel();
         bottomPanel.add(bottomLabel);
 
+        // CONTENT PANEL
         contentPanel.add(topPanel, BorderLayout.BEFORE_FIRST_LINE);
         contentPanel.add(mazePanel, BorderLayout.CENTER);
         contentPanel.add(bottomPanel, BorderLayout.AFTER_LAST_LINE);
-
-        gameOverDialog = new JDialog(this, "Game over !");
-
         add(contentPanel);
         setContentPane(contentPanel);
         setVisible(true);
         setFocusable(true);
         requestFocusInWindow();
+
+        // GAME OVER DIALOG
+        /*
+        gameOverDialog = new GameOverDialog();
+        gameOverDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        gameOverDialog.setSize(400,300);
+         */
 
         setupControls();
 
@@ -127,36 +143,64 @@ public class PacmanFrame extends JFrame {
             timer.stop();
 
             if (GameEngine.INSTANCE.isGameOver) {
-                gameOverDialog.add(new JLabel("Game over, score: " + GameEngine.INSTANCE.getScore()));
-                gameOverDialog.setSize(200,200);
+                gameOverDialog = new GameOverDialog();
+                gameOverDialog.setLocationRelativeTo(this);
                 gameOverDialog.setVisible(true);
-                System.out.println("game over from frame");
             }
         } else {
             debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", " + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
-            //System.out.println("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
             GameEngine.INSTANCE.updateGame();
 
             // Repaint the characters
             mazePanel.drawCharacters();
         }
+
     }
 
     /**
      * Checks if the number of lives has changed, and if so updates labels
      */
     private void updateBottom() {
-
+        /*
         if (!livesLeft.isEmpty()) {
             if (livesLeft.size() != GameEngine.INSTANCE.getLives()) {
                 livesLeft.get(livesLeft.size() - 1).setVisible(false);
                 this.remove(livesLeft.get(livesLeft.size() - 1));
-                System.out.println("setting the last one to invisibble..");
                 livesLeft.remove(livesLeft.size() - 1);
-                System.out.println("Lives left " + livesLeft.size());
             }
         }
+         */
+
+        // how many are visible?
+        int visible = 0;
+        for (JLabel label : livesLeft) {
+            if (label.isVisible()) visible++;
+        }
+
+        if (visible > GameEngine.INSTANCE.getLives()) {
+            // Make first visible not visible
+
+            for (JLabel label : livesLeft) {
+                if (label.isVisible()) {
+                    label.setVisible(false);
+                    break;
+                }
+            }
+        }
+
+        if (visible < GameEngine.INSTANCE.getLives()) {
+            // Make first invisible visible
+            for (JLabel label : livesLeft) {
+                if (!label.isVisible()) {
+                    label.setVisible(true);
+                    break;
+                }
+            }
+        }
+
     }
+
+
 
     private void updateTop() {
         //Update score in the top
