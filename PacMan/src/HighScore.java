@@ -26,16 +26,23 @@ public class HighScore {
             System.out.println("Error opening file " + path.toString());
              writeHighScore("" ,0);
         }
+
+        name = readScore.split("\n")[0];
+        highScore = Integer.parseInt(readScore.split("\n")[1]);
+
+        System.out.println("parsed " + name + " " + highScore);
     }
 
     /**
      * Writes new highscore to file
      * @param name the name
-     * @param score the score
+     * @param highScore the highscore
      */
-    protected void writeHighScore(String name, int score) {
+    protected void writeHighScore(String name, int highScore) {
         try {
-            String s = name + "\n" + score;
+            this.name = name;
+            this.highScore = highScore;
+            String s = name + "\n" + highScore;
             byte[] strToBytes = s.getBytes(StandardCharsets.UTF_8);
             Files.write(path, strToBytes);
         } catch (IOException e) {

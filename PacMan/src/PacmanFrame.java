@@ -9,8 +9,6 @@ import java.util.ArrayList;
 public class PacmanFrame extends JFrame {
     private JLabel debugLabel = new JLabel();
     private MazePanel mazePanel;
-    //private JPanel bottomPanel, topPanel;
-    private GameOverDialog gameOverPanel;
     private JLabel bottomLabel, scoreLabel;
     private Dimension gameSize, gridSize;
     private ImageIcon liveIcon;
@@ -31,14 +29,27 @@ public class PacmanFrame extends JFrame {
         mazePanel.setPreferredSize(gameSize);
         mazePanel.add(debugLabel);
 
-        JPanel topPanel = new JPanel();
+        // TOP PANEL
+        JPanel topPanel = new JPanel(new GridLayout(1,2));
         topPanel.setPreferredSize(new Dimension(width, gridSize.height));
         topPanel.setBackground(Color.BLACK);
-        scoreLabel = new JLabel();
-        scoreLabel.setFont(new Font("", Font.BOLD, 25));
-        scoreLabel.setForeground(Color.RED);
-        topPanel.add(scoreLabel);
 
+        Font topFont = new Font("", Font.BOLD, 25);
+
+        scoreLabel = new JLabel("0");
+        scoreLabel.setFont(topFont);
+        scoreLabel.setForeground(Color.WHITE);
+
+        JLabel highScoreLabel = new JLabel(HighScore.INSTANCE.getHighScoreName() + " " + HighScore.INSTANCE.getHighScore(), JLabel.RIGHT);
+        highScoreLabel.setFont(topFont);
+        highScoreLabel.setOpaque(true);
+        highScoreLabel.setForeground(Color.WHITE);
+
+        topPanel.add(scoreLabel);
+        topPanel.add(highScoreLabel);
+
+
+        // BOTTOM PANEL
         JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.setPreferredSize(new Dimension(width, gridSize.height));
         bottomPanel.setBackground(Color.BLACK);
@@ -46,25 +57,20 @@ public class PacmanFrame extends JFrame {
         bottomLabel = new JLabel();
         bottomPanel.add(bottomLabel);
 
+        // CONTENT PANEL
         contentPanel.add(topPanel, BorderLayout.BEFORE_FIRST_LINE);
         contentPanel.add(mazePanel, BorderLayout.CENTER);
         contentPanel.add(bottomPanel, BorderLayout.AFTER_LAST_LINE);
-
-        //gameOverDialog = new JDialog(this, "Game over !");
-        gameOverDialog = new GameOverDialog();
-        gameOverDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        gameOverDialog.setSize(400,300);
-        //gameOverPanel = new GameOverDialog();
-        //gameOverDialog.add(gameOverPanel);
-
-        //HighscorePanel highscorePanel = new HighscorePanel();
-        //gameOverDialog.add(highscorePanel);
-
         add(contentPanel);
         setContentPane(contentPanel);
         setVisible(true);
         setFocusable(true);
         requestFocusInWindow();
+
+        // GAME OVER DIALOG
+        gameOverDialog = new GameOverDialog();
+        gameOverDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        gameOverDialog.setSize(400,300);
 
         setupControls();
 
@@ -145,7 +151,6 @@ public class PacmanFrame extends JFrame {
             }
         } else {
             debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", " + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
-            //System.out.println("Pacmans position: " + GameEngine.INSTANCE.getPacman().x + ", " + GameEngine.INSTANCE.getPacman().y + " food " + Maze.INSTANCE.getFoodLeft());
             GameEngine.INSTANCE.updateGame();
 
             // Repaint the characters

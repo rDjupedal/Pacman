@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class GameEngine {
 
     protected static final GameEngine INSTANCE = new GameEngine();
-    private int level = 1, score = 11, lives = 3;
+    private int level = 1, score = 14, lives = 3;
     private Pacman pacman;
     private int pacmanStartX = 400, pacmanStartY = 690;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();

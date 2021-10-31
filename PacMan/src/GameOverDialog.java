@@ -54,6 +54,7 @@ public class GameOverDialog extends JDialog {
             label1.setText("You got a highscore!");
             yourName.setVisible(true);
             p.add(yourName);
+            okBtn.setText("Save");
         } else {
             p.setLayout(new FlowLayout());
             label1.setText("Game over !");
