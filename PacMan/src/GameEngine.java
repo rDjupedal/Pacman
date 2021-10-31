@@ -37,13 +37,14 @@ public class GameEngine {
                 break;
 
             case 0:
-                chaseCounter = 1300;
+                chaseCounter = 1301;
                 break;
             default:
                 break;
             }
 
             chaseCounter -= 1;
+            System.out.println("chaseCounter: " + chaseCounter);
         }
 
         if (highOnCandy) {
