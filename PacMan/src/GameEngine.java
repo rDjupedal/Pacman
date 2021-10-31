@@ -39,6 +39,8 @@ public class GameEngine {
             // Reset the position of the characters
             resetCharacterPositions();
 
+            //clearScreen = true;
+
             // stops the EDT timer
             isRunning = false;
 
@@ -103,7 +105,7 @@ public class GameEngine {
     protected void startGame() {
 
         // MazePanel checks this and repaints the whole screen
-        clearScreen = true;
+        //clearScreen = true;
         System.out.println("screen cleared from StartGame()");
 
         isRunning = true;
@@ -122,6 +124,8 @@ public class GameEngine {
         ghosts.get(1).setPos(330,450);
         ghosts.get(2).setPos(480,390);
         ghosts.get(3).setPos(480,450);
+
+        clearScreen = true;
     }
 
     protected void createPacman() {
