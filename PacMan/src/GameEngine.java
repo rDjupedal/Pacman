@@ -190,6 +190,8 @@ public class GameEngine {
         ghosts.add(ghostFactory.getCharacter("ghost", 480, 450, "pink"));
         ghosts.forEach(ghost -> {
             stateSetter.addObserver(ghost);
+            Thread thread = new Thread(ghost);
+            thread.start();
         });
     }
 

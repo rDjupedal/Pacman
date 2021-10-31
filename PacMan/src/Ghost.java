@@ -4,7 +4,7 @@ import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
 
-public class Ghost extends LivingCharacter implements StateObserver {
+public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     private IChaseBehaviour iChaseBehaviour;
     private IScatterBehaviour iScatterBehaviour;
     private IFrightenedBehaviour iFrightenedBehaviour;
@@ -178,6 +178,12 @@ public class Ghost extends LivingCharacter implements StateObserver {
         }
         currentState = newState;
         System.out.println("current state is : " + currentState);
+
+    }
+
+    @Override
+    public void run() {
+        System.out.println("This has been written by Thread : " + Thread.currentThread().getName());
 
     }
 
