@@ -74,6 +74,8 @@ public class GameEngine {
         for (Ghost ghost : ghosts) {
             ghost.doMove();
             if (ghost.getCollisionRectangle().intersects(pacman.getCollisionRectangle())) {
+                ghosts.remove(ghost); // Remove ghost from Array. Work on checking the details and spawning another
+                                      // one.
                 collisionDetected();
             }
         }
@@ -96,7 +98,7 @@ public class GameEngine {
 
         } else {
             score += 500;
-            // todo: respawn the ghost into its cage!
+
         }
     }
 
