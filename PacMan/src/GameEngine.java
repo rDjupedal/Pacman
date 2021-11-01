@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.lang.Thread.State;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameEngine {
 
@@ -17,6 +19,7 @@ public class GameEngine {
     protected boolean isRunning = false;
     protected boolean isGameOver = false;
     private boolean clearScreen = false;
+    private ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     StateSetter stateSetter = new StateSetter();
 
@@ -72,7 +75,7 @@ public class GameEngine {
         // Move the characters & check for collisions
         pacman.doMove();
         for (Ghost ghost : ghosts) {
-            ghost.doMove();
+            executorService.execute(ghost);
             if (ghost.getCollisionRectangle().intersects(pacman.getCollisionRectangle())) {
                 // Remove ghost from Array. Work on checking the details and spawning another
                 // one.
@@ -204,9 +207,7 @@ public class GameEngine {
         ghosts.add(ghostFactory.getCharacter("ghost", 480, 450, "pink"));
         ghosts.forEach(ghost -> {
             stateSetter.addObserver(ghost);
-            Thread thread = new Thread(ghost);
 
-            thread.start();
         });
     }
 

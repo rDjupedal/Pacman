@@ -137,6 +137,8 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     }
 
     private String getDirection() {
+        GhostLogger.getLogger().info(
+                "Thread : " + Thread.currentThread().getName() + " is working on this call for ghost: " + ghostColor);
 
         if (direction != null) {
             if (direction.equalsIgnoreCase("left")) {
@@ -214,21 +216,25 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     @Override
     public void run() {
 
-        while (isLogging) {
+        setDirection();
+        moveCharacter();
 
-            try {
-                String logMessage = String.format("%s ghost is at %d, %d. Written by Thread: %s at %s", ghostColor, x,
-                        y, Thread.currentThread().getName(), java.time.LocalTime.now());
+        // while (isLogging) {
 
-                GhostLogger.getLogger().info(logMessage);
+        // try {
+        // String logMessage = String.format("%s ghost is at %d, %d. Written by Thread:
+        // %s at %s", ghostColor, x,
+        // y, Thread.currentThread().getName(), java.time.LocalTime.now());
 
-                Thread.sleep(1000);
+        // GhostLogger.getLogger().info(logMessage);
 
-            } catch (InterruptedException e) {
-                System.out.println("Thread was interuppted: " + e.getMessage());
-            }
+        // Thread.sleep(1000);
 
-        }
+        // } catch (InterruptedException e) {
+        // System.out.println("Thread was interuppted: " + e.getMessage());
+        // }
+
+        // }
 
     }
 
