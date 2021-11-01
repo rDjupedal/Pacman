@@ -1,11 +1,13 @@
 import java.awt.*;
+import java.lang.Thread.State;
 import java.util.ArrayList;
 
 public class GameEngine {
 
     protected static final GameEngine INSTANCE = new GameEngine();
     private int level = 1, score = 0, lives = 3;
-    private int chaseCounter = 1500;
+    private int chaseCounter = 1300;
+    private int wakeupCounter = 200;
     private Pacman pacman;
     private boolean highOnCandy = false;
     private int highOnCandyMs = 800;
@@ -16,7 +18,7 @@ public class GameEngine {
     protected boolean isGameOver = false;
     private boolean clearScreen = false;
 
-    State stateSetter = new State();
+    StateSetter stateSetter = new StateSetter();
 
     private GameEngine() {
     }
@@ -26,32 +28,39 @@ public class GameEngine {
      */
     protected void updateGame() {
 
-        // TODO! Need to set when to open and close doors. this is tied to wakeup state,
-        // and killing ghosts.
-
-        if (!stateSetter.isFright()) {
-            switch (chaseCounter) {
-            case 1300:
+        if (stateSetter.isWakeUp()) {
+            wakeupCounter--;
+            if (wakeupCounter == 0) {
                 stateSetter.setChase();
-                break;
-            case 300:
-                stateSetter.setScatter();
-                break;
+                wakeupCounter = 200;
+                Maze.INSTANCE.closeDoor();
+            }
+        } else {
 
-            case 0:
-                chaseCounter = 1301;
-                break;
-            default:
-                break;
+            if (!stateSetter.isFright()) {
+                switch (chaseCounter) {
+                case 1300:
+                    stateSetter.setChase();
+                    break;
+                case 300:
+                    stateSetter.setScatter();
+                    break;
+
+                case 0:
+                    chaseCounter = 1301;
+                    break;
+                default:
+                    break;
+                }
+
+                chaseCounter -= 1;
             }
 
-            chaseCounter -= 1;
-        }
-
-        if (highOnCandy) {
-            highOnCandyMs -= 1;
-            if (highOnCandyMs < 1) {
-                endhighOnCandy();
+            if (highOnCandy) {
+                highOnCandyMs -= 1;
+                if (highOnCandyMs < 1) {
+                    endhighOnCandy();
+                }
             }
         }
 

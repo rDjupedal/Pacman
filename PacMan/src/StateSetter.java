@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class State {
+public class StateSetter {
     private String CurrentState;
     private String previousState = "";
     private final List<StateObserver> observers;
 
-    public State() {
+    public StateSetter() {
         observers = new ArrayList<>();
 
     }
@@ -56,6 +56,10 @@ public class State {
         return CurrentState.equalsIgnoreCase("fright");
     }
 
+    protected boolean isWakeUp() {
+        return CurrentState.equalsIgnoreCase("wakeup");
+    }
+
     protected void setScatter() {
         setCurrentState("scatter");
     }
@@ -72,6 +76,7 @@ public class State {
 
     protected void setWakeUp() {
         CurrentState = "wakeup";
+        Maze.INSTANCE.openDoor();
         notifyObservers();
     }
 
