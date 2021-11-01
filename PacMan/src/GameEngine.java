@@ -213,13 +213,9 @@ public class GameEngine {
         return lives;
     }
 
-    protected void setChase() {
-        stateSetter.setCurrentState("chase");
-    }
-
     protected void setHighOnCandy() {
         if (highOnCandy) {
-            highOnCandyMs += 800;
+            highOnCandyMs = 800;
         } else {
 
             highOnCandy = true;
