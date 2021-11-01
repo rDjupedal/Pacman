@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class ScatterBehaviour implements IScatterBehaviour {
     int x, y, targetX, targetY;
@@ -40,25 +39,7 @@ public class ScatterBehaviour implements IScatterBehaviour {
     }
 
     @Override
-    public String scatter(int x, int y) {
-
-        ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (previousMove.equalsIgnoreCase("left") || Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall()) {
-            possibleMovesArray.remove("right");
-
-        }
-        if (previousMove.equalsIgnoreCase("right") || Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall()) {
-            possibleMovesArray.remove("left");
-
-        }
-        if (Maze.INSTANCE.getBrick(x, y + Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("up")) {
-            possibleMovesArray.remove("down");
-
-        }
-        if (Maze.INSTANCE.getBrick(x, y - Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("down")) {
-            possibleMovesArray.remove("up");
-
-        }
+    public String scatter(int x, int y, ArrayList<String> possibleMovesArray) {
 
         List<Double> hypos = new ArrayList<>();
 

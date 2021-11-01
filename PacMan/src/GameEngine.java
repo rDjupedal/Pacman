@@ -190,6 +190,9 @@ public class GameEngine {
         ghosts.add(ghostFactory.getCharacter("ghost", 480, 450, "pink"));
         ghosts.forEach(ghost -> {
             stateSetter.addObserver(ghost);
+            Thread thread = new Thread(ghost);
+
+            thread.start();
         });
     }
 
@@ -210,13 +213,9 @@ public class GameEngine {
         return lives;
     }
 
-    protected void setChase() {
-        stateSetter.setCurrentState("chase");
-    }
-
     protected void setHighOnCandy() {
         if (highOnCandy) {
-            highOnCandyMs += 800;
+            highOnCandyMs = 800;
         } else {
 
             highOnCandy = true;

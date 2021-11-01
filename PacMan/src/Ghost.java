@@ -1,10 +1,13 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
+import java.sql.Date;
 
-public class Ghost extends LivingCharacter implements StateObserver {
+public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     private IChaseBehaviour iChaseBehaviour;
     private IScatterBehaviour iScatterBehaviour;
     private IFrightenedBehaviour iFrightenedBehaviour;
@@ -15,6 +18,8 @@ public class Ghost extends LivingCharacter implements StateObserver {
     private Boolean pickDirection = true;
     private boolean frigthened = false;
     private boolean animation = false;
+    private boolean isLogging = false;
+    private String previousMove = "";
 
     private final int cSize = 30;
     private final int moveDistance = 2;
@@ -73,6 +78,7 @@ public class Ghost extends LivingCharacter implements StateObserver {
             System.out.println("Ghost pic could not be loaded: " + e.getMessage());
         }
         currentImg = ghostImgs.get(0);
+        isLogging = true;
     }
 
     protected void setDirection() {
@@ -81,7 +87,7 @@ public class Ghost extends LivingCharacter implements StateObserver {
             pickDirection = true;
         }
         while (pickDirection) {
-            direction = getState();
+            direction = getDirection();
             pickDirection = false;
         }
     }
@@ -125,10 +131,12 @@ public class Ghost extends LivingCharacter implements StateObserver {
 
                 break;
             }
+
+            previousMove = direction;
         }
     }
 
-    private String getState() {
+    private String getDirection() {
 
         if (direction != null) {
             if (direction.equalsIgnoreCase("left")) {
@@ -143,20 +151,42 @@ public class Ghost extends LivingCharacter implements StateObserver {
         }
 
         if (currentState.equalsIgnoreCase("wakeup")) {
-            return iWakeUpBehaviour.awokenBehaviour(x, y);
+            return iWakeUpBehaviour.awokenBehaviour(x, y, getPossibleMoves());
 
         } else if (currentState.equalsIgnoreCase("chase")) {
-            return iChaseBehaviour.chase(x, y);
+            return iChaseBehaviour.chase(x, y, getPossibleMoves());
 
         } else if (currentState.equalsIgnoreCase("scatter")) {
-            return iScatterBehaviour.scatter(x, y);
+            return iScatterBehaviour.scatter(x, y, getPossibleMoves());
 
         } else if (currentState.equalsIgnoreCase("fright")) {
             frigthened = true;
-            return iFrightenedBehaviour.FrightenedBehaviour(x, y);
+            return iFrightenedBehaviour.FrightenedBehaviour(x, y, getPossibleMoves());
         } else {
             return "";
         }
+    }
+
+    private ArrayList<String> getPossibleMoves() {
+        ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
+        if (previousMove.equalsIgnoreCase("left") || Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall()) {
+            possibleMovesArray.remove("right");
+
+        }
+        if (previousMove.equalsIgnoreCase("right") || Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall()) {
+            possibleMovesArray.remove("left");
+
+        }
+        if (Maze.INSTANCE.getBrick(x, y + Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("up")) {
+            possibleMovesArray.remove("down");
+
+        }
+        if (Maze.INSTANCE.getBrick(x, y - Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("down")) {
+            possibleMovesArray.remove("up");
+
+        }
+
+        return possibleMovesArray;
     }
 
     public void draw(Graphics g) {
@@ -178,6 +208,27 @@ public class Ghost extends LivingCharacter implements StateObserver {
         }
         currentState = newState;
         System.out.println("current state is : " + currentState);
+
+    }
+
+    @Override
+    public void run() {
+
+        while (isLogging) {
+
+            try {
+                String logMessage = String.format("%s ghost is at %d, %d. Written by Thread: %s at %s", ghostColor, x,
+                        y, Thread.currentThread().getName(), java.time.LocalTime.now());
+
+                GhostLogger.getLogger().info(logMessage);
+
+                Thread.sleep(1000);
+
+            } catch (InterruptedException e) {
+                System.out.println("Thread was interuppted: " + e.getMessage());
+            }
+
+        }
 
     }
 
