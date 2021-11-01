@@ -32,7 +32,7 @@ public class GameEngine {
             wakeupCounter--;
             if (wakeupCounter == 0) {
                 stateSetter.setChase();
-                wakeupCounter = 200;
+                wakeupCounter = 150;
                 Maze.INSTANCE.closeDoor();
             }
         } else {
@@ -42,7 +42,7 @@ public class GameEngine {
                 case 1300:
                     stateSetter.setChase();
                     break;
-                case 300:
+                case 200:
                     stateSetter.setScatter();
                     break;
 
