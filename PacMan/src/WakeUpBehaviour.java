@@ -18,27 +18,9 @@ public class WakeUpBehaviour implements IWakeUpBehaviour {
     }
 
     @Override
-    public String awokenBehaviour(int x, int y) {
+    public String awokenBehaviour(int x, int y, ArrayList<String> possibleMovesArray) {
         this.x = x;
         this.y = y;
-
-        ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("left")) {
-            possibleMovesArray.remove("right");
-
-        }
-        if (Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall() | previousMove.equalsIgnoreCase("right")) {
-            possibleMovesArray.remove("left");
-
-        }
-        if (Maze.INSTANCE.getBrick(x, y + Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("up")) {
-            possibleMovesArray.remove("down");
-
-        }
-        if (Maze.INSTANCE.getBrick(x, y - Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("down")) {
-            possibleMovesArray.remove("up");
-
-        }
 
         List<Double> hypos = new ArrayList<>();
 

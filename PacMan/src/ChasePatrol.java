@@ -14,26 +14,7 @@ public class ChasePatrol implements IChaseBehaviour {
     IScatterBehaviour iScatterBehaviour = new ScatterBehaviour("BR");
 
     @Override
-    public String chase(int x, int y) {
-
-        // Picks possible moves taking previous move and wall into account.
-        ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (previousMove.equalsIgnoreCase("left") || Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall()) {
-            possibleMovesArray.remove("right");
-
-        }
-        if (previousMove.equalsIgnoreCase("right") || Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall()) {
-            possibleMovesArray.remove("left");
-
-        }
-        if (Maze.INSTANCE.getBrick(x, y + Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("up")) {
-            possibleMovesArray.remove("down");
-
-        }
-        if (Maze.INSTANCE.getBrick(x, y - Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("down")) {
-            possibleMovesArray.remove("up");
-
-        }
+    public String chase(int x, int y, ArrayList<String> possibleMovesArray) {
 
         // List to store hypotenusas.
         List<Double> hypos = new ArrayList<>();
@@ -71,7 +52,7 @@ public class ChasePatrol implements IChaseBehaviour {
         // else continous to chase PacMan
         // instead.
         if (shortestHypo < 200) {
-            return iScatterBehaviour.scatter(x, y);
+            return iScatterBehaviour.scatter(x, y, possibleMovesArray);
         } else {
             return previousMove;
         }

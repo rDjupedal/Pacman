@@ -1,5 +1,7 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
@@ -17,9 +19,10 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     private boolean frigthened = false;
     private boolean animation = false;
     private boolean isLogging = false;
+    private String previousMove = "";
 
     private final int cSize = 30;
-    private final int moveDistance = 1;
+    private final int moveDistance = 2;
     private String direction;
     private ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
     private ArrayList<BufferedImage> frigthenedGhostImgs = new ArrayList<BufferedImage>();
@@ -84,7 +87,7 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
             pickDirection = true;
         }
         while (pickDirection) {
-            direction = getState();
+            direction = getDirection();
             pickDirection = false;
         }
     }
@@ -128,10 +131,12 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
 
                 break;
             }
+
+            previousMove = direction;
         }
     }
 
-    private String getState() {
+    private String getDirection() {
 
         if (direction != null) {
             if (direction.equalsIgnoreCase("left")) {
@@ -146,20 +151,42 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
         }
 
         if (currentState.equalsIgnoreCase("wakeup")) {
-            return iWakeUpBehaviour.awokenBehaviour(x, y);
+            return iWakeUpBehaviour.awokenBehaviour(x, y, getPossibleMoves());
 
         } else if (currentState.equalsIgnoreCase("chase")) {
-            return iChaseBehaviour.chase(x, y);
+            return iChaseBehaviour.chase(x, y, getPossibleMoves());
 
         } else if (currentState.equalsIgnoreCase("scatter")) {
-            return iScatterBehaviour.scatter(x, y);
+            return iScatterBehaviour.scatter(x, y, getPossibleMoves());
 
         } else if (currentState.equalsIgnoreCase("fright")) {
             frigthened = true;
-            return iFrightenedBehaviour.FrightenedBehaviour(x, y);
+            return iFrightenedBehaviour.FrightenedBehaviour(x, y, getPossibleMoves());
         } else {
             return "";
         }
+    }
+
+    private ArrayList<String> getPossibleMoves() {
+        ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
+        if (previousMove.equalsIgnoreCase("left") || Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall()) {
+            possibleMovesArray.remove("right");
+
+        }
+        if (previousMove.equalsIgnoreCase("right") || Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall()) {
+            possibleMovesArray.remove("left");
+
+        }
+        if (Maze.INSTANCE.getBrick(x, y + Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("up")) {
+            possibleMovesArray.remove("down");
+
+        }
+        if (Maze.INSTANCE.getBrick(x, y - Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("down")) {
+            possibleMovesArray.remove("up");
+
+        }
+
+        return possibleMovesArray;
     }
 
     public void draw(Graphics g) {
