@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
+import java.sql.Date;
 
 public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     private IChaseBehaviour iChaseBehaviour;
@@ -15,9 +16,10 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     private Boolean pickDirection = true;
     private boolean frigthened = false;
     private boolean animation = false;
+    private boolean isLogging = false;
 
     private final int cSize = 30;
-    private final int moveDistance = 2;
+    private final int moveDistance = 1;
     private String direction;
     private ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
     private ArrayList<BufferedImage> frigthenedGhostImgs = new ArrayList<BufferedImage>();
@@ -73,6 +75,7 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
             System.out.println("Ghost pic could not be loaded: " + e.getMessage());
         }
         currentImg = ghostImgs.get(0);
+        isLogging = true;
     }
 
     protected void setDirection() {
@@ -183,7 +186,22 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
 
     @Override
     public void run() {
-        System.out.println("This has been written by Thread : " + Thread.currentThread().getName());
+
+        while (isLogging) {
+
+            try {
+                String logMessage = String.format("%s ghost is at %d, %d. Written by Thread: %s at %s", ghostColor, x,
+                        y, Thread.currentThread().getName(), java.time.LocalTime.now());
+
+                GhostLogger.getLogger().info(logMessage);
+
+                Thread.sleep(1000);
+
+            } catch (InterruptedException e) {
+                System.out.println("Thread was interuppted: " + e.getMessage());
+            }
+
+        }
 
     }
 
