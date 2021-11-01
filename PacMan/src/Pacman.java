@@ -7,7 +7,7 @@ import java.awt.image.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-class Pacman extends LivingCharacter {
+class Pacman extends LivingCharacter implements Runnable {
 
     // . means no lastKey waiting
     char lastKey = '.';
@@ -74,6 +74,7 @@ class Pacman extends LivingCharacter {
     }
 
     protected void setDirection() {
+        GhostLogger.getLogger().info("Thread : " + Thread.currentThread().getName() + " does things in PacMan!");
 
         // Check if a key has been pressed...
         if (lastKey != '.') {
@@ -185,5 +186,11 @@ class Pacman extends LivingCharacter {
         }
 
         g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, cSize, cSize, null);
+    }
+
+    @Override
+    public void run() {
+
+        doMove();
     }
 }

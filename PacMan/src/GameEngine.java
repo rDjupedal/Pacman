@@ -19,7 +19,7 @@ public class GameEngine {
     protected boolean isRunning = false;
     protected boolean isGameOver = false;
     private boolean clearScreen = false;
-    private ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     StateSetter stateSetter = new StateSetter();
 
@@ -73,7 +73,7 @@ public class GameEngine {
         }
 
         // Move the characters & check for collisions
-        pacman.doMove();
+        executorService.execute(pacman);
         for (Ghost ghost : ghosts) {
             executorService.execute(ghost);
             if (ghost.getCollisionRectangle().intersects(pacman.getCollisionRectangle())) {
