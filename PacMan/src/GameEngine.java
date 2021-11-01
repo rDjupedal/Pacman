@@ -26,6 +26,9 @@ public class GameEngine {
      */
     protected void updateGame() {
 
+        // TODO! Need to set when to open and close doors. this is tied to wakeup state,
+        // and killing ghosts.
+
         if (!stateSetter.isFright()) {
             switch (chaseCounter) {
             case 1300:

@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public final class Maze extends JComponent {
     protected static final Maze INSTANCE = new Maze();
@@ -20,6 +21,7 @@ public final class Maze extends JComponent {
     private byte[] readLevel;
     protected BufferedImage wall, space, food, candy, door;
     private ArrayList<MazeBrick> mazeBricks;
+    private ArrayList<MazeBrick> doorBricks;
 
     /**
      * Empty private constructor, Singleton
@@ -150,6 +152,10 @@ public final class Maze extends JComponent {
             }
 
         }
+
+        // Create door arrayList
+        doorBricks = mazeBricks.stream().filter(brick -> brick.getType().equals("door"))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void setPacManPos(int pacManX, int pacManY) {
@@ -187,6 +193,20 @@ public final class Maze extends JComponent {
         for (int y = 0; y <= height; y += gridHeight) {
             g.drawLine(0, y, width, y);
         }
+    }
+
+    public void closeDoor() {
+
+        doorBricks.forEach(z -> {
+            z.changeType("wall");
+        });
+    }
+
+    public void openDoor() {
+        doorBricks.forEach(brick -> {
+            brick.changeType("door");
+        });
+
     }
 
 }

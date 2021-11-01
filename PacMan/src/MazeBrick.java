@@ -15,18 +15,27 @@ public class MazeBrick {
         this.height = height;
     }
 
-    protected void changeBrick (String newType, BufferedImage newImage) {
+    protected void changeBrick(String newType, BufferedImage newImage) {
         this.type = newType;
         this.image = newImage;
+    }
+
+    protected void changeType(String newType) {
+
+        this.type = newType;
     }
 
     protected Rectangle getBrickRectangle() {
         return new Rectangle(x, y, width, height);
     }
 
-    protected String getType() { return type; }
+    protected String getType() {
+        return type;
+    }
 
-    protected boolean isWall() { return (type == "wall"); }
+    protected boolean isWall() {
+        return (type == "wall");
+    }
 
     protected void draw(Graphics g) {
         g.drawImage(image, x, y, width, height, null);
