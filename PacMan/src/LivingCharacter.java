@@ -1,16 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 abstract class LivingCharacter extends JComponent {
     protected int x, y;
     boolean animation;
     boolean isMoving = false;
+
     // . means no current direction
     char direction = '.';
+
     final int cSize = 30;
     final int moveDistance = 2;
+    ArrayList<BufferedImage> charImages = new ArrayList<BufferedImage>();
 
     /**
      * Template method pattern to make a move
@@ -52,9 +57,7 @@ abstract class LivingCharacter extends JComponent {
         }
     }
 
-    protected boolean inVerticalGrid() {
-        return (x % Maze.INSTANCE.gridWidth <= 1);
-    }
+    protected boolean inVerticalGrid() { return (x % Maze.INSTANCE.gridWidth <= 1); }
 
     protected boolean inHorizontalGrid() {
         return (y % Maze.INSTANCE.gridHeight <= 1);
@@ -82,7 +85,7 @@ abstract class LivingCharacter extends JComponent {
      * @return rectangle surrounding pacman
      */
     public Rectangle getRectangle() {
-        // If pacman is just crossing through the shortcut return a wider rectangle
+        // If the character is just crossing through the shortcut return a wider rectangle
         // covering both exists
         if ((x < cSize && direction == 'R') || x + cSize > Maze.INSTANCE.width && direction == 'L') {
             return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, cSize + 4);
