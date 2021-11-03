@@ -76,7 +76,7 @@ public class PacmanFrame extends JFrame {
         setupControls();
 
         // The pacman icons in the bottom bar indicating number of lives left
-        liveIcon = new ImageIcon(GameEngine.INSTANCE.getPacman().pacImages.get(1));
+        liveIcon = new ImageIcon(GameEngine.INSTANCE.getPacman().charImages.get(1));
         for (int i = 0; i < GameEngine.INSTANCE.getLives(); i++) {
             JLabel label = new JLabel(liveIcon);
             livesLeft.add(label);

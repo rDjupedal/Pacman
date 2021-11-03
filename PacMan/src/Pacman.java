@@ -5,16 +5,12 @@ import java.awt.event.KeyEvent;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 class Pacman extends LivingCharacter implements Runnable {
 
     // . means no lastKey waiting
     char lastKey = '.';
-    int highOnCandyMs = 0;
-    boolean died = false;
 
-    ArrayList<BufferedImage> pacImages = new ArrayList<BufferedImage>();
     BufferedImage currentImgBig;
     BufferedImage currentImgSmall;
 
@@ -27,15 +23,15 @@ class Pacman extends LivingCharacter implements Runnable {
         // Load images.
         try {
 
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacLeftBig.png"))); // 0
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacRightBig.png"))); // 1
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacUpBig.png"))); // 2
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacDownBig.png"))); // 3
+            charImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacLeftBig.png"))); // 0
+            charImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacRightBig.png"))); // 1
+            charImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacUpBig.png"))); // 2
+            charImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacDownBig.png"))); // 3
 
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacLeftSmall.png"))); // 4
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacRightSmall.png"))); // 5
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacUpSmall.png"))); // 6
-            pacImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacDownSmall.png"))); // 7
+            charImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacLeftSmall.png"))); // 4
+            charImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacRightSmall.png"))); // 5
+            charImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacUpSmall.png"))); // 6
+            charImages.add(ImageIO.read(this.getClass().getResource("resources/PacMan/pacDownSmall.png"))); // 7
 
             setInitImage();
 
@@ -46,8 +42,8 @@ class Pacman extends LivingCharacter implements Runnable {
 
     protected void setInitImage() {
         // Initial pic.
-        currentImgBig = pacImages.get(1);
-        currentImgSmall = pacImages.get(4);
+        currentImgBig = charImages.get(1);
+        currentImgSmall = charImages.get(4);
     }
 
     protected void keyPressed(KeyEvent e) {
@@ -112,8 +108,8 @@ class Pacman extends LivingCharacter implements Runnable {
         case 'U':
             if (goUp() && inVerticalGrid()) {
                 y -= moveDistance;
-                currentImgBig = pacImages.get(2);
-                currentImgSmall = pacImages.get(6);
+                currentImgBig = charImages.get(2);
+                currentImgSmall = charImages.get(6);
                 isMoving = true;
                 Maze.INSTANCE.setPacManPos(x, y);
             }
@@ -122,8 +118,8 @@ class Pacman extends LivingCharacter implements Runnable {
         case 'D':
             if (goDown() && inVerticalGrid()) {
                 y += moveDistance;
-                currentImgBig = pacImages.get(3);
-                currentImgSmall = pacImages.get(7);
+                currentImgBig = charImages.get(3);
+                currentImgSmall = charImages.get(7);
                 isMoving = true;
                 Maze.INSTANCE.setPacManPos(x, y);
             }
@@ -136,8 +132,8 @@ class Pacman extends LivingCharacter implements Runnable {
 
             if (goLeft() && inHorizontalGrid()) {
                 x -= moveDistance;
-                currentImgBig = pacImages.get(0);
-                currentImgSmall = pacImages.get(4);
+                currentImgBig = charImages.get(0);
+                currentImgSmall = charImages.get(4);
                 isMoving = true;
                 Maze.INSTANCE.setPacManPos(x, y);
             }
@@ -151,8 +147,8 @@ class Pacman extends LivingCharacter implements Runnable {
 
             if (goRight() && inHorizontalGrid()) {
                 x += moveDistance;
-                currentImgBig = pacImages.get(1);
-                currentImgSmall = pacImages.get(5);
+                currentImgBig = charImages.get(1);
+                currentImgSmall = charImages.get(5);
                 isMoving = true;
                 Maze.INSTANCE.setPacManPos(x, y);
             }

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
-import java.sql.Date;
 
 public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     private IChaseBehaviour iChaseBehaviour;
@@ -21,10 +20,8 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     private boolean isLogging = false;
     private String previousMove = "";
 
-    private final int cSize = 30;
-    private final int moveDistance = 2;
     private String direction;
-    private ArrayList<BufferedImage> ghostImgs = new ArrayList<BufferedImage>();
+
     private ArrayList<BufferedImage> frigthenedGhostImgs = new ArrayList<BufferedImage>();
     private BufferedImage currentImg;
     private String currentState = "wakeup";
@@ -71,13 +68,13 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
 
             for (int i = 0; i < 4; i++) {
                 this.imgPath = String.format("resources/%sGhost/%d.png", ghostColor, i);
-                ghostImgs.add(ImageIO.read(this.getClass().getResource(imgPath)));
+                charImages.add(ImageIO.read(this.getClass().getResource(imgPath)));
             }
 
         } catch (IOException e) {
             System.out.println("Ghost pic could not be loaded: " + e.getMessage());
         }
-        currentImg = ghostImgs.get(0);
+        currentImg = charImages.get(0);
         isLogging = true;
     }
 
@@ -100,13 +97,13 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
             case "up":
 
                 y -= moveDistance;
-                currentImg = ghostImgs.get(0);
+                currentImg = charImages.get(0);
 
                 break;
 
             case "down":
                 y += moveDistance;
-                currentImg = ghostImgs.get(1);
+                currentImg = charImages.get(1);
                 break;
 
             case "left":
@@ -116,7 +113,7 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
                 }
 
                 x -= moveDistance;
-                currentImg = ghostImgs.get(2);
+                currentImg = charImages.get(2);
 
                 break;
 
@@ -127,7 +124,7 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
                 }
 
                 x += moveDistance;
-                currentImg = ghostImgs.get(3);
+                currentImg = charImages.get(3);
 
                 break;
             }
