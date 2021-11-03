@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class PacmanFrame extends JFrame {
     private JLabel debugLabel = new JLabel();
     private MazePanel mazePanel;
-    private JLabel bottomLabel, scoreLabel;
+    private JLabel bottomLabel, scoreLabel, highScoreLabel;
     private Dimension gameSize, gridSize;
     private ImageIcon liveIcon;
     private JDialog gameOverDialog;
@@ -40,7 +40,7 @@ public class PacmanFrame extends JFrame {
         scoreLabel.setFont(topFont);
         scoreLabel.setForeground(Color.WHITE);
 
-        JLabel highScoreLabel = new JLabel(
+        highScoreLabel = new JLabel(
                 HighScore.INSTANCE.getHighScoreName() + " " + HighScore.INSTANCE.getHighScore(), JLabel.RIGHT);
         highScoreLabel.setFont(topFont);
         highScoreLabel.setForeground(Color.WHITE);
@@ -65,13 +65,6 @@ public class PacmanFrame extends JFrame {
         setVisible(true);
         setFocusable(true);
         requestFocusInWindow();
-
-        // GAME OVER DIALOG
-        /*
-         * gameOverDialog = new GameOverDialog();
-         * gameOverDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-         * gameOverDialog.setSize(400,300);
-         */
 
         setupControls();
 
@@ -157,14 +150,8 @@ public class PacmanFrame extends JFrame {
      * Checks if the number of lives has changed, and if so updates labels
      */
     private void updateBottom() {
-        /*
-         * if (!livesLeft.isEmpty()) { if (livesLeft.size() !=
-         * GameEngine.INSTANCE.getLives()) { livesLeft.get(livesLeft.size() -
-         * 1).setVisible(false); this.remove(livesLeft.get(livesLeft.size() - 1));
-         * livesLeft.remove(livesLeft.size() - 1); } }
-         */
 
-        // how many are visible?
+        // how lives many are visible?
         int visible = 0;
         for (JLabel label : livesLeft) {
             if (label.isVisible())
@@ -195,8 +182,9 @@ public class PacmanFrame extends JFrame {
     }
 
     private void updateTop() {
-        // Update score in the top
+        // Update score and highscore in the top
         scoreLabel.setText("" + GameEngine.INSTANCE.getScore());
+        highScoreLabel.setText(HighScore.INSTANCE.getHighScoreName() + " " + HighScore.INSTANCE.getHighScore());
     }
 
 }

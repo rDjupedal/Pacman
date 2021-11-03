@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * Object pool and factory of MazeBricks
+ * Object pool and factory for MazeBricks
  */
 public class MazeBrickPool {
     protected static final MazeBrickPool INSTANCE = new MazeBrickPool();
@@ -24,6 +24,10 @@ public class MazeBrickPool {
         return tempBrick;
     }
 
+    /**
+     * Gets a free MazeBrick and stores it for future use
+     * @param returnedBrick
+     */
     protected void returnBrickObject(MazeBrick returnedBrick) {
         pool.add(returnedBrick);
     }
