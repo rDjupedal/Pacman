@@ -6,7 +6,9 @@ public class MazeBrick {
     String type;
     BufferedImage image;
 
-    public MazeBrick(String type, BufferedImage image, int x, int y, int width, int height) {
+    protected MazeBrick() {}
+
+    public void setupBrick(String type, BufferedImage image, int x, int y, int width, int height) {
         this.image = image;
         this.type = type;
         this.x = x;
