@@ -20,7 +20,7 @@ public final class Maze extends JComponent {
     private char pacManDirection;
     private byte[] readLevel;
     protected BufferedImage wall, space, food, candy, door;
-    private ArrayList<MazeBrick> mazeBricks = new ArrayList<MazeBrick>();;
+    private ArrayList<MazeBrick> mazeBricks = new ArrayList<>();
     private ArrayList<MazeBrick> doorBricks;
 
     /**
@@ -81,19 +81,12 @@ public final class Maze extends JComponent {
             // e.printStackTrace();
         }
 
-        /*
-         * System.out.println(readLevel.length); List<?> test =
-         * Stream.of(readLevel).collect(Collectors.toList());
-         */
-
         System.out.println("Read " + readLevel.length + " bytes from Maze file.");
 
     }
 
     private void createGraphics() {
 
-        // create walls & spaces
-        // todo: move to separate class
         try {
             wall = ImageIO.read(new File("PacMan/src/resources/wall.jpg"));
             space = ImageIO.read(new File("PacMan/src/resources/space.jpg"));
@@ -116,44 +109,42 @@ public final class Maze extends JComponent {
 
         for (int i = 0; i < readLevel.length; i++) {
 
-            MazeBrick tempMazeBrick = MazeBrickPool.INSTANCE.getBrickObject();
-
             if (readLevel[i] != 10) { // ignore new line characters
+
+                MazeBrick tempMazeBrick = MazeBrickPool.INSTANCE.getBrickObject();
+                boolean skip = false;
+
                 switch (readLevel[i]) {
                 // todo: use a factory instead and pass the byte as argument
 
                 case 67: // (C)andy
-                    //tempMazeBrick = new MazeBrick("candy", candy, curX, curY, gridWidth, gridHeight);
                     tempMazeBrick.setupBrick("candy", candy, curX, curY, gridWidth, gridHeight);
                     break;
 
                 case 68: // (D)oor
-                    //tempMazeBrick = new MazeBrick("door", door, curX, curY, gridWidth, gridHeight);
                     tempMazeBrick.setupBrick("door", door, curX, curY, gridWidth, gridHeight);
                     break;
 
                 case 70: // (F)ood
-                    //tempMazeBrick = new MazeBrick("food", food, curX, curY, gridWidth, gridHeight);
                     tempMazeBrick.setupBrick("food", food, curX, curY, gridWidth, gridHeight);
                     foodLeft++;
                     break;
 
                 case 83: // (S)pace
-                    //tempMazeBrick = new MazeBrick("space", space, curX, curY, gridWidth, gridHeight);
                     tempMazeBrick.setupBrick("space", space, curX, curY, gridWidth, gridHeight);
                     break;
 
                 case 87: // (W)all
-                    //tempMazeBrick = new MazeBrick("wall", wall, curX, curY, gridWidth, gridHeight);
                     tempMazeBrick.setupBrick("wall", wall, curX, curY, gridWidth, gridHeight);
                     break;
 
                 default:
                     System.out.println("Found unrecognized character at: " + i + ":  " + readLevel[i]);
+                    skip = true;
                     break;
                 }
 
-                mazeBricks.add(tempMazeBrick);
+                if (!skip) mazeBricks.add(tempMazeBrick);
 
                 if (curX + gridWidth >= width) {
                     curY += gridHeight;
