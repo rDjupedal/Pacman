@@ -14,6 +14,7 @@ public class GameEngine {
     private int highOnCandyMs = 800;
     private int pacmanStartX = 400, pacmanStartY = 690;
     private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+    private ArrayList<Ghost> deadGhosts = new ArrayList<>();
     private Dimension gameSize, gridSize;
     protected boolean isRunning = false;
     protected boolean isGameOver = false;
@@ -239,5 +240,6 @@ public class GameEngine {
         highOnCandy = false;
         stateSetter.setPreviousState();
         highOnCandyMs = 800;
+        stateSetter.setWakeUp();
     }
 }

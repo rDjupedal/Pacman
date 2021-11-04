@@ -48,7 +48,8 @@ public final class Maze extends JComponent {
         // Return whatever dummy brick that is not wall
 
         for (MazeBrick brick : mazeBricks) {
-            if (!brick.isWall()) return brick;
+            if (!brick.isWall())
+                return brick;
         }
         return null;
     }
@@ -148,7 +149,8 @@ public final class Maze extends JComponent {
                     break;
                 }
 
-                if (!skip) mazeBricks.add(tempMazeBrick);
+                if (!skip)
+                    mazeBricks.add(tempMazeBrick);
 
                 if (curX + gridWidth >= width) {
                     curY += gridHeight;
@@ -188,7 +190,7 @@ public final class Maze extends JComponent {
         for (MazeBrick brick : mazeBricks) {
             brick.draw(g);
         }
-        //drawDebugGrid(g);
+        // drawDebugGrid(g);
 
     }
 
@@ -206,6 +208,8 @@ public final class Maze extends JComponent {
         doorBricks.forEach(z -> {
             z.changeType("wall");
         });
+
+        System.out.println("Maze::Closedoor: Door is closing.");
     }
 
     public void openDoor() {

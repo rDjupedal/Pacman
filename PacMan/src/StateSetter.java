@@ -80,4 +80,13 @@ public class StateSetter {
         notifyObservers();
     }
 
+    // protected void releaseGhost(ArrayList<Ghost> deadGhosts) {
+
+    // Maze.INSTANCE.openDoor();
+    // deadGhosts.forEach(ghost -> {
+    // ghost.updateState("wakeup");
+    // });
+
+    // }
+
 }
