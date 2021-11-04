@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-
 abstract class LivingCharacter extends JComponent {
     protected int x, y;
     boolean animation;
@@ -19,7 +18,7 @@ abstract class LivingCharacter extends JComponent {
 
     /**
      * Template method pattern to make a move
-    */
+     */
     protected final void doMove() {
         setDirection();
         moveCharacter();
@@ -38,26 +37,31 @@ abstract class LivingCharacter extends JComponent {
     /**
      * Hook method, not mandatory for baseclass to implement if it doesn't want to
      * listen to key presses
+     * 
      * @param e KeyEvent
      */
-    protected void keyPressed(KeyEvent e){}
+    protected void keyPressed(KeyEvent e) {
+    }
 
     /**
      * Draws the character
+     * 
      * @param g
      */
     abstract public void draw(Graphics g);
 
     protected boolean withinBoundary() {
-        if ((y >= cSize && y <= Maze.INSTANCE.height - cSize)
-                && (x >= cSize && x <= Maze.INSTANCE.width - cSize)) return true;
+        if ((y >= cSize && y <= Maze.INSTANCE.height - cSize) && (x >= cSize && x <= Maze.INSTANCE.width - cSize))
+            return true;
         else {
             System.out.println("Out of boundary, " + x + ", " + y);
             return false;
         }
     }
 
-    protected boolean inVerticalGrid() { return (x % Maze.INSTANCE.gridWidth <= 1); }
+    protected boolean inVerticalGrid() {
+        return (x % Maze.INSTANCE.gridWidth <= 1);
+    }
 
     protected boolean inHorizontalGrid() {
         return (y % Maze.INSTANCE.gridHeight <= 1);
@@ -85,7 +89,8 @@ abstract class LivingCharacter extends JComponent {
      * @return rectangle surrounding pacman
      */
     public Rectangle getRectangle() {
-        // If the character is just crossing through the shortcut return a wider rectangle
+        // If the character is just crossing through the shortcut return a wider
+        // rectangle
         // covering both exists
         if ((x < cSize && direction == 'R') || x + cSize > Maze.INSTANCE.width && direction == 'L') {
             return new Rectangle(0, y - 2, Maze.INSTANCE.width - x, cSize + 4);
@@ -96,19 +101,24 @@ abstract class LivingCharacter extends JComponent {
 
     /**
      * Returns a rectangle for collision check
+     * 
      * @return rectangle only covering pacman
      */
     public Rectangle getCollisionRectangle() {
         return new Rectangle(x + moveDistance, y + moveDistance, cSize - moveDistance, cSize - moveDistance);
     }
 
-    protected int get_X() { return x; }
-    protected int get_Y() { return y; }
+    protected int get_X() {
+        return x;
+    }
+
+    protected int get_Y() {
+        return y;
+    }
 
     protected void setPos(int x, int y) {
         this.x = x;
         this.y = y;
     }
-
 
 }
