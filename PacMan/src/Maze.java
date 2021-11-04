@@ -222,7 +222,7 @@ public final class Maze extends JComponent {
         for (MazeBrick brick : mazeBricks) {
             brick.draw(g);
         }
-        drawDebugGrid(g);
+        //drawDebugGrid(g);
     }
 
     /**
