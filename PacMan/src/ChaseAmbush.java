@@ -22,9 +22,6 @@ public class ChaseAmbush implements IChaseBehaviour {
         int pacmanCurX = GameEngine.INSTANCE.getPacman().get_X();
         int pacmanCurY = GameEngine.INSTANCE.getPacman().get_Y();
 
-        // Getter of pacmans Direction, and makes calculations on his "future"
-        // positions.
-        //pacManDirection = Maze.INSTANCE.getPacManDirection();
         pacManDirection = GameEngine.INSTANCE.getPacman().direction;
         switch (pacManDirection) {
         case 'U':

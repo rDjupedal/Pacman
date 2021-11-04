@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class ChaseAggresive implements IChaseBehaviour {
 
-    int pacmanX, pacmanY;
     String previousMove = "";
 
     @Override
@@ -22,10 +21,8 @@ public class ChaseAggresive implements IChaseBehaviour {
         List<Double> hypos = new ArrayList<>();
 
         // Getters for PacMans positions.
-        pacmanX = GameEngine.INSTANCE.getPacman().getX();
-        pacmanY = GameEngine.INSTANCE.getPacman().getY();
-        //pacmanX = Maze.INSTANCE.getPacManPos()[0];
-        //pacmanY = Maze.INSTANCE.getPacManPos()[1];
+        int pacmanX = GameEngine.INSTANCE.getPacman().get_X();
+        int pacmanY = GameEngine.INSTANCE.getPacman().get_Y();
 
         // If only 1 possible move, pick that one.
         if (possibleMovesArray.size() == 1) {
