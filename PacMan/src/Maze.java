@@ -102,7 +102,7 @@ public final class Maze extends JComponent {
         int curX = 0;
         int curY = 0;
         foodLeft = 0;
-        //mazeBricks = new ArrayList<MazeBrick>();
+
         // Return MazeBricks to pool
         mazeBricks.forEach((brick) -> MazeBrickPool.INSTANCE.returnBrickObject(brick));
         mazeBricks.clear();
@@ -115,7 +115,6 @@ public final class Maze extends JComponent {
                 boolean skip = false;
 
                 switch (readLevel[i]) {
-                // todo: use a factory instead and pass the byte as argument
 
                 case 67: // (C)andy
                     tempMazeBrick.setupBrick("candy", candy, curX, curY, gridWidth, gridHeight);

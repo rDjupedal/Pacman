@@ -61,7 +61,7 @@ public class GameEngine {
             if (highOnCandy) {
                 highOnCandyMs -= 1;
                 if (highOnCandyMs < 1) {
-                    endhighOnCandy();
+                    endHighOnCandy();
                 }
             }
         }
@@ -84,13 +84,11 @@ public class GameEngine {
     }
 
     private void collisionDetected() {
-        System.out.println(highOnCandy);
+
         if (!highOnCandy) {
             lives--;
             // Reset the position of the characters
             resetCharacterPositions();
-
-            // clearScreen = true;
 
             // stops the EDT timer
             isRunning = false;
@@ -105,13 +103,10 @@ public class GameEngine {
     }
 
     private void gameOver() {
-        System.out.println("Game over");
         isGameOver = true;
-
     }
 
     private void finishLevel() {
-        System.out.println("game finished!!");
         GameEngine.INSTANCE.isRunning = false;
         resetCharacterPositions();
         // todo level..
@@ -133,7 +128,7 @@ public class GameEngine {
      * Called after GameOver
      */
     protected void newGame() {
-        // Old Maze handled by garbage collector..
+
         createMaze();
 
         lives = 3;
@@ -155,11 +150,6 @@ public class GameEngine {
      * Called after Pacman died / new game
      */
     protected void startGame() {
-
-        // MazePanel checks this and repaints the whole screen
-        // clearScreen = true;
-        System.out.println("screen cleared from StartGame()");
-
         isRunning = true;
         isGameOver = false;
     }
@@ -191,8 +181,6 @@ public class GameEngine {
 
     protected void createPacman() {
         AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
-        // todo: replace harcoded startpos with Maze.INSTANCE.getPacmanX() &
-        // Maze.INSTANCE.getPacmanY()
         pacman = pacManFactory.getCharacter("pacman", pacmanStartX, pacmanStartY);
     }
 
@@ -237,7 +225,7 @@ public class GameEngine {
         }
     }
 
-    private void endhighOnCandy() {
+    private void endHighOnCandy() {
         highOnCandy = false;
         stateSetter.setPreviousState();
         highOnCandyMs = 800;

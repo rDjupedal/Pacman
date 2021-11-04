@@ -105,7 +105,8 @@ abstract class LivingCharacter extends JComponent {
      * @return rectangle only covering pacman
      */
     public Rectangle getCollisionRectangle() {
-        return new Rectangle(x + moveDistance, y + moveDistance, cSize - moveDistance, cSize - moveDistance);
+        //return new Rectangle(x + moveDistance, y + moveDistance, cSize - moveDistance, cSize - moveDistance);
+        return new Rectangle(x + cSize / 4, y + cSize / 4, cSize /2, cSize / 2);
     }
 
     protected int get_X() {
