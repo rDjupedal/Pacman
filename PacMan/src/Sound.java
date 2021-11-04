@@ -20,7 +20,6 @@ public class Sound {
      * clips in an array
      */
     public Sound() {
-        System.out.println(Thread.currentThread().getName());
         try {
             int i = 0;
             for (String sound : sounds) {
