@@ -214,16 +214,22 @@ public final class Maze extends JComponent {
     }
      */
 
+    /**
+     * Draws all the bricks on the screen
+     * @param g
+     */
     protected void drawMap(Graphics g) {
         for (MazeBrick brick : mazeBricks) {
             brick.draw(g);
         }
         drawDebugGrid(g);
-
     }
 
+    /**
+     * Draw lines along the grids of the maze
+     * @param g
+     */
     private void drawDebugGrid(Graphics g) {
-        // debug grid
         for (int x = 0; x <= width; x += gridWidth) {
             g.drawLine(x, 0, x, height);
         }
