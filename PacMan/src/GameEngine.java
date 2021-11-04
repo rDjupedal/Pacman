@@ -87,6 +87,7 @@ public class GameEngine {
 
         if (!highOnCandy) {
             lives--;
+            Sound.INSTANCE.play("die");
             // Reset the position of the characters
             resetCharacterPositions();
 
@@ -98,6 +99,7 @@ public class GameEngine {
 
         } else {
             score += 500;
+            Sound.INSTANCE.play("kill");
             // Kill the ghost
             ghost.died();
 
@@ -105,6 +107,7 @@ public class GameEngine {
     }
 
     private void gameOver() {
+        Sound.INSTANCE.play("gameover");
         isGameOver = true;
     }
 
@@ -112,6 +115,7 @@ public class GameEngine {
         GameEngine.INSTANCE.isRunning = false;
         resetCharacterPositions();
         endHighOnCandy();
+        Sound.INSTANCE.play("mazefinished");
         // todo level..
         // level++;
         createMaze();
@@ -159,6 +163,7 @@ public class GameEngine {
 
     protected void ateFood() {
         score += 10;
+        Sound.INSTANCE.play("eat");
     }
 
     protected int getScore() {
@@ -219,6 +224,7 @@ public class GameEngine {
     }
 
     protected void setHighOnCandy() {
+        Sound.INSTANCE.play("candy");
         if (highOnCandy) {
             highOnCandyMs = 800;
         } else {
