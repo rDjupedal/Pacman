@@ -17,7 +17,7 @@ class Pacman extends LivingCharacter implements Runnable {
     protected Pacman(int x, int y) {
         this.x = x;
         this.y = y;
-        Maze.INSTANCE.setPacManPos(x, y);
+        //Maze.INSTANCE.setPacManPos(x, y);
         animation = true;
 
         // Load images.
@@ -100,7 +100,8 @@ class Pacman extends LivingCharacter implements Runnable {
          * förflyttning at närliggande ruta ej är en vägg
          */
 
-        Maze.INSTANCE.setPacManDirection(direction);
+        //Maze.INSTANCE.setPacManDirection(direction);
+
         isMoving = false;
         switch (direction) {
 
@@ -151,7 +152,7 @@ class Pacman extends LivingCharacter implements Runnable {
         }
 
         // Update Pacmans position to Maze
-        Maze.INSTANCE.setPacManPos(x, y);
+        //Maze.INSTANCE.setPacManPos(x, y);
 
         // Check for food and candy at new position
         if (isMoving && x >= 0) {

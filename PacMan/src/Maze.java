@@ -126,17 +126,20 @@ public final class Maze extends JComponent {
         int curY = 0;
         foodLeft = 0;
 
-        // Return MazeBricks to pool
+        // Return MazeBricks to pool for reuse
         mazeBricks.forEach((brick) -> MazeBrickPool.INSTANCE.returnBrickObject(brick));
         mazeBricks.clear();
 
+        // Iterate over the data from the Maze file
         for (int i = 0; i < readLevel.length; i++) {
 
             if (readLevel[i] != 10) { // ignore new line characters
 
+                // Get a MazeBrick from the Maze-pool
                 MazeBrick tempMazeBrick = MazeBrickPool.INSTANCE.getBrickObject();
                 boolean skip = false;
 
+                // Set the properties of the MazeBrick
                 switch (readLevel[i]) {
 
                 case 67: // (C)andy
@@ -166,8 +169,10 @@ public final class Maze extends JComponent {
                     break;
                 }
 
+                // Add the MazeBrick to the array
                 if (!skip) mazeBricks.add(tempMazeBrick);
 
+                // Check if the horizontal line is finished
                 if (curX + gridWidth >= width) {
                     curY += gridHeight;
                     curX = 0;
@@ -183,24 +188,31 @@ public final class Maze extends JComponent {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /*
     public void setPacManPos(int pacManX, int pacManY) {
         this.pacmanX = pacManX;
         this.pacmanY = pacManY;
     }
+     */
 
+    /*
     public void setPacManDirection(char pacManDirection) {
         this.pacManDirection = pacManDirection;
     }
+     */
 
+    /*
     public int[] getPacManPos() {
         int[] pacManPos = { pacmanX, pacmanY };
         return pacManPos;
-
     }
+     */
 
+    /*
     public char getPacManDirection() {
         return pacManDirection;
     }
+     */
 
     protected void drawMap(Graphics g) {
         for (MazeBrick brick : mazeBricks) {

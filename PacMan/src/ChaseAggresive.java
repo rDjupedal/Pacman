@@ -22,8 +22,10 @@ public class ChaseAggresive implements IChaseBehaviour {
         List<Double> hypos = new ArrayList<>();
 
         // Getters for PacMans positions.
-        pacmanX = Maze.INSTANCE.getPacManPos()[0];
-        pacmanY = Maze.INSTANCE.getPacManPos()[1];
+        pacmanX = GameEngine.INSTANCE.getPacman().getX();
+        pacmanY = GameEngine.INSTANCE.getPacman().getY();
+        //pacmanX = Maze.INSTANCE.getPacManPos()[0];
+        //pacmanY = Maze.INSTANCE.getPacManPos()[1];
 
         // If only 1 possible move, pick that one.
         if (possibleMovesArray.size() == 1) {

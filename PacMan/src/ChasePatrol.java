@@ -20,8 +20,10 @@ public class ChasePatrol implements IChaseBehaviour {
         List<Double> hypos = new ArrayList<>();
 
         // Gets PacMans position.
-        pacmanX = Maze.INSTANCE.getPacManPos()[0];
-        pacmanY = Maze.INSTANCE.getPacManPos()[1];
+        pacmanX = GameEngine.INSTANCE.getPacman().get_X();
+        pacmanY = GameEngine.INSTANCE.getPacman().get_Y();
+        //pacmanX = Maze.INSTANCE.getPacManPos()[0];
+        //pacmanY = Maze.INSTANCE.getPacManPos()[1];
 
         double tempX = x;
         double tempY = y;
