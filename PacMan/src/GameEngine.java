@@ -111,6 +111,7 @@ public class GameEngine {
     private void finishLevel() {
         GameEngine.INSTANCE.isRunning = false;
         resetCharacterPositions();
+        endHighOnCandy();
         // todo level..
         // level++;
         createMaze();
