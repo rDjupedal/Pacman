@@ -109,6 +109,7 @@ public final class Maze extends JComponent {
     private void createGraphics() {
 
         try {
+            // wall bitmap taken from https://opengameart.org/content/wall-0
             wall = ImageIO.read(new File("PacMan/src/resources/maze/wall.jpg"));
             space = ImageIO.read(new File("PacMan/src/resources/maze/space.jpg"));
             food = ImageIO.read(new File("PacMan/src/resources/maze/food.jpg"));
