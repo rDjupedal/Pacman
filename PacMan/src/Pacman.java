@@ -70,7 +70,6 @@ class Pacman extends LivingCharacter implements Runnable {
     }
 
     protected void setDirection() {
-        GhostLogger.getLogger().info("Thread : " + Thread.currentThread().getName() + " does things in PacMan!");
 
         // Check if a key has been pressed...
         if (lastKey != '.') {
@@ -184,9 +183,34 @@ class Pacman extends LivingCharacter implements Runnable {
         g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, cSize, cSize, null);
     }
 
+    private String getRandomMsg() {
+        String[] messages = { "HAHA! You will NEVER catch me!", "RUN FORREST RUUUUUN!",
+                "Food food food.. mmmm GOOD FOOD!", "One little food, two little food, threeee little food! SO GOOD!",
+                "I will NEVER STOP!", "Scary ghosts EVERYWHERE!", "Ooooh, CANDY!" };
+
+        int randomIdx = (int) (Math.random() * messages.length);
+
+        return messages[randomIdx];
+    }
+
     @Override
     public void run() {
 
         doMove();
+
+        // Producer / Consumer.
+        if (PostMaster.getPostMaster().pacManHasMail()) {
+            String ghostMsg = PostMaster.getPostMaster().recieveGhostMsg();
+            System.out.println(ghostMsg);
+        }
+
+        int sendMsgChance = (int) (Math.random() * 1000);
+
+        if (sendMsgChance == 5) {
+            String msg = String.format("Pacman says: %s", getRandomMsg());
+            PostMaster.getPostMaster().sendPacManMsg(msg);
+
+        }
+
     }
 }

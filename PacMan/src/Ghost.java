@@ -134,8 +134,6 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     }
 
     private synchronized String getDirection() {
-        GhostLogger.getLogger().info(
-                "Thread : " + Thread.currentThread().getName() + " is working on this call for ghost: " + ghostColor);
 
         if (direction != null) {
             if (direction.equalsIgnoreCase("left")) {
@@ -206,14 +204,38 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
             frigthened = false;
         }
         currentState = newState;
-        System.out.println("current state is : " + currentState);
 
+    }
+
+    private String getRandomMsg() {
+
+        String[] messages = { "I will catch you, PacMan!", "You will never see the light of day, Pacman!! ",
+                "Slow doen, you pesky food eating bastard!", "I will hunt you down Pacman! ",
+                "STOP! LET ME CATCH YOU!! ", "PACMAN! GET BACK HERE! ",
+                " Please stop eating our food, my children will starve!" };
+
+        int randIdx = (int) (Math.random() * messages.length);
+
+        return messages[randIdx];
     }
 
     @Override
     public void run() {
 
         doMove();
+
+        // Producer / Consumer
+        int sendMsgChance = (int) (Math.random() * 3000);
+
+        if (sendMsgChance == 3) {
+            String ghostMsg = String.format("%s ghost says: %s", ghostColor, getRandomMsg());
+            PostMaster.getPostMaster().sendGhostMessage(ghostMsg);
+        }
+
+        if (PostMaster.getPostMaster().ghostHasMail()) {
+            String pacManMsg = PostMaster.getPostMaster().recievePacManMsg();
+            System.out.println(pacManMsg);
+        }
 
     }
 
