@@ -78,6 +78,11 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
         isLogging = true;
     }
 
+    protected void died() {
+        // Send ghost back to cage when he dies
+        setPos(15 * Maze.INSTANCE.gridWidth, 15 * Maze.INSTANCE.gridHeight);
+    }
+
     protected void setDirection() {
 
         if (inHorizontalGrid() && inVerticalGrid()) {

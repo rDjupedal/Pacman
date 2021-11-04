@@ -127,7 +127,7 @@ class Pacman extends LivingCharacter implements Runnable {
         case 'L':
             // if pacman went thru tunnel
             if (x - moveDistance < 0)
-                x = Maze.INSTANCE.width;
+                x = Maze.INSTANCE.width - moveDistance;
 
             if (goLeft() && inHorizontalGrid()) {
                 x -= moveDistance;

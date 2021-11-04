@@ -78,12 +78,12 @@ public class GameEngine {
             if (ghost.getCollisionRectangle().intersects(pacman.getCollisionRectangle())) {
                 // Remove ghost from Array. Work on checking the details and spawning another
                 // one.
-                collisionDetected();
+                collisionDetected(ghost);
             }
         }
     }
 
-    private void collisionDetected() {
+    private void collisionDetected(Ghost ghost) {
 
         if (!highOnCandy) {
             lives--;
@@ -98,6 +98,8 @@ public class GameEngine {
 
         } else {
             score += 500;
+            // Kill the ghost
+            ghost.died();
 
         }
     }
