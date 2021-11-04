@@ -45,6 +45,11 @@ public final class Maze extends JComponent {
         }
 
         System.out.println("Could not find a brick at position " + x + ", " + y);
+        // Return whatever dummy brick that is not wall
+
+        for (MazeBrick brick : mazeBricks) {
+            if (!brick.isWall()) return brick;
+        }
         return null;
     }
 
@@ -198,7 +203,6 @@ public final class Maze extends JComponent {
     }
 
     public void closeDoor() {
-
         doorBricks.forEach(z -> {
             z.changeType("wall");
         });
