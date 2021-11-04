@@ -210,7 +210,7 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     private String getRandomMsg() {
 
         String[] messages = { "I will catch you, PacMan!", "You will never see the light of day, Pacman!! ",
-                "Slow doen, you pesky food eating bastard!", "I will hunt you down Pacman! ",
+                "Slow down, you pesky, food eating bastard!", "I will hunt you down Pacman! ",
                 "STOP! LET ME CATCH YOU!! ", "PACMAN! GET BACK HERE! ",
                 " Please stop eating our food, my children will starve!" };
 
