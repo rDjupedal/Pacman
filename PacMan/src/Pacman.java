@@ -110,7 +110,6 @@ class Pacman extends LivingCharacter implements Runnable {
                 currentImgBig = charImages.get(2);
                 currentImgSmall = charImages.get(6);
                 isMoving = true;
-                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
 
@@ -120,7 +119,6 @@ class Pacman extends LivingCharacter implements Runnable {
                 currentImgBig = charImages.get(3);
                 currentImgSmall = charImages.get(7);
                 isMoving = true;
-                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
 
@@ -134,7 +132,6 @@ class Pacman extends LivingCharacter implements Runnable {
                 currentImgBig = charImages.get(0);
                 currentImgSmall = charImages.get(4);
                 isMoving = true;
-                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
 
@@ -149,13 +146,14 @@ class Pacman extends LivingCharacter implements Runnable {
                 currentImgBig = charImages.get(1);
                 currentImgSmall = charImages.get(5);
                 isMoving = true;
-                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
-
         }
 
-        // Check for food or candy at new position
+        // Update Pacmans position to Maze
+        Maze.INSTANCE.setPacManPos(x, y);
+
+        // Check for food and candy at new position
         if (isMoving && x >= 0) {
             MazeBrick brick = Maze.INSTANCE.getBrick(x, y);
 

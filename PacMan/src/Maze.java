@@ -53,14 +53,27 @@ public final class Maze extends JComponent {
         return null;
     }
 
+    /**
+     * Returns number of MazeBricks that are food
+     * @return food left
+     */
     protected int getFoodLeft() {
         return foodLeft;
     }
 
+    /**
+     * Updates a food counter when food is eaten
+     */
     protected void ateFood() {
         foodLeft--;
     }
 
+    /**
+     * Sets up a new maze
+     * @param level current level
+     * @param paneSize size of the maze
+     * @param gridSize size of each grid
+     */
     protected void startMaze(int level, Dimension paneSize, Dimension gridSize) {
 
         this.level = level;
@@ -74,35 +87,40 @@ public final class Maze extends JComponent {
         createMazeBricks();
     }
 
+    /**
+     * Reads maze from file
+     */
     private void readFromFile() {
 
-        Path path = Paths.get("PacMan/src/resources/level" + level);
-        System.out.println("opening file " + path.toString() + "...");
+        Path path = Paths.get("PacMan/src/resources/maze/level" + level);
 
         try {
             readLevel = Files.readAllBytes(path);
         } catch (IOException e) {
-            System.out.println("error opening file ");
-            // e.printStackTrace();
+            System.out.println("Error opening Maze file. ");
         }
-
-        System.out.println("Read " + readLevel.length + " bytes from Maze file.");
 
     }
 
+    /**
+     * Reads maze iamges
+     */
     private void createGraphics() {
 
         try {
-            wall = ImageIO.read(new File("PacMan/src/resources/wall.jpg"));
-            space = ImageIO.read(new File("PacMan/src/resources/space.jpg"));
-            food = ImageIO.read(new File("PacMan/src/resources/food.jpg"));
-            candy = ImageIO.read(new File("PacMan/src/resources/candy.jpg"));
-            door = ImageIO.read(new File("PacMan/src/resources/door.jpg"));
+            wall = ImageIO.read(new File("PacMan/src/resources/maze/wall.jpg"));
+            space = ImageIO.read(new File("PacMan/src/resources/maze/space.jpg"));
+            food = ImageIO.read(new File("PacMan/src/resources/maze/food.jpg"));
+            candy = ImageIO.read(new File("PacMan/src/resources/maze/candy.jpg"));
+            door = ImageIO.read(new File("PacMan/src/resources/maze/door.jpg"));
         } catch (IOException e) {
-            System.out.println("error loading image");
+            System.out.println("Error loading image files..");
         }
     }
 
+    /**
+     * Sets up an array of MazeBricks in accordance with the Maze-file
+     */
     private void createMazeBricks() {
         int curX = 0;
         int curY = 0;
