@@ -160,7 +160,6 @@ public class PacmanFrame extends JFrame {
 
         if (visible > GameEngine.INSTANCE.getLives()) {
             // Make first visible not visible
-
             for (JLabel label : livesLeft) {
                 if (label.isVisible()) {
                     label.setVisible(false);
