@@ -47,7 +47,6 @@ public class Sound {
         switch (s) {
         case "eat":
             soundIndex = 0;
-            System.out.println(Thread.currentThread().getName());
             break;
 
         case "die":
