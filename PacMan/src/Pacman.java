@@ -16,7 +16,7 @@ class Pacman extends LivingCharacter implements Runnable {
     protected Pacman(int x, int y) {
         this.x = x;
         this.y = y;
-        Maze.INSTANCE.setPacManPos(x, y);
+        //Maze.INSTANCE.setPacManPos(x, y);
         animation = true;
 
         // Load images.
@@ -99,7 +99,8 @@ class Pacman extends LivingCharacter implements Runnable {
          * förflyttning at närliggande ruta ej är en vägg
          */
 
-        Maze.INSTANCE.setPacManDirection(direction);
+        //Maze.INSTANCE.setPacManDirection(direction);
+
         isMoving = false;
         switch (direction) {
 
@@ -109,7 +110,6 @@ class Pacman extends LivingCharacter implements Runnable {
                 currentImgBig = charImages.get(2);
                 currentImgSmall = charImages.get(6);
                 isMoving = true;
-                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
 
@@ -119,7 +119,6 @@ class Pacman extends LivingCharacter implements Runnable {
                 currentImgBig = charImages.get(3);
                 currentImgSmall = charImages.get(7);
                 isMoving = true;
-                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
 
@@ -133,7 +132,6 @@ class Pacman extends LivingCharacter implements Runnable {
                 currentImgBig = charImages.get(0);
                 currentImgSmall = charImages.get(4);
                 isMoving = true;
-                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
 
@@ -148,13 +146,14 @@ class Pacman extends LivingCharacter implements Runnable {
                 currentImgBig = charImages.get(1);
                 currentImgSmall = charImages.get(5);
                 isMoving = true;
-                Maze.INSTANCE.setPacManPos(x, y);
             }
             break;
-
         }
 
-        // Check for food or candy at new position
+        // Update Pacmans position to Maze
+        //Maze.INSTANCE.setPacManPos(x, y);
+
+        // Check for food and candy at new position
         if (isMoving && x >= 0) {
             MazeBrick brick = Maze.INSTANCE.getBrick(x, y);
 

@@ -19,32 +19,36 @@ public class ChaseAmbush implements IChaseBehaviour {
         // List of hypotenusas
         List<Double> hypos = new ArrayList<>();
 
+        int pacmanCurX = GameEngine.INSTANCE.getPacman().get_X();
+        int pacmanCurY = GameEngine.INSTANCE.getPacman().get_Y();
+
         // Getter of pacmans Direction, and makes calculations on his "future"
         // positions.
-        pacManDirection = Maze.INSTANCE.getPacManDirection();
+        //pacManDirection = Maze.INSTANCE.getPacManDirection();
+        pacManDirection = GameEngine.INSTANCE.getPacman().direction;
         switch (pacManDirection) {
         case 'U':
             // This is a special bug in Pacman, so when pacman is going up, you need to also
             // add a bit to the left of him.
-            pacmanX = Maze.INSTANCE.getPacManPos()[0] - (Maze.INSTANCE.gridWidth * 2);
-            pacmanY = Maze.INSTANCE.getPacManPos()[1] + (Maze.INSTANCE.gridHeight * 3);
+            pacmanX = pacmanCurX - (Maze.INSTANCE.gridWidth * 2);
+            pacmanY = pacmanCurY + (Maze.INSTANCE.gridHeight * 3);
 
             break;
         case 'D':
-            pacmanX = Maze.INSTANCE.getPacManPos()[0];
-            pacmanY = Maze.INSTANCE.getPacManPos()[1] - (Maze.INSTANCE.gridHeight * 3);
+            pacmanX = pacmanCurX;
+            pacmanY = pacmanCurY - (Maze.INSTANCE.gridHeight * 3);
 
             break;
 
         case 'L':
-            pacmanX = Maze.INSTANCE.getPacManPos()[0] - (Maze.INSTANCE.gridWidth * 3);
-            pacmanY = Maze.INSTANCE.getPacManPos()[1];
+            pacmanX = pacmanCurX - (Maze.INSTANCE.gridWidth * 3);
+            pacmanY = pacmanCurY;
 
             break;
 
         case 'R':
-            pacmanX = Maze.INSTANCE.getPacManPos()[0] + (Maze.INSTANCE.gridWidth * 3);
-            pacmanY = Maze.INSTANCE.getPacManPos()[1];
+            pacmanX = pacmanCurX + (Maze.INSTANCE.gridWidth * 3);
+            pacmanY = pacmanCurY;
 
             break;
 

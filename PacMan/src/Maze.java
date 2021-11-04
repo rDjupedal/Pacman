@@ -54,14 +54,27 @@ public final class Maze extends JComponent {
         return null;
     }
 
+    /**
+     * Returns number of MazeBricks that are food
+     * @return food left
+     */
     protected int getFoodLeft() {
         return foodLeft;
     }
 
+    /**
+     * Updates a food counter when food is eaten
+     */
     protected void ateFood() {
         foodLeft--;
     }
 
+    /**
+     * Sets up a new maze
+     * @param level current level
+     * @param paneSize size of the maze
+     * @param gridSize size of each grid
+     */
     protected void startMaze(int level, Dimension paneSize, Dimension gridSize) {
 
         this.level = level;
@@ -75,51 +88,59 @@ public final class Maze extends JComponent {
         createMazeBricks();
     }
 
+    /**
+     * Reads maze from file
+     */
     private void readFromFile() {
 
-        Path path = Paths.get("PacMan/src/resources/level" + level);
-        System.out.println("opening file " + path.toString() + "...");
+        Path path = Paths.get("PacMan/src/resources/maze/level" + level);
 
         try {
             readLevel = Files.readAllBytes(path);
         } catch (IOException e) {
-            System.out.println("error opening file ");
-            // e.printStackTrace();
+            System.out.println("Error opening Maze file. ");
         }
-
-        System.out.println("Read " + readLevel.length + " bytes from Maze file.");
 
     }
 
+    /**
+     * Reads maze iamges
+     */
     private void createGraphics() {
 
         try {
-            wall = ImageIO.read(new File("PacMan/src/resources/wall.jpg"));
-            space = ImageIO.read(new File("PacMan/src/resources/space.jpg"));
-            food = ImageIO.read(new File("PacMan/src/resources/food.jpg"));
-            candy = ImageIO.read(new File("PacMan/src/resources/candy.jpg"));
-            door = ImageIO.read(new File("PacMan/src/resources/door.jpg"));
+            wall = ImageIO.read(new File("PacMan/src/resources/maze/wall.jpg"));
+            space = ImageIO.read(new File("PacMan/src/resources/maze/space.jpg"));
+            food = ImageIO.read(new File("PacMan/src/resources/maze/food.jpg"));
+            candy = ImageIO.read(new File("PacMan/src/resources/maze/candy.jpg"));
+            door = ImageIO.read(new File("PacMan/src/resources/maze/door.jpg"));
         } catch (IOException e) {
-            System.out.println("error loading image");
+            System.out.println("Error loading image files..");
         }
     }
 
+    /**
+     * Sets up an array of MazeBricks in accordance with the Maze-file
+     */
     private void createMazeBricks() {
         int curX = 0;
         int curY = 0;
         foodLeft = 0;
 
-        // Return MazeBricks to pool
+        // Return MazeBricks to pool for reuse
         mazeBricks.forEach((brick) -> MazeBrickPool.INSTANCE.returnBrickObject(brick));
         mazeBricks.clear();
 
+        // Iterate over the data from the Maze file
         for (int i = 0; i < readLevel.length; i++) {
 
             if (readLevel[i] != 10) { // ignore new line characters
 
+                // Get a MazeBrick from the Maze-pool
                 MazeBrick tempMazeBrick = MazeBrickPool.INSTANCE.getBrickObject();
                 boolean skip = false;
 
+                // Set the properties of the MazeBrick
                 switch (readLevel[i]) {
 
                 case 67: // (C)andy
@@ -149,9 +170,10 @@ public final class Maze extends JComponent {
                     break;
                 }
 
-                if (!skip)
-                    mazeBricks.add(tempMazeBrick);
+                // Add the MazeBrick to the array
+                if (!skip) mazeBricks.add(tempMazeBrick);
 
+                // Check if the horizontal line is finished
                 if (curX + gridWidth >= width) {
                     curY += gridHeight;
                     curX = 0;
@@ -167,6 +189,7 @@ public final class Maze extends JComponent {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /*
     public void setPacManPos(int pacManX, int pacManY) {
         this.pacmanX = pacManX;
         this.pacmanY = pacManY;
@@ -175,27 +198,37 @@ public final class Maze extends JComponent {
     public void setPacManDirection(char pacManDirection) {
         this.pacManDirection = pacManDirection;
     }
+     */
 
+    /*
     public int[] getPacManPos() {
         int[] pacManPos = { pacmanX, pacmanY };
         return pacManPos;
-
     }
+     */
 
+    /*
     public char getPacManDirection() {
         return pacManDirection;
     }
+     */
 
+    /**
+     * Draws all the bricks on the screen
+     * @param g
+     */
     protected void drawMap(Graphics g) {
         for (MazeBrick brick : mazeBricks) {
             brick.draw(g);
         }
-        // drawDebugGrid(g);
-
+        drawDebugGrid(g);
     }
 
+    /**
+     * Draw lines along the grids of the maze
+     * @param g
+     */
     private void drawDebugGrid(Graphics g) {
-        // debug grid
         for (int x = 0; x <= width; x += gridWidth) {
             g.drawLine(x, 0, x, height);
         }
@@ -208,8 +241,6 @@ public final class Maze extends JComponent {
         doorBricks.forEach(z -> {
             z.changeType("wall");
         });
-
-        System.out.println("Maze::Closedoor: Door is closing.");
     }
 
     public void openDoor() {
