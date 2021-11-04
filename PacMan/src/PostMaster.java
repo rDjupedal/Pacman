@@ -59,11 +59,11 @@ public class PostMaster {
 
     }
 
-    protected boolean pacManHasMail() {
+    protected synchronized boolean pacManHasMail() {
         return !ghostMessages.isEmpty();
     }
 
-    protected boolean ghostHasMail() {
+    protected synchronized boolean ghostHasMail() {
         return !pacManMessages.isEmpty();
     }
 
