@@ -18,7 +18,8 @@ public class GameEngine {
     protected boolean isRunning = false;
     protected boolean isGameOver = false;
     private boolean clearScreen = false;
-    private ExecutorService executorService = Executors.newFixedThreadPool(5);
+    private ExecutorService executorService = Executors.newFixedThreadPool(6);
+    private Sound sound = new Sound();
 
     StateSetter stateSetter = new StateSetter();
 
@@ -87,7 +88,7 @@ public class GameEngine {
 
         if (!highOnCandy) {
             lives--;
-            Sound.INSTANCE.play("die");
+            sound.play("die");
             // Reset the position of the characters
             resetCharacterPositions();
 
@@ -99,7 +100,7 @@ public class GameEngine {
 
         } else {
             score += 500;
-            Sound.INSTANCE.play("kill");
+            sound.play("kill");
             // Kill the ghost
             ghost.died();
 
@@ -107,7 +108,7 @@ public class GameEngine {
     }
 
     private void gameOver() {
-        Sound.INSTANCE.play("gameover");
+        sound.play("gameover");
         isGameOver = true;
     }
 
@@ -115,7 +116,7 @@ public class GameEngine {
         GameEngine.INSTANCE.isRunning = false;
         resetCharacterPositions();
         endHighOnCandy();
-        Sound.INSTANCE.play("mazefinished");
+        sound.play("mazefinished");
         // todo level..
         // level++;
         createMaze();
@@ -163,7 +164,7 @@ public class GameEngine {
 
     protected void ateFood() {
         score += 10;
-        Sound.INSTANCE.play("eat");
+        sound.play("eat");
     }
 
     protected int getScore() {
@@ -224,7 +225,7 @@ public class GameEngine {
     }
 
     protected void setHighOnCandy() {
-        Sound.INSTANCE.play("candy");
+        sound.play("candy");
         if (highOnCandy) {
             highOnCandyMs = 800;
         } else {
