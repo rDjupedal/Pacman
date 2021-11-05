@@ -1,5 +1,4 @@
 # Project Assignment
-
 ## Environment & Tools
 *Rasmus Djupedal*
 * Operating system Linux Mint 20.2 Cinnamon, 64-bit
