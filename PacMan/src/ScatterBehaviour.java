@@ -1,16 +1,22 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The behavoir when the Ghosts has state Scatter Activated. Depending on which
+ * ghost, they move towards a specific corner and circles that area.
+ * 
+ * @author Tobias Liljeblad & Rasmus Djupedal
+ */
 public class ScatterBehaviour implements IScatterBehaviour {
-    int x, y, targetX, targetY;
-    int scatterX;
-    int scatterY;
-    String direction;
-    String previousMove = "";
-    Boolean onTheMove = false;
-    Boolean pickDirection = true;
+    int x, y, scatterX, scatterY;
 
+    /**
+     * Depending on which corner the ghosts has assigned, scatter Target is adjusted
+     * in the constructor.
+     * 
+     * @param corner the corner of which the ghost should aim for in Scatter state.
+     *               TL = Top Left etc.
+     */
     public ScatterBehaviour(String corner) {
         switch (corner) {
         case "TL":
@@ -38,41 +44,68 @@ public class ScatterBehaviour implements IScatterBehaviour {
         }
     }
 
+    /**
+     * Determines the shortest route to the assigned scatter Corner.
+     * 
+     * @param x                  the x position of the ghost at the time of calling
+     * 
+     * @param y                  the y position of the ghost at the time of calling
+     * @param possibleMovesArray the array of possible moves for the ghost at the
+     *                           coordinate x,y.
+     */
     @Override
     public String scatter(int x, int y, ArrayList<String> possibleMovesArray) {
 
+        // Create list for hypotenuse
         List<Double> hypos = new ArrayList<>();
 
+        // if only one possible move, return that one.
         if (possibleMovesArray.size() == 1) {
-            previousMove = possibleMovesArray.get(0);
-            return previousMove;
+            return possibleMovesArray.get(0);
         } else {
 
             double tempX = x;
             double tempY = y;
 
+            // add future possible move to all moves.
             for (int i = 0; i < possibleMovesArray.size(); i++) {
-                if (possibleMovesArray.get(i).equals("right")) {
+                switch (possibleMovesArray.get(i)) {
+                case "right":
                     tempX = x + Maze.INSTANCE.gridWidth;
-                } else if (possibleMovesArray.get(i).equals("left")) {
+
+                    break;
+                case "left":
                     tempX = x - Maze.INSTANCE.gridWidth;
-                } else if (possibleMovesArray.get(i).equals("down")) {
+                    break;
+                case "down":
                     tempY = y + Maze.INSTANCE.gridHeight;
-                } else if (possibleMovesArray.get(i).equals("up")) {
+                    break;
+                case "up":
                     tempY = y - Maze.INSTANCE.gridHeight;
+                    break;
+
+                default:
+                    break;
                 }
 
+                // Calculate the hypotenuse and add to lost.
                 hypos.add(Math
                         .sqrt(((scatterY - tempY) * (scatterY - tempY)) + ((scatterX - tempX) * (scatterX - tempX))));
             }
 
-            previousMove = possibleMovesArray.get(smallestIndex(hypos));
+            // REturn the shortest hypotenuse as direction.
+            return possibleMovesArray.get(smallestIndex(hypos));
 
-            return previousMove;
         }
 
     }
 
+    /**
+     * Takes an array and returns the index of the shortest double of the array.
+     * 
+     * @param array of hypotenuse as Double
+     * @return index of the shortest Double in array.
+     */
     private int smallestIndex(List<Double> array) {
         int idx = 0;
         Double min = array.get(idx);
