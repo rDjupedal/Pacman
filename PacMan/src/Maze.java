@@ -26,7 +26,7 @@ public final class Maze extends JComponent {
     private ArrayList<MazeBrick> doorBricks;
 
     /**
-     * Empty private constructor, Singleton
+     * Private constructor as it is a Singleton
      */
     private Maze() {
     }

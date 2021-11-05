@@ -27,7 +27,7 @@ public class GameEngine {
     private StateSetter stateSetter = new StateSetter();
 
     /**
-     * Private empty constructor as it is a singleton
+     * Private constructor as it is a singleton
      */
     private GameEngine() {
     }

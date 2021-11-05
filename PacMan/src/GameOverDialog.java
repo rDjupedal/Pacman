@@ -2,15 +2,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Class for the GameOver dialog
+ * @author Rasmus Djupedal, Tobias Liljeblad
+ */
 public class GameOverDialog extends JDialog {
     private int score;
     private int highScore;
     private JTextField yourName;
 
+    /**
+     * Constructor, creates the dialog
+     */
     protected GameOverDialog() {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setSize(400,300);
         setResizable(false);
+
         score = GameEngine.INSTANCE.getScore();
         highScore = HighScore.INSTANCE.getHighScore();
         boolean isHighScore = score > highScore;
@@ -29,16 +37,12 @@ public class GameOverDialog extends JDialog {
 
             // Save to highscore
             if (isHighScore) {
-                // todo: check input
                 String name = yourName.getText();
                 HighScore.INSTANCE.writeHighScore(name, score);
             }
 
             // Close dialog
             dispose();
-
-            // New game
-            GameEngine.INSTANCE.newGame();
         });
 
         yourName = new JTextField();
@@ -51,6 +55,7 @@ public class GameOverDialog extends JDialog {
         add(label1);
         add(label2);
 
+        // Show different contents dependent on whether highscore reached or not
         if (isHighScore) {
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             label1.setText("You got a highscore!");
@@ -66,5 +71,7 @@ public class GameOverDialog extends JDialog {
         p.add(okBtn);
         add(p);
 
+        // New game
+        GameEngine.INSTANCE.newGame();
     }
 }
