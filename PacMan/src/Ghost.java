@@ -7,8 +7,8 @@ import java.awt.image.*;
 import java.io.IOException;
 
 /**
- * The Concreten Ghost class. Handles all ghost painting and movement.
- * Implements StateObeserver to observe state changes and Runnable to enable
+ * The Concrete Ghost class. Handles all ghost painting and movement. Implements
+ * StateObeserver to observe state changes and Runnable to enable
  * multithreading.
  * 
  * @author Tobias Liljeblad & Rasmus Djupedal
