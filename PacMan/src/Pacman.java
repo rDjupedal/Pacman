@@ -1,10 +1,13 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
-//Image imports
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.IOException;
 
+/**
+ * Pacman class
+ * @author Rasmus Djupedal, Tobias Liljeblad
+ */
 class Pacman extends LivingCharacter implements Runnable {
 
     // . means no lastKey waiting
@@ -13,10 +16,14 @@ class Pacman extends LivingCharacter implements Runnable {
     BufferedImage currentImgBig;
     BufferedImage currentImgSmall;
 
+    /**
+     * Constructor. Sets the position of Pacman and loads his images
+     * @param x
+     * @param y
+     */
     protected Pacman(int x, int y) {
         this.x = x;
         this.y = y;
-        // Maze.INSTANCE.setPacManPos(x, y);
         animation = true;
 
         // Load images.
@@ -35,16 +42,23 @@ class Pacman extends LivingCharacter implements Runnable {
             setInitImage();
 
         } catch (IOException e) {
-            System.out.println("Pacmans bild kunde inte hämtas: " + e.getMessage());
+            System.out.println("Error loading Pacman images: " + e.getMessage());
         }
     }
 
+    /**
+     * Sets the initial image for Pacman
+     */
     protected void setInitImage() {
-        // Initial pic.
         currentImgBig = charImages.get(1);
         currentImgSmall = charImages.get(4);
     }
 
+    /**
+     * Called when a key is pressed
+     * @param e KeyEvent the key event
+     */
+    @Override
     protected void keyPressed(KeyEvent e) {
 
         switch (e.getKeyCode()) {
@@ -61,13 +75,18 @@ class Pacman extends LivingCharacter implements Runnable {
             lastKey = 'R';
             break;
         case 27:
-            // key = 'E'; // todo Escape (Stop playing)
+            // Escape key, pauses the game
+            GameEngine.INSTANCE.isRunning = false;
             break;
         case 80:
-            // key = 'P'; // todo P (Pause)
+            // P key, pauses the game
+            GameEngine.INSTANCE.isRunning = false;
         }
     }
 
+    /**
+     * Checks if legal and sets the direction for Pacman
+     */
     protected void setDirection() {
 
         // Check if a key has been pressed...
@@ -93,14 +112,11 @@ class Pacman extends LivingCharacter implements Runnable {
         }
     }
 
+    /**
+     * Draw Pacman facing correct direction and check for wall before moving him
+     */
+    @Override
     protected void moveCharacter() {
-        /**
-         * Rita pacman med munnen åt rätt håll samt förflytta honom Kolla innan varje
-         * förflyttning at närliggande ruta ej är en vägg
-         */
-
-        // Maze.INSTANCE.setPacManDirection(direction);
-
         isMoving = false;
         switch (direction) {
 
@@ -150,9 +166,6 @@ class Pacman extends LivingCharacter implements Runnable {
             break;
         }
 
-        // Update Pacmans position to Maze
-        // Maze.INSTANCE.setPacManPos(x, y);
-
         // Check for food and candy at new position
         if (isMoving && x >= 0) {
             MazeBrick brick = Maze.INSTANCE.getBrick(x, y);
@@ -165,13 +178,18 @@ class Pacman extends LivingCharacter implements Runnable {
 
             if (brick.getType() == "candy") {
                 brick.changeBrick("space", Maze.INSTANCE.space);
-                // Calls gameEngine which sets highOnCandy
+                // Call gameEngine and set highOnCandy
                 GameEngine.INSTANCE.setHighOnCandy();
             }
         }
 
     }
 
+    /**
+     * Draw Pacman
+     * @param g Graphics object
+     */
+    @Override
     public void draw(Graphics g) {
         // Stops animation if pacman is not moving.
         if (isMoving) {
