@@ -36,12 +36,12 @@ public class ChaseAmbush implements IChaseBehaviour {
         switch (pacManDirection) {
         case 'U':
 
-            pacmanY = pacmanY + (Maze.INSTANCE.gridHeight * 3);
+            pacmanY = pacmanY - (Maze.INSTANCE.gridHeight * 3);
 
             break;
         case 'D':
 
-            pacmanY = pacmanY - (Maze.INSTANCE.gridHeight * 3);
+            pacmanY = pacmanY + (Maze.INSTANCE.gridHeight * 3);
 
             break;
 
@@ -89,6 +89,9 @@ public class ChaseAmbush implements IChaseBehaviour {
                 default:
                     break;
                 }
+
+                // DEBUG
+                System.out.println("Targeting PacMan at " + pacmanX + ", " + pacmanY);
 
                 // calculates Hypotenuse on all possible moves
 
