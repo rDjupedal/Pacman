@@ -90,9 +90,6 @@ public class ChaseAmbush implements IChaseBehaviour {
                     break;
                 }
 
-                // DEBUG
-                System.out.println("Targeting PacMan at " + pacmanX + ", " + pacmanY);
-
                 // calculates Hypotenuse on all possible moves
 
                 hypos.add(Math.sqrt(((pacmanY - tempY) * (pacmanY - tempY)) + ((pacmanX - tempX) * (pacmanX - tempX))));
