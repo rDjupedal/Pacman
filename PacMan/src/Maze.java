@@ -10,14 +10,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * Class for handling the maze
+ * @author Rasmus Djupedal, Tobias Liljeblad
+ */
 public final class Maze extends JComponent {
     protected static final Maze INSTANCE = new Maze();
     protected int level;
     protected int gridWidth, gridHeight;
     protected int width, height;
     protected int foodLeft;
-    private int pacmanX, pacmanY;
-    private char pacManDirection;
     private byte[] readLevel;
     protected BufferedImage wall, space, food, candy, door;
     private ArrayList<MazeBrick> mazeBricks = new ArrayList<>();
@@ -100,7 +102,6 @@ public final class Maze extends JComponent {
         } catch (IOException e) {
             System.out.println("Error opening Maze file. ");
         }
-
     }
 
     /**
@@ -190,30 +191,6 @@ public final class Maze extends JComponent {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    /*
-    public void setPacManPos(int pacManX, int pacManY) {
-        this.pacmanX = pacManX;
-        this.pacmanY = pacManY;
-    }
-
-    public void setPacManDirection(char pacManDirection) {
-        this.pacManDirection = pacManDirection;
-    }
-     */
-
-    /*
-    public int[] getPacManPos() {
-        int[] pacManPos = { pacmanX, pacmanY };
-        return pacManPos;
-    }
-     */
-
-    /*
-    public char getPacManDirection() {
-        return pacManDirection;
-    }
-     */
-
     /**
      * Draws all the bricks on the screen
      * @param g
@@ -222,6 +199,7 @@ public final class Maze extends JComponent {
         for (MazeBrick brick : mazeBricks) {
             brick.draw(g);
         }
+        // Uncomment in order to draw a grid
         //drawDebugGrid(g);
     }
 
@@ -238,17 +216,22 @@ public final class Maze extends JComponent {
         }
     }
 
+    /**
+    Stops ghosts from running in / out of the cage
+     */
     public void closeDoor() {
         doorBricks.forEach(z -> {
             z.changeType("wall");
         });
     }
 
+    /**
+     * Opens the door to the ghosts cage
+     */
     public void openDoor() {
         doorBricks.forEach(brick -> {
             brick.changeType("door");
         });
 
     }
-
 }
