@@ -1,13 +1,13 @@
 # Project Assignment
 ## Environment & Tools
-*Rasmus Djupedal*
+*Rasmus Djupedal*  
 * Operating system Linux Mint 20.2 Cinnamon, 64-bit  
 * IDE IntelliJ IDEA Edu 2021.2.1  
 * Java OpenJDK 16  
 * GIT version 2.25.1  
 * Maven Apache 3.6.3   
 
-*Tobias Liljeblad*
+*Tobias Liljeblad*  
 * Operating system  
 * IDE   
 * Java OpenJDK  
@@ -56,7 +56,7 @@ which makes it easy to modify / add more mazes. The format of the maze file is e
 can easily be modified in a text editor. A future feature however could be adding a Maze-editor.
 
 Use of resources;
-It could be discussed if constantly iterating over an ArrayList of roughly 1000 objects each time a Ghost or Pacman is
+It could be discussed whether constantly iterating over an ArrayList of roughly 1000 objects each time a Ghost or Pacman is
 checking what moves are legal (when calling **Maze.INSTANCE.getBrick()**). Our conclusion is that we could probably make
 this less resource hungry, but with modern computers today it is unnecessary. To prove this claim, I tested temporarily 
 rewriting the method to iterate over the Array 100 times before returning the **MazeBrick**, and there was still no
@@ -64,5 +64,10 @@ obvious loss of performance.
 However, we could have used different ArrayLists for different kinds of **MazeBricks**.
 For example one ArrayList only containing MazeBricks that are walls.
 With this approach it would be possible to check "Is there a wall at position x, y ?"  instead of as we do now
-"What MazeBrick is at position X, Y?", then asking the MazeBrick "are you a wall?".
+"What MazeBrick is at position X, Y?", then asking the MazeBrick "are you a wall?". Another approach could have been
+adding a field to each **MazeBrick** containing legal directions to go from there.
+
 Our current code is clean and easy to read and follow. This we value higher than a not notable performance lost.
+
+In general we are very satisfied with the result of this Pacman clone. Its definitely playable and we already have
+a some players enjoying it (our kids).
