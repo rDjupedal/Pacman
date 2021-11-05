@@ -1,29 +1,36 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Chases pacman on his exact position, until closer than hypotenusa 250, then
+ * Chases pacman on his exact position, until closer than hypotenuse 250, then
  * starts to scatter towards Bottom Right corner.
  * 
+ * @author Tobias Liljeblad & Rasmus Djupedal
  */
 public class ChasePatrol implements IChaseBehaviour {
 
     int pacmanX, pacmanY;
-    String previousMove = "";
     IScatterBehaviour iScatterBehaviour = new ScatterBehaviour("BR");
 
+    /**
+     * Determines PacMans position and chases PacMan until closer than hypotenuse
+     * <200, then scatters away.
+     * 
+     * @param x                  the x position of the ghost at the time of calling
+     * 
+     * @param y                  the y position of the ghost at the time of calling
+     * @param possibleMovesArray the array of possible moves for the ghost at the
+     *                           coordinate x,y.
+     */
     @Override
     public String chase(int x, int y, ArrayList<String> possibleMovesArray) {
 
-        // List to store hypotenusas.
+        // List to store hypotenuse
         List<Double> hypos = new ArrayList<>();
 
         // Gets PacMans position.
         pacmanX = GameEngine.INSTANCE.getPacman().get_X();
         pacmanY = GameEngine.INSTANCE.getPacman().get_Y();
-        //pacmanX = Maze.INSTANCE.getPacManPos()[0];
-        //pacmanY = Maze.INSTANCE.getPacManPos()[1];
 
         double tempX = x;
         double tempY = y;
@@ -31,21 +38,30 @@ public class ChasePatrol implements IChaseBehaviour {
         // adds possible future moves to x or y to determine hypotenusa on future move.
 
         for (int i = 0; i < possibleMovesArray.size(); i++) {
-            if (possibleMovesArray.get(i).equals("right")) {
+            switch (possibleMovesArray.get(i)) {
+            case "right":
                 tempX = x + Maze.INSTANCE.gridWidth;
-            } else if (possibleMovesArray.get(i).equals("left")) {
+
+                break;
+            case "left":
                 tempX = x - Maze.INSTANCE.gridWidth;
-            } else if (possibleMovesArray.get(i).equals("down")) {
+                break;
+            case "down":
                 tempY = y + Maze.INSTANCE.gridHeight;
-            } else if (possibleMovesArray.get(i).equals("up")) {
+                break;
+            case "up":
                 tempY = y - Maze.INSTANCE.gridHeight;
+                break;
+
+            default:
+                break;
             }
-            // calculates hypotenusa on all possible moves
+            // calculates hypotenuse on all possible moves
             hypos.add(Math.sqrt(((pacmanY - tempY) * (pacmanY - tempY)) + ((pacmanX - tempX) * (pacmanX - tempX))));
         }
 
         // Get the direction to the shortest hypo and stores it.
-        previousMove = possibleMovesArray.get(smallestIndex(hypos));
+        String chaseDiretion = possibleMovesArray.get(smallestIndex(hypos));
 
         // Gets the shortest hypo and stores is
         double shortestHypo = hypos.get(smallestIndex(hypos));
@@ -56,7 +72,7 @@ public class ChasePatrol implements IChaseBehaviour {
         if (shortestHypo < 200) {
             return iScatterBehaviour.scatter(x, y, possibleMovesArray);
         } else {
-            return previousMove;
+            return chaseDiretion;
         }
 
     }
