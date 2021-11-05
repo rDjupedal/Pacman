@@ -2,13 +2,14 @@ import java.util.ArrayList;
 
 /**
  * Object pool and factory for MazeBricks
+ * @author Rasmus Djupedal, Tobias Liljeblad
  */
 public class MazeBrickPool {
     protected static final MazeBrickPool INSTANCE = new MazeBrickPool();
     private static ArrayList<MazeBrick> pool = new ArrayList<>();
 
     /**
-     * Private empty constructor as it is a Singleton
+     * Private constructor as it is a Singleton
      */
     private MazeBrickPool(){}
 

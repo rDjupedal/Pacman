@@ -10,21 +10,23 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * Class for handling the maze
+ * @author Rasmus Djupedal, Tobias Liljeblad
+ */
 public final class Maze extends JComponent {
     protected static final Maze INSTANCE = new Maze();
     protected int level;
     protected int gridWidth, gridHeight;
     protected int width, height;
-    protected int foodLeft;
-    private int pacmanX, pacmanY;
-    private char pacManDirection;
+    private int foodLeft;
     private byte[] readLevel;
     protected BufferedImage wall, space, food, candy, door;
     private ArrayList<MazeBrick> mazeBricks = new ArrayList<>();
     private ArrayList<MazeBrick> doorBricks;
 
     /**
-     * Empty private constructor, Singleton
+     * Private constructor as it is a Singleton
      */
     private Maze() {
     }
@@ -70,7 +72,7 @@ public final class Maze extends JComponent {
     }
 
     /**
-     * Sets up a new maze
+     * Sets up a new / resets maze
      * @param level current level
      * @param paneSize size of the maze
      * @param gridSize size of each grid
@@ -100,7 +102,6 @@ public final class Maze extends JComponent {
         } catch (IOException e) {
             System.out.println("Error opening Maze file. ");
         }
-
     }
 
     /**
@@ -109,7 +110,6 @@ public final class Maze extends JComponent {
     private void createGraphics() {
 
         try {
-            // wall bitmap taken from https://opengameart.org/content/wall-0
             wall = ImageIO.read(new File("PacMan/src/resources/maze/wall.jpg"));
             space = ImageIO.read(new File("PacMan/src/resources/maze/space.jpg"));
             food = ImageIO.read(new File("PacMan/src/resources/maze/food.jpg"));
@@ -190,30 +190,6 @@ public final class Maze extends JComponent {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    /*
-    public void setPacManPos(int pacManX, int pacManY) {
-        this.pacmanX = pacManX;
-        this.pacmanY = pacManY;
-    }
-
-    public void setPacManDirection(char pacManDirection) {
-        this.pacManDirection = pacManDirection;
-    }
-     */
-
-    /*
-    public int[] getPacManPos() {
-        int[] pacManPos = { pacmanX, pacmanY };
-        return pacManPos;
-    }
-     */
-
-    /*
-    public char getPacManDirection() {
-        return pacManDirection;
-    }
-     */
-
     /**
      * Draws all the bricks on the screen
      * @param g
@@ -222,6 +198,7 @@ public final class Maze extends JComponent {
         for (MazeBrick brick : mazeBricks) {
             brick.draw(g);
         }
+        // Uncomment in order to draw a grid
         //drawDebugGrid(g);
     }
 
@@ -238,17 +215,21 @@ public final class Maze extends JComponent {
         }
     }
 
+    /**
+    Stops ghosts from running in / out of the cage
+     */
     public void closeDoor() {
         doorBricks.forEach(z -> {
-            z.changeType("wall");
+            z.changeBrick("wall");
         });
     }
 
+    /**
+     * Opens the door to the ghosts cage
+     */
     public void openDoor() {
         doorBricks.forEach(brick -> {
-            brick.changeType("door");
+            brick.changeBrick("door");
         });
-
     }
-
 }

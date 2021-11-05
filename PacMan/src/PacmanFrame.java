@@ -6,6 +6,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/**
+ * JFrame for the game
+ * @author Rasmus Djupedal, Tobias Liljeblad
+ */
 public class PacmanFrame extends JFrame {
     private JLabel debugLabel = new JLabel();
     private MazePanel mazePanel;
@@ -16,6 +20,11 @@ public class PacmanFrame extends JFrame {
     private ArrayList<JLabel> livesLeft = new ArrayList<>();
     Timer timer;
 
+    /**
+     * Constructor, sets up all the Swing components and tells GameEngine to initialize a the game
+     * @param width the with of the playable area
+     * @param height the height of the playable area
+     */
     protected PacmanFrame(int width, int height) {
         JPanel contentPanel = new JPanel(new BorderLayout(3, 1));
 
@@ -68,7 +77,7 @@ public class PacmanFrame extends JFrame {
 
         setupControls();
 
-        // The pacman icons in the bottom bar indicating number of lives left
+        // The Pacman icons in the bottom bar indicating number of lives left
         liveIcon = new ImageIcon(GameEngine.INSTANCE.getPacman().charImages.get(1));
         for (int i = 0; i < GameEngine.INSTANCE.getLives(); i++) {
             JLabel label = new JLabel(liveIcon);
@@ -77,6 +86,9 @@ public class PacmanFrame extends JFrame {
         }
     }
 
+    /**
+     * Sets up a timer and a KeyListener to control the game
+     */
     private void setupControls() {
 
         timer = new Timer(10, (ae -> {
@@ -95,15 +107,16 @@ public class PacmanFrame extends JFrame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                // A key was pressed
 
                 if (GameEngine.INSTANCE.isRunning) {
+                    // Game is running, send the KeyEvent to Pacman
                     GameEngine.INSTANCE.getPacman().keyPressed(e);
-                    // GameEngine.INSTANCE.getGhosts().forEach(z -> z.keyPressed(e));
                 } else {
+                    // Game is not running, start it and send the KeyEvent to Pacman
                     GameEngine.INSTANCE.startGame();
                     GameEngine.INSTANCE.getPacman().keyPressed(e);
                     timer.start();
-
                 }
             }
         });
@@ -124,6 +137,9 @@ public class PacmanFrame extends JFrame {
         });
     }
 
+    /**
+     * Updates the game, called by timer at each "tick"
+     */
     protected void gameUpdate() {
 
         // Check if game has been stopped
@@ -138,6 +154,7 @@ public class PacmanFrame extends JFrame {
         } else {
             debugLabel.setText("Pacmans position: " + GameEngine.INSTANCE.getPacman().get_X() + ", "
                     + GameEngine.INSTANCE.getPacman().get_Y() + " food " + Maze.INSTANCE.getFoodLeft());
+
             GameEngine.INSTANCE.updateGame();
 
             // Repaint the characters
@@ -147,7 +164,7 @@ public class PacmanFrame extends JFrame {
     }
 
     /**
-     * Checks if the number of lives has changed, and if so updates labels
+     * Checks if the number of lives has changed, and if so update the labels
      */
     private void updateBottom() {
 
@@ -180,8 +197,10 @@ public class PacmanFrame extends JFrame {
 
     }
 
+    /**
+     * Update score and highscore in the top
+     */
     private void updateTop() {
-        // Update score and highscore in the top
         scoreLabel.setText("" + GameEngine.INSTANCE.getScore());
         highScoreLabel.setText(HighScore.INSTANCE.getHighScoreName() + " " + HighScore.INSTANCE.getHighScore());
     }

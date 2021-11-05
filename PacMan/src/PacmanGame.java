@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Entrypoint for the Pacman game.
+ * @author Rasmus Djupedal, Tobias Liljeblad
+ */
 public class PacmanGame {
     final static int width = 840;
     final static int height = 930;
