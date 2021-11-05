@@ -77,7 +77,7 @@ public class MazeBrick {
 
     /**
      * Draws the brick
-     * @param g
+     * @param g Graphics object
      */
     protected void draw(Graphics g) {
         g.drawImage(image, x, y, width, height, null);

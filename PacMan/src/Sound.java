@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Singleton class for playing sound effects. Original sounds are taken from
- * https://freesound.org
+ * Singleton class for playing sound effects.
+ * @author Rasmus Djupedal, Tobias Liljeblad
  */
 
 public class Sound {
