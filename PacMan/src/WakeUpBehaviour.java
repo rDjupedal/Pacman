@@ -1,60 +1,82 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+/**
+ * State and behaviour used when the ghosts move from the livingroom into the
+ * maze.
+ * 
+ * @author Tobias Liljeblad and Rasmus Djupedal
+ */
 public class WakeUpBehaviour implements IWakeUpBehaviour {
     int x, y;
     int wakeUpX = 420;
     int wakeUpY = 330;
-    String direction;
-    String previousMove = "";
-    Boolean onTheMove = false;
-    Boolean pickDirection = true;
-    Ghost ghost;
 
-    public WakeUpBehaviour(Ghost ghost) {
-        this.ghost = ghost;
-
-    }
-
+    /**
+     * Takes the ghosts current direction and moves out of the living room. Once in
+     * the maze, a change in state wikl occur and the ghosts will more to another
+     * state.
+     * 
+     * @param x                  the x position of the ghost at the time of calling
+     * 
+     * @param y                  the y position of the ghost at the time of calling
+     * @param possibleMovesArray the array of possible moves for the ghost at the
+     *                           coordinate x,y.
+     */
     @Override
     public String awokenBehaviour(int x, int y, ArrayList<String> possibleMovesArray) {
-        this.x = x;
-        this.y = y;
 
+        // List of hypotenuse
         List<Double> hypos = new ArrayList<>();
 
+        // If only one possible move,return that move.
         if (possibleMovesArray.size() == 1) {
-            previousMove = possibleMovesArray.get(0);
-            return previousMove;
+            return possibleMovesArray.get(0);
         } else {
+            this.x = x;
+            this.y = y;
 
-            // Works on positive values. Need to implement working on negative values
-            // aswell.
             double tempX = x;
             double tempY = y;
 
+            // For each possible move, determine the hypotenuse of that move
             for (int i = 0; i < possibleMovesArray.size(); i++) {
-                if (possibleMovesArray.get(i).equals("right")) {
+                switch (possibleMovesArray.get(i)) {
+                case "right":
                     tempX = x + Maze.INSTANCE.gridWidth;
-                } else if (possibleMovesArray.get(i).equals("left")) {
+
+                    break;
+                case "left":
                     tempX = x - Maze.INSTANCE.gridWidth;
-                } else if (possibleMovesArray.get(i).equals("down")) {
+                    break;
+                case "down":
                     tempY = y + Maze.INSTANCE.gridHeight;
-                } else if (possibleMovesArray.get(i).equals("up")) {
+                    break;
+                case "up":
                     tempY = y - Maze.INSTANCE.gridHeight;
+                    break;
+
+                default:
+                    break;
                 }
 
+                // Add all hypotenuse to a list.
                 hypos.add(Math.sqrt(((wakeUpY - tempY) * (wakeUpY - tempY)) + ((wakeUpX - tempX) * (wakeUpX - tempX))));
             }
 
-            previousMove = possibleMovesArray.get(smallestIndex(hypos));
+            // Return the direction which has the shortest hypotenuse as next move.
+            return possibleMovesArray.get(smallestIndex(hypos));
 
-            return previousMove;
         }
 
     }
 
+    /**
+     * Takes an array and returns the index of the shortest double of the array.
+     * 
+     * @param array of hypotenuse as Double
+     * @return index of the shortest Double in array.
+     */
     private int smallestIndex(List<Double> array) {
         int idx = 0;
         Double min = array.get(idx);
