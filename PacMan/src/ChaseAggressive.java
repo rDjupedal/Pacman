@@ -78,7 +78,7 @@ public class ChaseAggressive implements IChaseBehaviour {
     /**
      * Takes an array and returns the index of the shortest double of the array.
      * 
-     * @param array
+     * @param array of hypotenuse as Double.
      * @return index of the shortest Double in array.
      */
     private int smallestIndex(List<Double> array) {
