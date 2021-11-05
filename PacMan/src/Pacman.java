@@ -87,6 +87,7 @@ class Pacman extends LivingCharacter implements Runnable {
     /**
      * Checks if legal and sets the direction for Pacman
      */
+    @Override
     protected void setDirection() {
 
         // Check if a key has been pressed...

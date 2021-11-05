@@ -212,8 +212,8 @@ public class GameEngine {
      * Resets the position for Pacman and the ghosts
      */
     protected void resetCharacterPositions() {
-        pacman.x = pacmanStartX;
-        pacman.y = pacmanStartY;
+        pacman.setPos(pacmanStartX, pacmanStartY);
+
         ghosts.get(0).setPos(330, 390);
         ghosts.get(1).setPos(330, 450);
         ghosts.get(2).setPos(480, 390);
@@ -281,6 +281,12 @@ public class GameEngine {
     protected int getLives() {
         return lives;
     }
+
+    /**
+     * Returns the grid size
+     * @return Dimension of the gridSize
+     */
+    protected Dimension getGridSize() { return gridSize; }
 
     /**
      * Called when Pacman eats a candy. Sets a counter and makes the ghosts scared!
