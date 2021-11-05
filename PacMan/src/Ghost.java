@@ -240,6 +240,8 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
     /**
      * Draws the ghost on the panel. If the ghost are frigthened, adds an animation
      * to toggle between two colours.
+     * 
+     * @param g graphics object
      */
     public void draw(Graphics g) {
 
