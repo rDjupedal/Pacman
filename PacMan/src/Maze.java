@@ -19,7 +19,7 @@ public final class Maze extends JComponent {
     protected int level;
     protected int gridWidth, gridHeight;
     protected int width, height;
-    protected int foodLeft;
+    private int foodLeft;
     private byte[] readLevel;
     protected BufferedImage wall, space, food, candy, door;
     private ArrayList<MazeBrick> mazeBricks = new ArrayList<>();
@@ -72,7 +72,7 @@ public final class Maze extends JComponent {
     }
 
     /**
-     * Sets up a new maze
+     * Sets up a new / resets maze
      * @param level current level
      * @param paneSize size of the maze
      * @param gridSize size of each grid
@@ -221,7 +221,7 @@ public final class Maze extends JComponent {
      */
     public void closeDoor() {
         doorBricks.forEach(z -> {
-            z.changeType("wall");
+            z.changeBrick("wall");
         });
     }
 
@@ -230,7 +230,7 @@ public final class Maze extends JComponent {
      */
     public void openDoor() {
         doorBricks.forEach(brick -> {
-            brick.changeType("door");
+            brick.changeBrick("door");
         });
 
     }
