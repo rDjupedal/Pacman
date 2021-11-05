@@ -211,9 +211,8 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
                 break;
 
             case "left":
-                if (x - Maze.INSTANCE.gridWidth < 0) {
-                    x = (Maze.INSTANCE.width);
-
+                if (x - moveDistance < 0) {
+                    x = (Maze.INSTANCE.width - moveDistance);
                 }
 
                 x -= moveDistance;
@@ -222,9 +221,8 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
                 break;
 
             case "right":
-                if (x + Maze.INSTANCE.gridWidth >= Maze.INSTANCE.width) {
+                if (x + cSize + moveDistance >= Maze.INSTANCE.width) {
                     x = 0;
-
                 }
 
                 x += moveDistance;
