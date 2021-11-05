@@ -1,23 +1,30 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Chase Aggressive ghost behavior. Chases PacMan on his exact position. All the
  * time.
  * 
- * 
+ * @author Tobias Liljeblad & Rasmus Djupedal
  */
-public class ChaseAggresive implements IChaseBehaviour {
+public class ChaseAggressive implements IChaseBehaviour {
 
-    String previousMove = "";
-
+    /**
+     * Takes the current position and decides the next step forward based on the
+     * shortest hypotenuse to Pacman.
+     * 
+     * @param x                  the x position of the ghost at the time of calling
+     * @param y                  the y position of the ghost at the time of calling
+     * @param possibleMovesArray the array of possible moves for the ghost at the
+     *                           coordinate x,y.
+     * 
+     */
     @Override
     public String chase(int x, int y, ArrayList<String> possibleMovesArray) {
 
         // Picks possible moves taking previous move and wall into account.
 
-        // List to store hypotenusas.
+        // List to store hypotenuse.
         List<Double> hypos = new ArrayList<>();
 
         // Getters for PacMans positions.
@@ -26,14 +33,14 @@ public class ChaseAggresive implements IChaseBehaviour {
 
         // If only 1 possible move, pick that one.
         if (possibleMovesArray.size() == 1) {
-            previousMove = possibleMovesArray.get(0);
-            return previousMove;
+
+            return possibleMovesArray.get(0);
         } else {
 
             double tempX = x;
             double tempY = y;
 
-            // adds possible future moves to x or y to determine hypotenusa on future move.
+            // adds possible future moves to x or y to determine hypotenuse on future move.
             for (int i = 0; i < possibleMovesArray.size(); i++) {
                 if (possibleMovesArray.get(i).equals("right")) {
                     tempX = x + Maze.INSTANCE.gridWidth;
@@ -45,16 +52,15 @@ public class ChaseAggresive implements IChaseBehaviour {
                     tempY = y - Maze.INSTANCE.gridHeight;
                 }
 
-                // calculates hypotenusa on all possible moves
+                // calculates hypotenuse on all possible moves
                 hypos.add(Math.sqrt(((pacmanY - tempY) * (pacmanY - tempY)) + ((pacmanX - tempX) * (pacmanX - tempX))));
             }
 
-            // Sends all hypotenusas to a "shortest hypotenusa" check. Stores in
-            // previousmove.
-            previousMove = possibleMovesArray.get(smallestIndex(hypos));
+            // Sends all hypotenuse to a "shortest hypotenuse" check and returns the
+            // shortest one.
 
-            // Returns the direction which has the shortest hypotenusa.
-            return previousMove;
+            return possibleMovesArray.get(smallestIndex(hypos));
+
         }
 
     }
