@@ -17,7 +17,7 @@ public class Sound {
 
     /**
      * Singleton, private constructor. Reads the sound files and stores the audio
-     * clips in an array
+     * clips in an ArrayList.
      */
     public Sound() {
         try {
@@ -37,7 +37,6 @@ public class Sound {
 
     /**
      * Plays a sound
-     * 
      * @param s name of soundeffect
      */
     protected void play(String s) {
