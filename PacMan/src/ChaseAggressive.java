@@ -42,14 +42,24 @@ public class ChaseAggressive implements IChaseBehaviour {
 
             // adds possible future moves to x or y to determine hypotenuse on future move.
             for (int i = 0; i < possibleMovesArray.size(); i++) {
-                if (possibleMovesArray.get(i).equals("right")) {
+
+                switch (possibleMovesArray.get(i)) {
+                case "right":
                     tempX = x + Maze.INSTANCE.gridWidth;
-                } else if (possibleMovesArray.get(i).equals("left")) {
+
+                    break;
+                case "left":
                     tempX = x - Maze.INSTANCE.gridWidth;
-                } else if (possibleMovesArray.get(i).equals("down")) {
+                    break;
+                case "down":
                     tempY = y + Maze.INSTANCE.gridHeight;
-                } else if (possibleMovesArray.get(i).equals("up")) {
+                    break;
+                case "up":
                     tempY = y - Maze.INSTANCE.gridHeight;
+                    break;
+
+                default:
+                    break;
                 }
 
                 // calculates hypotenuse on all possible moves
