@@ -169,19 +169,19 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
      */
     private ArrayList<String> getPossibleMoves() {
         ArrayList<String> possibleMovesArray = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        if (previousMove.equalsIgnoreCase("left") || Maze.INSTANCE.getBrick(x + Maze.INSTANCE.gridWidth, y).isWall()) {
+        if (previousMove.equalsIgnoreCase("left") || !goRight()) {
             possibleMovesArray.remove("right");
 
         }
-        if (previousMove.equalsIgnoreCase("right") || Maze.INSTANCE.getBrick(x - Maze.INSTANCE.gridWidth, y).isWall()) {
+        if (previousMove.equalsIgnoreCase("right") || !goLeft()) {
             possibleMovesArray.remove("left");
 
         }
-        if (Maze.INSTANCE.getBrick(x, y + Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("up")) {
+        if (!goDown() | previousMove.equalsIgnoreCase("up")) {
             possibleMovesArray.remove("down");
 
         }
-        if (Maze.INSTANCE.getBrick(x, y - Maze.INSTANCE.gridHeight).isWall() | previousMove.equalsIgnoreCase("down")) {
+        if (!goUp() | previousMove.equalsIgnoreCase("down")) {
             possibleMovesArray.remove("up");
 
         }
