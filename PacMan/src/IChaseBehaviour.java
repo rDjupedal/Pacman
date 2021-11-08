@@ -6,5 +6,5 @@ import java.util.ArrayList;
  * @author Tobias Liljeblad & Rasmus Djupedal
  */
 public interface IChaseBehaviour {
-    public String chase(int x, int y, ArrayList<String> list);
+    String chase(int x, int y, ArrayList<String> list);
 }

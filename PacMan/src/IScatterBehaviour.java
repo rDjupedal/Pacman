@@ -6,6 +6,6 @@ import java.util.ArrayList;
  * @author Tobias Liljeblad & Rasmus Djupedal
  */
 public interface IScatterBehaviour {
-    public String scatter(int x, int y, ArrayList<String> possibleMovesArray);
+    String scatter(int x, int y, ArrayList<String> possibleMovesArray);
 
 }

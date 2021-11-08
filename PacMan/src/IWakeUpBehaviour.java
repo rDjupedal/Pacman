@@ -6,6 +6,6 @@ import java.util.ArrayList;
  * @author Tobias Liljeblad & Rasmus Djupedal
  */
 public interface IWakeUpBehaviour {
-    public String awokenBehaviour(int x, int y, ArrayList<String> possibleMovesArray);
+    String awokenBehaviour(int x, int y, ArrayList<String> possibleMovesArray);
 
 }
