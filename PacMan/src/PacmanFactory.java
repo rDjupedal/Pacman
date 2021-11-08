@@ -1,4 +1,4 @@
-public class pacmanFactory extends AbstractFactory {
+public class PacmanFactory extends AbstractFactory {
 
     protected Pacman getCharacter(String type, int startX, int startY) {
         if (type.equalsIgnoreCase("pacman"))
