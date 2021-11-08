@@ -1,16 +1,31 @@
 
 import java.util.LinkedList;
 
+/**
+ * Singleton Class that handles a producer/consumer problem. Messages are sent
+ * from and to between ghosts and Pacman.
+ * 
+ * @author Tobias Liljeblad & Rasmus Djupedal
+ */
 public class PostMaster {
     private LinkedList<String> ghostMessages = new LinkedList<>();
     private LinkedList<String> pacManMessages = new LinkedList<>();
 
     private static PostMaster postMaster = null;
 
+    /**
+     * Empty constructor
+     */
     protected PostMaster() {
 
     }
 
+    /**
+     * The getter and Initializer for the singleton class. Made synchronized so that
+     * threads are concurrent.
+     * 
+     * @return the instance of the class
+     */
     public static synchronized PostMaster getPostMaster() {
         if (postMaster == null) {
             postMaster = new PostMaster();
@@ -19,15 +34,28 @@ public class PostMaster {
 
     }
 
-    protected boolean sendGhostMessage(String msg) {
+    /**
+     * Method for ghosts to send a message. List is synchronized to enable
+     * concurrency.
+     * 
+     * @param msg the message
+     * 
+     */
+    protected void sendGhostMessage(String msg) {
 
         synchronized (ghostMessages) {
-            return ghostMessages.add(msg);
+            ghostMessages.add(msg);
 
         }
 
     }
 
+    /**
+     * Method to recieve a message from the ghosts. LinkedList is synchronized to
+     * enable concurrency.
+     * 
+     * @return a message from ghosts.
+     */
     protected synchronized String recieveGhostMsg() {
         synchronized (ghostMessages) {
             if (!ghostMessages.isEmpty()) {
@@ -38,14 +66,27 @@ public class PostMaster {
 
     }
 
-    protected synchronized boolean sendPacManMsg(String msg) {
+    /**
+     * Method for Pacman to send a message. List is synchronized to enable
+     * concurrency.
+     * 
+     * @param msg the message
+     * 
+     */
+    protected synchronized void sendPacManMsg(String msg) {
 
         synchronized (pacManMessages) {
-            return pacManMessages.add(msg);
+            pacManMessages.add(msg);
         }
 
     }
 
+    /**
+     * Method for ghosts to recieve a message from Pacman. List is synchronized to
+     * enable concurrency.
+     * 
+     * @return a message
+     */
     protected synchronized String recievePacManMsg() {
 
         synchronized (pacManMessages) {
@@ -53,15 +94,25 @@ public class PostMaster {
                 return pacManMessages.pop();
 
             } else
-                return "No messages from PacMan";
+                return null;
         }
 
     }
 
+    /**
+     * Checks if Pacman has any messages from Ghost.
+     * 
+     * @return true if there is mail
+     */
     protected synchronized boolean pacManHasMail() {
         return !ghostMessages.isEmpty();
     }
 
+    /**
+     * Checks if Ghosts has any messages from Pacman.
+     * 
+     * @return true if there is mail
+     */
     protected synchronized boolean ghostHasMail() {
         return !pacManMessages.isEmpty();
     }
