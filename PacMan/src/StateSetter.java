@@ -8,7 +8,8 @@ import java.util.List;
  * @author Tobias Liljeblad & Rasumus Djupedal
  */
 public class StateSetter {
-    private String CurrentState;
+
+    private String currentState;
     private String previousState = "";
     private final List<StateObserver> observers;
 
@@ -25,16 +26,16 @@ public class StateSetter {
      * 
      * @param observer Concrete class of StateObserver
      */
-    public void addObserver(StateObserver observer) {
+    public void addObserver(final StateObserver observer) {
         observers.add(observer);
     }
 
     /**
-     * Removes an observere from the observerList
+     * Removes an observere from the observerList.
      * 
      * @param observer Instance of StateObserver
      */
-    public void removeObserver(StateObserver observer) {
+    public void removeObserver(final StateObserver observer) {
         observers.remove(observer);
     }
 
@@ -43,7 +44,7 @@ public class StateSetter {
      */
     private void notifyObservers() {
         observers.forEach(observer -> {
-            observer.updateState(CurrentState);
+            observer.updateState(currentState);
         });
     }
 
@@ -54,11 +55,11 @@ public class StateSetter {
      * 
      * @param newState a new change in state.
      */
-    private void setCurrentState(String newState) {
+    private void setCurrentState(final String newState) {
 
         if (!isCurrentState(newState)) {
-            previousState = CurrentState;
-            CurrentState = newState;
+            previousState = currentState;
+            currentState = newState;
             notifyObservers();
 
         }
@@ -78,8 +79,8 @@ public class StateSetter {
      * @param newState Ghost state
      * @return boolean if newState is equal to currentState
      */
-    private boolean isCurrentState(String newState) {
-        return newState.equalsIgnoreCase(CurrentState);
+    private boolean isCurrentState(final String newState) {
+        return newState.equalsIgnoreCase(currentState);
     }
 
     /**
@@ -88,7 +89,7 @@ public class StateSetter {
      * @return true if current state is scatter.
      */
     protected boolean isScatter() {
-        return CurrentState.equalsIgnoreCase("scatter");
+        return currentState.equalsIgnoreCase("scatter");
     }
 
     /**
@@ -97,7 +98,7 @@ public class StateSetter {
      * @return true if current state is chase.
      */
     protected boolean isChase() {
-        return CurrentState.equalsIgnoreCase("chase");
+        return currentState.equalsIgnoreCase("chase");
     }
 
     /**
@@ -106,7 +107,7 @@ public class StateSetter {
      * @return true if current state is fright.
      */
     protected boolean isFright() {
-        return CurrentState.equalsIgnoreCase("fright");
+        return currentState.equalsIgnoreCase("fright");
     }
 
     /**
@@ -114,18 +115,18 @@ public class StateSetter {
      * @return true if current state is Wakeup
      */
     protected boolean isWakeUp() {
-        return CurrentState.equalsIgnoreCase("wakeup");
+        return currentState.equalsIgnoreCase("wakeup");
     }
 
     /**
-     * Sets scatter state
+     * Sets scatter state.
      */
     protected void setScatter() {
         setCurrentState("scatter");
     }
 
     /**
-     * Sets chase state
+     * Sets chase state.
      */
     protected void setChase() {
         setCurrentState("chase");
@@ -135,7 +136,7 @@ public class StateSetter {
      * Sets fright state and stores previous state.
      */
     protected void setFright() {
-        previousState = CurrentState;
+        previousState = currentState;
         setCurrentState("fright");
     }
 
