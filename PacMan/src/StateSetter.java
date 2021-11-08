@@ -132,18 +132,21 @@ public class StateSetter {
     }
 
     /**
-     * Sets fright state and
+     * Sets fright state and stores previous state.
      */
     protected void setFright() {
         previousState = CurrentState;
-        CurrentState = "fright";
-        notifyObservers();
+        setCurrentState("fright");
     }
 
+    /**
+     * Opens ghost living room door and set state to Wakeup.
+     */
     protected void setWakeUp() {
-        CurrentState = "wakeup";
+
         Maze.INSTANCE.openDoor();
-        notifyObservers();
+        setCurrentState("wakeup");
+
     }
 
 }
