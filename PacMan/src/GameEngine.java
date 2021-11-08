@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Singleton class for handling the game
+ * 
  * @author Rasmsu Djupedal, Tobias Liljeblad
  */
 public class GameEngine {
@@ -92,6 +93,7 @@ public class GameEngine {
 
     /**
      * Called when a ghost collide with Pacman
+     * 
      * @param ghost the ghost that collides with Pacman
      */
     private void collisionDetected(Ghost ghost) {
@@ -128,8 +130,8 @@ public class GameEngine {
     }
 
     /**
-     * Called when maze is finished (all food eaten)
-     * Resets the maze and characters positions.
+     * Called when maze is finished (all food eaten) Resets the maze and characters
+     * positions.
      */
     private void finishLevel() {
         GameEngine.INSTANCE.isRunning = false;
@@ -140,8 +142,7 @@ public class GameEngine {
     }
 
     /**
-     * Initializes the game.
-     * Called only on program start
+     * Initializes the game. Called only on program start
      */
     protected void initGame() {
         createPacman();
@@ -151,8 +152,7 @@ public class GameEngine {
     }
 
     /**
-     * Creates a new maze, resets score
-     * Called after GameOver
+     * Creates a new maze, resets score Called after GameOver
      */
     protected void newGame() {
 
@@ -167,6 +167,7 @@ public class GameEngine {
 
     /**
      * Used by MazePanel in order to know if the whole screen should be repainted
+     * 
      * @return whether the screen should be repainted
      */
     protected boolean getClearScreen() {
@@ -195,6 +196,7 @@ public class GameEngine {
 
     /**
      * Returns the current score
+     * 
      * @return the score
      */
     protected int getScore() {
@@ -227,7 +229,7 @@ public class GameEngine {
     /**
      * Creates Pacman and sets his starting position with an abstract factory
      */
-    protected void createPacman() {
+    private void createPacman() {
         AbstractFactory pacManFactory = FactoryProducer.getFactory(true);
         pacman = pacManFactory.getCharacter("pacman", pacmanStartX, pacmanStartY);
     }
@@ -235,7 +237,7 @@ public class GameEngine {
     /**
      * Creates the ghosts and set their starting positions with an abstract factory
      */
-    protected void createGhosts() {
+    private void createGhosts() {
         AbstractFactory ghostFactory = FactoryProducer.getFactory(false);
 
         ghosts.add(ghostFactory.getCharacter("ghost", 330, 390, "red"));
@@ -249,6 +251,7 @@ public class GameEngine {
 
     /**
      * Returns the Pacman instance
+     * 
      * @return the Pacman instance
      */
     protected Pacman getPacman() {
@@ -256,8 +259,9 @@ public class GameEngine {
     }
 
     /**
-     * Tells GameEngine about the size of the playable area and the gridsize.
-     * Called from PacmanFrame
+     * Tells GameEngine about the size of the playable area and the gridsize. Called
+     * from PacmanFrame
+     * 
      * @param gameSize dimension of the playable area
      * @param gridSize dimension of the grid
      */
@@ -268,6 +272,7 @@ public class GameEngine {
 
     /**
      * Returns all ghost instances
+     * 
      * @return the ghosts
      */
     protected ArrayList<Ghost> getGhosts() {
@@ -276,6 +281,7 @@ public class GameEngine {
 
     /**
      * Returns the number of lives left of Pacman
+     * 
      * @return number of lives
      */
     protected int getLives() {
@@ -284,9 +290,12 @@ public class GameEngine {
 
     /**
      * Returns the grid size
+     * 
      * @return Dimension of the gridSize
      */
-    protected Dimension getGridSize() { return gridSize; }
+    protected Dimension getGridSize() {
+        return gridSize;
+    }
 
     /**
      * Called when Pacman eats a candy. Sets a counter and makes the ghosts scared!
