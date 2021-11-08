@@ -18,7 +18,7 @@ public class GameEngine {
     private boolean highOnCandy = false;
     private int highOnCandyMs = 800;
     private int pacmanStartX = 400, pacmanStartY = 690;
-    private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+    private final ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     private Dimension gameSize, gridSize;
     protected boolean isRunning = false;
     protected boolean isGameOver = false;
