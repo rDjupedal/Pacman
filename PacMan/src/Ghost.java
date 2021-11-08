@@ -307,7 +307,10 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
         // If there is a message from PacMan, retrieves it.
         if (PostMaster.getPostMaster().ghostHasMail()) {
             String pacManMsg = PostMaster.getPostMaster().recievePacManMsg();
-            System.out.println(pacManMsg);
+            if (pacManMsg != null) {
+                System.out.println(pacManMsg);
+            }
+
         }
 
     }
