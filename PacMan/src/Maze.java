@@ -46,7 +46,7 @@ public final class Maze extends JComponent {
             }
         }
 
-        System.out.println("Could not find a brick at position " + x + ", " + y);
+        //System.out.println("Could not find a brick at position " + x + ", " + y);
         // Return whatever dummy brick that is not wall
 
         for (MazeBrick brick : mazeBricks) {
