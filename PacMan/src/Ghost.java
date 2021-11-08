@@ -111,7 +111,7 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
      */
     protected void setDirection() {
 
-        if (inHorizontalGrid() && inVerticalGrid()) {
+        if (withinBoundary() && inHorizontalGrid() && inVerticalGrid()) {
             pickDirection = true;
         }
         while (pickDirection) {
@@ -128,20 +128,6 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
      * @return the next direction.
      */
     private synchronized String getDirection() {
-
-        // Checks if the ghost is inside the tunnel. Changes the x value base on which
-        // side of the tunnel it is going through.
-        if (direction != null) {
-            if (direction.equalsIgnoreCase("left")) {
-                if (x - moveDistance < 0)
-                    x = Maze.INSTANCE.width;
-            }
-
-            if (direction.equalsIgnoreCase("right")) {
-                if (x + Maze.INSTANCE.gridWidth + moveDistance > Maze.INSTANCE.width)
-                    x = 0;
-            }
-        }
 
         // Checks current state and returns the direction Ghost should go based on which
         // state is active.
@@ -229,6 +215,20 @@ public class Ghost extends LivingCharacter implements StateObserver, Runnable {
                 currentImg = charImages.get(3);
 
                 break;
+            }
+
+            // Checks if the ghost is inside the tunnel. Changes the x value base on which
+            // side of the tunnel it is going through.
+            if (direction != null) {
+                if (direction.equalsIgnoreCase("left")) {
+                    if (x - moveDistance < 0)
+                        x = Maze.INSTANCE.width;
+                }
+
+                if (direction.equalsIgnoreCase("right")) {
+                    if (x + Maze.INSTANCE.gridWidth + moveDistance > Maze.INSTANCE.width)
+                        x = 0;
+                }
             }
 
             previousMove = direction;

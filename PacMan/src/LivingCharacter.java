@@ -59,7 +59,7 @@ abstract class LivingCharacter extends JComponent {
      * @return whether current position is inside playable area
      */
     protected boolean withinBoundary() {
-        if ((y >= cSize && y <= Maze.INSTANCE.height - cSize) && (x >= 0 && x <= Maze.INSTANCE.width - cSize)) {
+        if ((y >= 0 && y <= Maze.INSTANCE.height - cSize) && (x >= 0 && x <= Maze.INSTANCE.width - cSize)) {
             return true;
         }
 
