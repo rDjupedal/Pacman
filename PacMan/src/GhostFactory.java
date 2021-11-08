@@ -22,7 +22,10 @@ public class GhostFactory extends AbstractFactory {
      */
     @Override
     Ghost getCharacter(String type, int x, int y, String color) {
-        return new Ghost(x, y, color);
+        if (type.equalsIgnoreCase("ghost")) {
+            return new Ghost(x, y, color);
+        }
+        return null;
 
     }
 }
