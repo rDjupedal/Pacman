@@ -6,6 +6,7 @@ import java.io.IOException;
 
 /**
  * Pacman class
+ * 
  * @author Rasmus Djupedal, Tobias Liljeblad
  */
 class Pacman extends LivingCharacter implements Runnable {
@@ -18,6 +19,7 @@ class Pacman extends LivingCharacter implements Runnable {
 
     /**
      * Constructor. Sets the position of Pacman and loads his images
+     * 
      * @param x
      * @param y
      */
@@ -56,6 +58,7 @@ class Pacman extends LivingCharacter implements Runnable {
 
     /**
      * Called when a key is pressed
+     * 
      * @param e KeyEvent the key event
      */
     @Override
@@ -188,6 +191,7 @@ class Pacman extends LivingCharacter implements Runnable {
 
     /**
      * Draw Pacman
+     * 
      * @param g Graphics object
      */
     @Override
@@ -200,6 +204,12 @@ class Pacman extends LivingCharacter implements Runnable {
         g.drawImage(animation ? currentImgBig : currentImgSmall, x, y, cSize, cSize, null);
     }
 
+    /**
+     * A simple part of the Producer Consumer implementation where Pacman picks a
+     * random message and returns it.
+     * 
+     * @return a random String message.
+     */
     private String getRandomMsg() {
         String[] messages = { "HAHA! You will NEVER catch me!", "RUN FORREST RUUUUUN!",
                 "Food food food.. mmmm GOOD FOOD!", "One little food, two little food, threeee little food! SO GOOD!",
@@ -210,19 +220,26 @@ class Pacman extends LivingCharacter implements Runnable {
         return messages[randomIdx];
     }
 
+    /**
+     * The overridden run method which is called by GameEngine whenever the game
+     * does a tick. Calls the template method of LivingCharacter (to make a move)
+     * and also sends a message to Ghosts (Based on some random intervall) and
+     * recieves a message from Ghosts if there is one avaliable.
+     */
     @Override
     public void run() {
 
+        // Calls LivingCharacter ::doMove()
         doMove();
 
-        // Producer / Consumer.
+        // Checks if pacman has mail, and recieves it if true.
         if (PostMaster.getPostMaster().pacManHasMail()) {
             String ghostMsg = PostMaster.getPostMaster().recieveGhostMsg();
             System.out.println(ghostMsg);
         }
 
+        // Randomly writes a message to ghosts.
         int sendMsgChance = (int) (Math.random() * 1000);
-
         if (sendMsgChance == 5) {
             String msg = String.format("Pacman says: %s", getRandomMsg());
             PostMaster.getPostMaster().sendPacManMsg(msg);
