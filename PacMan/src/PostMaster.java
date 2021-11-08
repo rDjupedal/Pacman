@@ -8,8 +8,8 @@ import java.util.LinkedList;
  * @author Tobias Liljeblad & Rasmus Djupedal
  */
 public class PostMaster {
-    private LinkedList<String> ghostMessages = new LinkedList<>();
-    private LinkedList<String> pacManMessages = new LinkedList<>();
+    private final LinkedList<String> ghostMessages = new LinkedList<>();
+    private final LinkedList<String> pacManMessages = new LinkedList<>();
 
     private static PostMaster postMaster = null;
 
