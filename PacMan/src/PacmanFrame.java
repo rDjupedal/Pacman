@@ -127,11 +127,14 @@ public class PacmanFrame extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
+                /*  Uncomment to decrease gamespeed to 10% when mouse is clicked
                 debugLabel.setVisible(true);
                 if (timer.getDelay() == 10)
                     timer.setDelay(100);
                 else
                     timer.setDelay(10);
+
+                 */
 
             }
         });
